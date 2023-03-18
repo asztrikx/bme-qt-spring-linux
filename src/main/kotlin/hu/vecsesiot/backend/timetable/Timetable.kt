@@ -1,0 +1,18 @@
+package hu.vecsesiot.backend.timetable
+
+import hu.vecsesiot.backend.line.Line
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToOne
+import java.util.*
+
+@Entity
+class Timetable (
+	@Id
+	@GeneratedValue
+	private val id: Long?,
+	@ManyToOne
+	private val line: Line,
+	private val date: Date,
+)
