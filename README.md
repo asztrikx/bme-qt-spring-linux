@@ -20,7 +20,7 @@ Alap feladatok (maximális kapható pontokkal):
 - [x] 7p: REST API (benne új adat létrehozása, lekérdezés, adat módosítása, logikusan felépített URL-ekkel)
 - [x] 8p: Több felhasználó, az authentikáció és különböző szerepkörök támogatása.
 - [ ] 7p: Linux alatt saját, jól átgondolt kommunikációs protokoll implementálása.
-- [ ] 15p: Linux alatt eszközvezérlő készítése
+- [x] 15p: Linux alatt eszközvezérlő készítése
 - [ ] 5p: Aszinkron üzenetsorral kommunikáló szerverek (vagyis több backend komponens van).
 - [x] 5p: Java Persistence API használata, legalább 5 osztállyal.
 - [ ] 2p: Spring Data használata
