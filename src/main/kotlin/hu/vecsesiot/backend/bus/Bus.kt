@@ -5,8 +5,10 @@ import hu.vecsesiot.backend.user.User
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.OneToOne
+import jakarta.persistence.Entity
 
-// TODO explain
+// TODO explain temporary values
+@Entity
 class Bus (
 	@Id
 	@GeneratedValue
