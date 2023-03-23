@@ -5,14 +5,16 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
-import java.util.*
+import java.time.LocalDateTime
 
 @Entity
-class Timetable (
+class Timetable {
 	@Id
 	@GeneratedValue
-	private val id: Long?,
+	private var id: Long? = null
+
 	@ManyToOne
-	private val line: Line,
-	private val date: Date,
-)
+	private lateinit var line: Line
+
+	private lateinit var date: LocalDateTime
+}
