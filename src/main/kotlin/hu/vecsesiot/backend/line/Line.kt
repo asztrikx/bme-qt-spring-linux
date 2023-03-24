@@ -1,6 +1,7 @@
 package hu.vecsesiot.backend.line
 
 import hu.vecsesiot.backend.section.Section
+import hu.vecsesiot.backend.stop.Stop
 import hu.vecsesiot.backend.timetable.Timetable
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
