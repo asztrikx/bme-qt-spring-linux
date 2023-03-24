@@ -11,8 +11,10 @@ class FaultTicket (
 	@Id
 	@GeneratedValue
 	private val id: Long?,
+	@ManyToOne
 	private val user: User,
 	// could be a computed value
+	@ManyToOne
 	private val bus: Bus,
 	private val startDate: Date,
 	private val resolveDate: Date,

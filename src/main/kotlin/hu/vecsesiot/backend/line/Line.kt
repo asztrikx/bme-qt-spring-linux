@@ -24,6 +24,9 @@ class Line{
 	@ManyToMany
 	private lateinit var route: List<Section>
 
+	@ManyToMany
+	private lateinit var stops: List<Stop>
+
 	@OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
 	private lateinit var timetable: List<Timetable>
 }
