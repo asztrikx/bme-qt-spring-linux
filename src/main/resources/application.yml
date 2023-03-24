@@ -1,0 +1,26 @@
+spring:
+#  jpa:
+#    properties:
+#      hibernate:
+#        show_sql: true
+#        format_sql: true
+#      javax:
+#        persistence:
+#          schema-generation:
+#            create-script-source: schema.sql
+#            create-source: script
+#    generate-ddl: 'false'
+#    show-sql: 'true'
+#    hibernate:
+#      ddl-auto: none
+#      naming:
+#        implicit-strategy: org.hibernate.boot.model.naming.ImplicitNamingStrategyJpaCompliantImpl
+#        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+  data:
+    rest:
+      base-path: /api
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
