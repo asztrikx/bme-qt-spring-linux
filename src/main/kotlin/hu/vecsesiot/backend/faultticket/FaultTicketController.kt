@@ -1,4 +1,4 @@
-package hu.vecsesiot.backend.line
+package hu.vecsesiot.backend.faultticket
 
 
 import org.springframework.beans.factory.annotation.Autowired
