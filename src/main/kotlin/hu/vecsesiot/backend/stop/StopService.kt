@@ -1,5 +1,6 @@
 package hu.vecsesiot.backend.stop
 
+import hu.vecsesiot.backend.line.StopRepository
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
