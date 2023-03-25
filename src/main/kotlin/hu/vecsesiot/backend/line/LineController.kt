@@ -17,15 +17,7 @@ class LineController {
     @Autowired
     private lateinit var service: LineService
 
-    @PostMapping("")
-    fun addLine(@RequestBody line: Line) = service.addLine(line)
-
-    @GetMapping("/{:id}")
-    fun getLineById(@PathVariable id: Long) = service.findById(id)
-
     @GetMapping("/line?name={:name}")
     fun getLineByName(@PathVariable name: String) = service.findLinesByName(name)
 
-    @DeleteMapping("/{:id}")
-    fun deleteLineById(@PathVariable id: Long) = service.deleteLineById(id)
 }
