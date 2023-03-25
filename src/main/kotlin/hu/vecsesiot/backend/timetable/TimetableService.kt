@@ -8,18 +8,20 @@ import java.time.LocalDateTime
 
 @Service
 class TimetableService {
+
     @Autowired
     private lateinit var repository: TimetableRepository
 
     @Transactional
     fun addTimetable(timetable: Timetable) = repository.save(timetable)
 
-    fun findTimetablesByLine(line : Line) = repository.findAllByLine(line)
+    fun findTimetablesByLine(line: Line) = repository.findAllByLine(line)
 
-    fun findTimetableByLineAndAfterDate(line : Line, date : LocalDateTime) = repository.findAllByLineAndAfterDate(line, date)
+    fun findTimetableByLineAndAfterDate(line: Line, date: LocalDateTime) =
+        repository.findAllByLineAndAfterDate(line, date)
 
-    fun findById(id : Long) = repository.findById(id)
+    fun findById(id: Long) = repository.findById(id)
 
     @Transactional
-    fun deleteLineById(id : Long) = repository.deleteById(id)
+    fun deleteLineById(id: Long) = repository.deleteById(id)
 }

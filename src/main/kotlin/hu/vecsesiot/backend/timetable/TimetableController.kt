@@ -21,7 +21,8 @@ class TimetableController {
     fun getTimetablesByLine(@RequestBody line: Line) = service.findTimetablesByLine(line)
 
     @GetMapping("/byLine/{:date}")
-    fun getTimetablesByLineAfterDate(@RequestBody line : Line, @PathVariable date : LocalDateTime) = service.findTimetableByLineAndAfterDate(line, date)
+    fun getTimetablesByLineAfterDate(@RequestBody line: Line, @PathVariable date: LocalDateTime) =
+        service.findTimetableByLineAndAfterDate(line, date)
 
     @DeleteMapping("/{:id}")
     fun deleteLineById(@PathVariable id: Long) = service.deleteLineById(id)

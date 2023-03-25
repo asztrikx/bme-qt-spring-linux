@@ -9,12 +9,12 @@ import java.time.LocalDateTime
 
 @Entity
 class Timetable {
-	@Id
-	@GeneratedValue
-	var id: Long? = null
+    @Id
+    @GeneratedValue
+    var id: Long? = null
 
-	@ManyToOne
-	lateinit var line: Line
+    @ManyToOne
+    lateinit var line: Line
 
-	lateinit var startDate: LocalDateTime
+    lateinit var startDate: LocalDateTime
 }
