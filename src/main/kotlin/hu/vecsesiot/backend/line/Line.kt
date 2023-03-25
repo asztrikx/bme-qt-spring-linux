@@ -21,13 +21,13 @@ class Line(
 	@NotBlank
 	@Size(min = 4, max = 50)
 	var name: String,
+) {
+	@ManyToMany
+	lateinit var route: List<Section>
 
 	@ManyToMany
-	var route: List<Section>,
-
-	@ManyToMany
-	var stops: List<Stop>,
+	lateinit var stops: List<Stop>
 
 	@OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
-	var timetable: List<Timetable>,
-)
+	lateinit var timetable: List<Timetable>
+}

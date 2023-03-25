@@ -9,15 +9,17 @@ import org.hibernate.validator.constraints.time.DurationMin
 import java.time.Duration
 
 @Entity
-class Section (
+class Section(
 	@Id
 	@GeneratedValue
-	val id: Long,
-	@ManyToOne
-	val start: Stop,
-	@ManyToOne
-	val stop: Stop,
+	var id: Long,
 	// Hibernate solves the mapping to SQL primitives without using @Converter
 	@DurationMin(seconds = 1)
-	val timespan: Duration,
-)
+	var timespan: Duration,
+) {
+	@ManyToOne
+	lateinit var start: Stop
+
+	@ManyToOne
+	lateinit var stop: Stop
+}

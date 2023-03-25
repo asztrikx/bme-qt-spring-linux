@@ -9,17 +9,20 @@ import jakarta.validation.constraints.NotBlank
 // Bus represent a physical bus.
 // Bus may be temporarily linked to a bus or even to a timetable.
 @Entity
-class Bus (
+class Bus(
 	@Id
 	@GeneratedValue
-	val id: Long,
+	var id: Long,
 	@NotBlank
 	@Column(unique = true)
-	val serialnumber: String,
+	var serialnumber: String,
+) {
 	@OneToOne
-	val user: User?,
+	var user: User? = null
+
 	@OneToOne
-	val timetable: Timetable?,
+	var timetable: Timetable? = null
+
 	@OneToMany(mappedBy = "bus")
-	val faultTickets: List<FaultTicket>,
-)
+	lateinit var faultTickets: List<FaultTicket>
+}

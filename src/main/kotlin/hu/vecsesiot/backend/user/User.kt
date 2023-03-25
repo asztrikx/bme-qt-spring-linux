@@ -8,8 +8,8 @@ import jakarta.persistence.*
 class User(
 	@Id
 	@GeneratedValue
-	val id: Long? = null,
-	val username: String,
+	var id: Long? = null,
+	var username: String,
 ) {
 	@OneToOne(mappedBy = "user")
 	val bus: Bus? = null

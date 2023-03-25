@@ -7,10 +7,10 @@ import jakarta.persistence.*
 class Stop(
 	@Id
 	@GeneratedValue
-	val id: Long?,
-	val coordinate: GPSCoordinate,
-	val name: String,
-	// https://stackoverflow.com/a/14111651/4404911
+	var id: Long?,
+	var coordinate: GPSCoordinate,
+	var name: String,
+) {
 	@ManyToMany(mappedBy = "stops")
-	val lines: List<Line>
-)
+	lateinit var lines: List<Line>
+}

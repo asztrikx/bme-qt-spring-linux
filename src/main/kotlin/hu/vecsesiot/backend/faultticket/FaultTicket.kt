@@ -7,24 +7,26 @@ import jakarta.persistence.*
 import java.util.*
 
 @Entity
-class FaultTicket (
+class FaultTicket(
 	@Id
 	@GeneratedValue
-	val id: Long?,
-	@ManyToOne
-	val user: User,
+	var id: Long?,
+	var startDate: Date,
+	var resolveDate: Date,
+	var description: String,
 	// could be a computed value
-	@ManyToOne
-	val bus: Bus,
-	val startDate: Date,
-	val resolveDate: Date,
-	val description: String,
-	// could be a computed value
-	val coordinate: GPSCoordinate,
+	var coordinate: GPSCoordinate,
 	@Enumerated(EnumType.STRING)
-	val state: State
-)
+	var state: State
+) {
+	@ManyToOne
+	lateinit var user: User
 
-enum class State {
-	Created, InProgress, Resolved
+	// could be a computed value
+	@ManyToOne
+	lateinit var bus: Bus
+
+	enum class State {
+		Created, InProgress, Resolved
+	}
 }

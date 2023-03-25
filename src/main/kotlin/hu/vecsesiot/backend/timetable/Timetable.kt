@@ -13,8 +13,8 @@ class Timetable(
 	@GeneratedValue
 	var id: Long? = null,
 
-	@ManyToOne
-	var line: Line,
-
 	var startDate: LocalDateTime,
-)
+) {
+	@ManyToOne
+	lateinit var line: Line
+}
