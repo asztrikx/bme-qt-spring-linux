@@ -8,7 +8,7 @@ import org.springframework.boot.ApplicationRunner
 import org.springframework.stereotype.Component
 
 @Component
-class DataLoader : ApplicationRunner {
+class SqlInitializer : ApplicationRunner {
 	@Autowired
 	private lateinit var userRepository: UserRepository
 
