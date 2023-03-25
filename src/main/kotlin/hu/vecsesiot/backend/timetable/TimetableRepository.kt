@@ -9,8 +9,9 @@ import java.time.LocalDateTime
 
 @Repository
 interface TimetableRepository : JpaRepository<Timetable, Long> {
-    fun findAllByLine(line: Line): List<Timetable>
+	fun findAllByLine(line: Line): List<Timetable>
 
-    @Query("SELECT t FROM Timetable  t WHERE t.line = :line AND t.startDate > :date ORDER BY t.startDate ASC")
-    fun findAllByLineAndAfterDate(@Param("line") line: Line, @Param("date") date: LocalDateTime): List<Timetable>
+	// TODO check if param is necessary
+	@Query("SELECT t FROM Timetable t WHERE t.line = :line AND t.startDate > :date ORDER BY t.startDate ASC")
+	fun findAllByLineAndAfterDate(@Param("line") line: Line, @Param("date") date: LocalDateTime): List<Timetable>
 }

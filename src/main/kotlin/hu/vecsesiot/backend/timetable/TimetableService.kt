@@ -8,14 +8,6 @@ import java.time.LocalDateTime
 
 @Service
 class TimetableService {
-
-    @Autowired
-    private lateinit var repository: TimetableRepository
-
-
-    fun findTimetablesByLine(line: Line) = repository.findAllByLine(line)
-
-    fun findTimetableByLineAndAfterDate(line: Line, date: LocalDateTime) =
-        repository.findAllByLineAndAfterDate(line, date)
-
+	@Autowired
+	private lateinit var repository: TimetableRepository
 }

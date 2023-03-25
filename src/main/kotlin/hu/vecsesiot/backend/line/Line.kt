@@ -18,6 +18,7 @@ class Line(
 	@GeneratedValue
 	var id: Long? = null,
 
+	// TODO determine max size
 	@NotBlank
 	@Size(min = 4, max = 50)
 	var name: String,

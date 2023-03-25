@@ -13,11 +13,6 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @RequestMapping("/lines")
 class LineController {
-
-    @Autowired
-    private lateinit var service: LineService
-
-    @GetMapping("/line?name={:name}")
-    fun getLineByName(@PathVariable name: String) = service.findLinesByName(name)
-
+	@Autowired
+	private lateinit var service: LineService
 }

@@ -4,6 +4,7 @@ import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.stop.GPSCoordinate
 import hu.vecsesiot.backend.user.User
 import jakarta.persistence.*
+import jakarta.validation.constraints.NotBlank
 import java.util.*
 
 @Entity
@@ -13,8 +14,8 @@ class FaultTicket(
 	var id: Long?,
 	var startDate: Date,
 	var resolveDate: Date,
+	@NotBlank
 	var description: String,
-	// could be a computed value
 	var coordinate: GPSCoordinate,
 	@Enumerated(EnumType.STRING)
 	var state: State

@@ -14,6 +14,7 @@ class Section(
 	@GeneratedValue
 	var id: Long,
 	// Hibernate solves the mapping to SQL primitives without using @Converter
+	// Disallow negative duration
 	@DurationMin(seconds = 1)
 	var timespan: Duration,
 ) {

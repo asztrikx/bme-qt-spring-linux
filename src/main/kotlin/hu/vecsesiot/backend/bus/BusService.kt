@@ -14,7 +14,7 @@ class BusService {
 	@Autowired
 	private lateinit var busRepository: BusRepository
 
-	@Transactional(readOnly = true)
+	@Transactional
 	fun getAllFaultTickets(id: Long): List<FaultTicket>? {
 		return busRepository.findById(id).getOrNull()
 			?.faultTickets
