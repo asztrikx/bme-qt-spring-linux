@@ -8,13 +8,13 @@ import jakarta.persistence.ManyToOne
 import java.time.LocalDateTime
 
 @Entity
-class Timetable {
-    @Id
-    @GeneratedValue
-    var id: Long? = null
+class Timetable(
+	@Id
+	@GeneratedValue
+	var id: Long? = null,
 
-    @ManyToOne
-    lateinit var line: Line
+	@ManyToOne
+	var line: Line,
 
-    lateinit var startDate: LocalDateTime
-}
+	var startDate: LocalDateTime,
+)
