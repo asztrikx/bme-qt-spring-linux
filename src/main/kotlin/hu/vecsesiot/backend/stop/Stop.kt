@@ -10,10 +10,10 @@ import jakarta.persistence.ManyToMany
 class Stop(
 	@Id
 	@GeneratedValue
-	private val id: Long?,
-	private val coordinate: GPSCoordinate,
-	private val name : String,
+	val id: Long?,
+	val coordinate: GPSCoordinate,
+	val name : String,
 	// https://stackoverflow.com/a/14111651/4404911
 	@ManyToMany(mappedBy="stops")
-	private val lines : List<Line>
+	val lines : List<Line>
 )
