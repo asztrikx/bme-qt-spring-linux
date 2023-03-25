@@ -5,13 +5,19 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.Id
 import jakarta.persistence.ManyToOne
+import org.hibernate.validator.constraints.time.DurationMin
 import java.time.Duration
 
 @Entity
 class Section (
+	@Id
+	@GeneratedValue
+	val id: Long,
 	@ManyToOne
-	private val start: Stop,
+	val start: Stop,
 	@ManyToOne
-	private val stop: Stop,
-	private val timespan: Duration,
+	val stop: Stop,
+	// Hibernate solves the mapping to SQL primitives without using @Converter
+	@DurationMin(seconds = 1)
+	val timespan: Duration,
 )
