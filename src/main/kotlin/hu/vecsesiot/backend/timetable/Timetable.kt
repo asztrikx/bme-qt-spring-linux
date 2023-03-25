@@ -11,10 +11,10 @@ import java.time.LocalDateTime
 class Timetable {
 	@Id
 	@GeneratedValue
-	private var id: Long? = null
+	var id: Long? = null
 
 	@ManyToOne
-	private lateinit var line: Line
+	lateinit var line: Line
 
-	private lateinit var date: LocalDateTime
+	lateinit var startDate: LocalDateTime
 }
