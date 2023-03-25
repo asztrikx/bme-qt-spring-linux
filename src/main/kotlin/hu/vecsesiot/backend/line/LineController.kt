@@ -18,7 +18,7 @@ class LineController {
     private lateinit var service: LineService
 
     @PostMapping("")
-    fun addLine(@RequestBody line : Line) = service.addLine(line)
+    fun addLine(@RequestBody line: Line) = service.addLine(line)
 
     @GetMapping("/{:id}")
     fun getLineById(@PathVariable id: Long) = service.findById(id)

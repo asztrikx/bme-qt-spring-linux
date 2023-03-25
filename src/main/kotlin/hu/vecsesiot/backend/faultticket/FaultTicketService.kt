@@ -2,7 +2,6 @@ package hu.vecsesiot.backend.faultticket
 
 import hu.vecsesiot.backend.user.User
 import jakarta.transaction.Transactional
-import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.util.*

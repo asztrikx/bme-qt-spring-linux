@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface LineRepository : JpaRepository<Line, Long> {
-    fun findAllByName(name : String) : Line
+    fun findAllByName(name: String): Line
 }

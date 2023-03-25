@@ -13,21 +13,21 @@ import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 
 @Entity
-class Line{
-	@Id
-	@GeneratedValue
-	var id: Long? = null
+class Line {
+    @Id
+    @GeneratedValue
+    var id: Long? = null
 
-	@NotBlank
-	@Size(min = 4, max = 50)
-	lateinit var name: String
+    @NotBlank
+    @Size(min = 4, max = 50)
+    lateinit var name: String
 
-	@ManyToMany
-	lateinit var route: List<Section>
+    @ManyToMany
+    lateinit var route: List<Section>
 
-	@ManyToMany
-	lateinit var stops: List<Stop>
+    @ManyToMany
+    lateinit var stops: List<Stop>
 
-	@OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
-	lateinit var timetable: List<Timetable>
+    @OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
+    lateinit var timetable: List<Timetable>
 }
