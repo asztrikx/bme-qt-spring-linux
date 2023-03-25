@@ -9,6 +9,4 @@ import org.springframework.stereotype.Service
 class FaultTicketService {
     @Autowired
     private lateinit var repository: FaultTicketRepository
-
-    fun findFaultTicketsByUser(user: User) = repository.findAllByUser(user)
 }

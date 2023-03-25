@@ -13,7 +13,4 @@ class FaultTicketController {
 
     @Autowired
     private lateinit var service: FaultTicketService
-
-    @GetMapping("/?user")
-    fun getFaultTicketByUser(@RequestBody user: User) = service.findFaultTicketsByUser(user)
 }
