@@ -1,8 +1,12 @@
-package hu.vecsesiot.backend.line
+package hu.vecsesiot.backend.faultticket
 
+import hu.vecsesiot.backend.user.User
 import jakarta.transaction.Transactional
+import org.springframework.beans.BeanUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class FaultTicketService {
@@ -16,13 +20,8 @@ class FaultTicketService {
 
     fun findById(id : Long) = repository.findById(id)
 
-    @Transactional
-    fun updateFaultTicket(faultTicket : FaultTicket)
-    {
-        var existing = repository.read(faultTicket.getId())
-        BeanUtils.copyProperties(faultTicket, existing, getNullPropertyNames(faultTicket))
-        repository.save(existing)
-    }
+    //@Transactional
+    //fun updateFaultTicket(faultTicket : FaultTicket) = repository.save(findById(faultTicket.id!!).getOrNull() ?: throw Exception("404"))
 
     @Transactional
     fun deleteFaultTicketById(id : Long) = repository.deleteById(id)
