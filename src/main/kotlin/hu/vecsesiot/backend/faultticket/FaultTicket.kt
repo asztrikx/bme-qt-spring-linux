@@ -10,19 +10,19 @@ import java.util.*
 class FaultTicket (
 	@Id
 	@GeneratedValue
-	private val id: Long?,
+	val id: Long?,
 	@ManyToOne
-	private val user: User,
+	val user: User,
 	// could be a computed value
 	@ManyToOne
-	private val bus: Bus,
-	private val startDate: Date,
-	private val resolveDate: Date,
-	private val description: String,
+	val bus: Bus,
+	val startDate: Date,
+	val resolveDate: Date,
+	val description: String,
 	// could be a computed value
-	private val coordinate: GPSCoordinate,
+	val coordinate: GPSCoordinate,
 	@Enumerated(EnumType.STRING)
-	private val state: State
+	val state: State
 )
 
 enum class State {
