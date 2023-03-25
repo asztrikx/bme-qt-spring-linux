@@ -16,18 +16,18 @@ import jakarta.validation.constraints.Size
 class Line{
 	@Id
 	@GeneratedValue
-	private var id: Long? = null
+	var id: Long? = null
 
 	@NotBlank
 	@Size(min = 4, max = 50)
-	private lateinit var name: String
+	lateinit var name: String
 
 	@ManyToMany
-	private lateinit var route: List<Section>
+	lateinit var route: List<Section>
 
 	@ManyToMany
-	private lateinit var stops: List<Stop>
+	lateinit var stops: List<Stop>
 
 	@OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
-	private lateinit var timetable: List<Timetable>
+	lateinit var timetable: List<Timetable>
 }
