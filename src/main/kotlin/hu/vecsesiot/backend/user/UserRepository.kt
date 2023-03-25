@@ -1,10 +1,8 @@
 package hu.vecsesiot.backend.user
 
-import jakarta.persistence.EntityManager
-import jakarta.persistence.PersistenceContext
-import jakarta.transaction.Transactional
+import org.springframework.data.jpa.repository.JpaRepository
 import org.springframework.stereotype.Repository
 
 @Repository
-class UserRepository {
+interface UserRepository : JpaRepository<User, Long> {
 }

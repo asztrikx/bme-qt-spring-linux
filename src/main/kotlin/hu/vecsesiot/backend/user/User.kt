@@ -2,19 +2,18 @@ package hu.vecsesiot.backend.user
 
 import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.faultticket.FaultTicket
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.OneToMany
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
 
 @Entity
-class User (
+class User(
 	@Id
 	@GeneratedValue
-	val id: Long?,
+	val id: Long? = null,
+	val username: String,
+) {
 	@OneToOne(mappedBy = "user")
-	val bus: Bus?,
+	val bus: Bus? = null
+
 	@OneToMany(mappedBy = "user")
-	val faultTickets: List<FaultTicket>
-)
+	lateinit var faultTickets: List<FaultTicket>
+}
