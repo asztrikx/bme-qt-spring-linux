@@ -6,13 +6,13 @@ import jakarta.validation.constraints.NotBlank
 
 @Entity
 class Stop(
-	@Id
-	@GeneratedValue
-	var id: Long?,
-	var coordinate: GPSCoordinate,
-	@NotBlank
-	var name: String,
+    @Id
+    @GeneratedValue
+    var id: Long? = null,
+    var coordinate: GPSCoordinate,
+    @NotBlank
+    var name: String,
 ) {
-	@ManyToMany(mappedBy = "stops")
-	lateinit var lines: List<Line>
+    @ManyToMany(mappedBy = "stops")
+    lateinit var lines: List<Line>
 }

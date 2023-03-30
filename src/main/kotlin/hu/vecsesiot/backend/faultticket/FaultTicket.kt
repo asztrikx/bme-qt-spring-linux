@@ -11,9 +11,9 @@ import java.time.LocalDateTime
 class FaultTicket(
     @Id
     @GeneratedValue
-    var id: Long?,
+    var id: Long? = null,
     var startDate: LocalDateTime,
-    var resolveDate: LocalDateTime,
+    var resolveDate: LocalDateTime? = null,
     @NotBlank
     var description: String,
     var coordinate: GPSCoordinate,
