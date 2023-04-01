@@ -1,14 +1,17 @@
 package hu.vecsesiot.backend.stop
 
 import hu.vecsesiot.backend.line.Line
-import jakarta.persistence.*
+import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.Id
+import jakarta.persistence.ManyToMany
 import jakarta.validation.constraints.NotBlank
 
 @Entity
 class Stop(
 	@Id
 	@GeneratedValue
-	var id: Long?,
+	var id: Long? = null,
 	var coordinate: GPSCoordinate,
 	@NotBlank
 	var name: String,

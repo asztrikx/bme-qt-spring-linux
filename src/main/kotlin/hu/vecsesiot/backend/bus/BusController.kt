@@ -1,8 +1,8 @@
-package hu.vecsesiot.backend.bus;
+package hu.vecsesiot.backend.bus
 
 import hu.vecsesiot.backend.faultticket.FaultTicket
 import hu.vecsesiot.backend.timetable.Timetable
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/buses")
 class BusController {
 	@Autowired
-	private lateinit var busService: BusService;
+	private lateinit var busService: BusService
 
 	// TODO vszeg ezt default kiadja
 	@GetMapping("/{:id}/faulttickets")

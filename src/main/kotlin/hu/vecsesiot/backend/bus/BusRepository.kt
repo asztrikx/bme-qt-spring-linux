@@ -8,11 +8,12 @@ import org.springframework.data.repository.query.Param
 import org.springframework.data.rest.core.annotation.RepositoryRestResource
 
 
-@RepositoryRestResource(collectionResourceRel="buses", path="buses")
-interface BusRepository: JpaRepository<Bus, Long> {
+@RepositoryRestResource(collectionResourceRel = "buses", path = "buses")
+interface BusRepository : JpaRepository<Bus, Long> {
 	// TODO empty is permitted
 	fun findBySerialnumber(serialnumber: String): Bus?
 	fun findByUser(user: User): Bus?
+
 	@Query("SELECT b FROM Bus b WHERE b.timetable.line = :line")
 	fun findByLine(@Param("line") line: Line): List<Bus>
 }

@@ -12,7 +12,7 @@ import jakarta.validation.constraints.NotBlank
 class Bus(
 	@Id
 	@GeneratedValue
-	var id: Long,
+	var id: Long? = null,
 	@NotBlank
 	@Column(unique = true)
 	var serialnumber: String,

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface FaultTicketRepository : JpaRepository<FaultTicket, Long> {
-    fun findAllByUser(user: User): List<FaultTicket>
-    fun findAllByBus(bus: Bus): List<FaultTicket>
+	fun findAllByUser(user: User): List<FaultTicket>
+	fun findAllByBus(bus: Bus): List<FaultTicket>
 }

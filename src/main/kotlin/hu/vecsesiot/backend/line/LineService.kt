@@ -7,8 +7,8 @@ import hu.vecsesiot.backend.stop.Stop
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.time.LocalDateTime
 import java.time.Duration
+import java.time.LocalDateTime
 
 @Service
 class LineService {
@@ -26,7 +26,7 @@ class LineService {
 		// TODO can this fetch from db
 		for (section in line.route) {
 			if (section.start != stop) {
-				routeTimeToStop += section.timespan;
+				routeTimeToStop += section.timespan
 			}
 		}
 		return routeTimeToStop

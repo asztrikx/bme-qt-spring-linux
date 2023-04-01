@@ -5,15 +5,15 @@ import hu.vecsesiot.backend.stop.GPSCoordinate
 import hu.vecsesiot.backend.user.User
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
-import java.util.*
+import java.time.LocalDateTime
 
 @Entity
 class FaultTicket(
 	@Id
 	@GeneratedValue
-	var id: Long?,
-	var startDate: Date,
-	var resolveDate: Date,
+	var id: Long? = null,
+	var startDate: LocalDateTime,
+	var resolveDate: LocalDateTime? = null,
 	@NotBlank
 	var description: String,
 	var coordinate: GPSCoordinate,

@@ -12,7 +12,7 @@ import java.time.Duration
 class Section(
 	@Id
 	@GeneratedValue
-	var id: Long,
+	var id: Long? = null,
 	// Hibernate solves the mapping to SQL primitives without using @Converter
 	// Disallow negative duration
 	@DurationMin(seconds = 1)
