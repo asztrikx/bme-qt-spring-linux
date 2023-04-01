@@ -16,6 +16,7 @@ class Line(
 	// TODO determine max size
 	@NotBlank
 	@Size(min = 4, max = 50)
+	@Column(unique = true)
 	var name: String,
 ) {
 	@ManyToMany
