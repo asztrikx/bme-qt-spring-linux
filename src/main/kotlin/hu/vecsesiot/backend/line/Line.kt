@@ -3,12 +3,7 @@ package hu.vecsesiot.backend.line
 import hu.vecsesiot.backend.section.Section
 import hu.vecsesiot.backend.stop.Stop
 import hu.vecsesiot.backend.timetable.Timetable
-import jakarta.persistence.CascadeType
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToMany
-import jakarta.persistence.OneToMany
+import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 

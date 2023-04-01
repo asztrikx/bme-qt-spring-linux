@@ -10,19 +10,19 @@ import jakarta.validation.constraints.NotBlank
 // Bus may be temporarily linked to a bus or even to a timetable.
 @Entity
 class Bus(
-    @Id
-    @GeneratedValue
-    var id: Long? = null,
-    @NotBlank
-    @Column(unique = true)
-    var serialnumber: String,
+	@Id
+	@GeneratedValue
+	var id: Long? = null,
+	@NotBlank
+	@Column(unique = true)
+	var serialnumber: String,
 ) {
-    @OneToOne
-    var user: User? = null
+	@OneToOne
+	var user: User? = null
 
-    @OneToOne
-    var timetable: Timetable? = null
+	@OneToOne
+	var timetable: Timetable? = null
 
-    @OneToMany(mappedBy = "bus")
-    lateinit var faultTickets: List<FaultTicket>
+	@OneToMany(mappedBy = "bus")
+	lateinit var faultTickets: List<FaultTicket>
 }

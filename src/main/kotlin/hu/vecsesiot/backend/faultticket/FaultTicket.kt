@@ -9,25 +9,25 @@ import java.time.LocalDateTime
 
 @Entity
 class FaultTicket(
-    @Id
-    @GeneratedValue
-    var id: Long? = null,
-    var startDate: LocalDateTime,
-    var resolveDate: LocalDateTime? = null,
-    @NotBlank
-    var description: String,
-    var coordinate: GPSCoordinate,
-    @Enumerated(EnumType.STRING)
-    var state: State
+	@Id
+	@GeneratedValue
+	var id: Long? = null,
+	var startDate: LocalDateTime,
+	var resolveDate: LocalDateTime? = null,
+	@NotBlank
+	var description: String,
+	var coordinate: GPSCoordinate,
+	@Enumerated(EnumType.STRING)
+	var state: State
 ) {
-    @ManyToOne
-    lateinit var user: User
+	@ManyToOne
+	lateinit var user: User
 
-    // could be a computed value
-    @ManyToOne
-    lateinit var bus: Bus
+	// could be a computed value
+	@ManyToOne
+	lateinit var bus: Bus
 
-    enum class State {
-        Created, InProgress, Resolved
-    }
+	enum class State {
+		Created, InProgress, Resolved
+	}
 }
