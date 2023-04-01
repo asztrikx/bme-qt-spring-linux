@@ -9,12 +9,12 @@ import org.springframework.stereotype.Service
 @Service
 class EmailService {
     @Autowired
-    private val mailSender: JavaMailSender? = null
-    fun sendEmail(to: String?, subject: String?, body: String?) {
+    private lateinit var mailSender: JavaMailSender
+    fun sendEmail(to: String, subject: String, body: String) {
         val message = SimpleMailMessage()
         message.setTo(to)
         message.subject = subject
         message.text = body
-        mailSender!!.send(message)
+        mailSender.send(message)
     }
 }
