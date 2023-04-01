@@ -23,8 +23,23 @@ spring:
     username: sa
     url: jdbc:hsqldb:mem:testdb;DB_CLOSE_DELAY=-1
     password: ''
-logging:
-  level:
-    org:
-      hibernate:
-        type: trace
+  logging:
+    level:
+      org:
+        hibernate:
+          type: trace
+  mail:
+    default-encoding: UTF-8
+    host: sandbox.smtp.mailtrap.io
+    port: 2525
+    username: 5df950739991e4
+    password: d94a6b8397bb70
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+        debug: true
+    protocol: smtp
+    test-connection: false
