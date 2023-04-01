@@ -17,12 +17,14 @@ spring:
   sql:
     init:
       mode: always
-      platform: h2
   datasource:
     driver-class-name: org.hsqldb.jdbc.JDBCDriver
     username: sa
-    url: jdbc:hsqldb:mem:testdb;DB_CLOSE_DELAY=-1
+    url: jdbc:hsqldb:mem:vecsesiot;DB_CLOSE_DELAY=-1
     password: ''
+  session:
+    jdbc:
+      initialize-schema: always
 logging:
   level:
     org:

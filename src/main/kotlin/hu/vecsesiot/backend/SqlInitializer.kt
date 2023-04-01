@@ -54,8 +54,6 @@ class SqlInitializer : ApplicationRunner {
 		val buses = getBuses(users, timetables)
 		val tickets = getFaultTickets(buses)
 
-
-
 		stops.forEach { stopRepository.save(it) }
 		sections.forEach { sectionRepository.save(it) }
 		lines.forEach { lineRepository.save(it) }
@@ -271,16 +269,48 @@ class SqlInitializer : ApplicationRunner {
 	private fun getUsers(): List<User> {
 		return mutableListOf<User>().apply {
 			add(
-				User(username = "Nagy István")
+				User(
+					name = "Nagy István",
+					username = "asd",
+					roles = listOf("User"),
+					// ne spammeljünk domaineket...
+					email = "d",
+					// 123
+					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
+				)
 			)
 			add(
-				User(username = "Gipsz Jakab")
+				User(
+					name = "Gipsz Jakab",
+					username = "asd2",
+					roles = listOf("User"),
+					// ne spammeljünk domaineket...
+					email = "c",
+					// 123
+					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
+				)
 			)
 			add(
-				User(username = "Csetneki Péter")
+				User(
+					name = "Csetneki Péter",
+					username = "asd3",
+					roles = listOf("User"),
+					// ne spammeljünk domaineket...
+					email = "b",
+					// 123
+					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
+				)
 			)
 			add(
-				User(username = "Nagy István")
+				User(
+					name = "Kis István",
+					username = "asd4",
+					roles = listOf("User"),
+					// ne spammeljünk domaineket...
+					email = "a",
+					// 123
+					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
+				)
 			)
 		}
 	}
