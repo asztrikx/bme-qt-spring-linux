@@ -36,7 +36,8 @@ class SecurityConfig {
 			// logout is accessible by default
 			authorizeHttpRequests {
 				// More generale rules here
-				// authorize("/api/**", hasAuthority("Developer"))
+				// TODO refine this
+				authorize("/api/**", hasAuthority("User"))
 			}
 			cors {
 				disable()
