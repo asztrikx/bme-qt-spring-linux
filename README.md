@@ -5,7 +5,7 @@ Csapatnév: VecsésIoT
 Csapattagok Neptun kóddal:
 - Potyók Csaba (OZNVQ4)
 - Rádai Ronald (KBP74E)
-- Vörös Asztrik (WYXJ90)
+- Vörös Asztrik (WYZJ90)
 
 Bemutató videó URL: 
 (Ugye minden olyan dolog szerepel benne a kiírásnak megfelelően, amire pontot szeretnétek kapni?)
