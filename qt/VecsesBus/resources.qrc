@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>FaultTicketForm.qml</file>
+        <file>FaultTicketList.qml</file>
+        <file>FaultTicketDetail.qml</file>
+    </qresource>
+</RCC>
