@@ -4,6 +4,6 @@ import jakarta.persistence.Embeddable
 
 @Embeddable
 class GPSCoordinate(
-	var longitude: Double,
-	var latitude: Double,
+        var latitude: Double,
+        var longitude: Double,
 )
