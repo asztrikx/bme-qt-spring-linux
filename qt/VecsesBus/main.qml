@@ -7,17 +7,18 @@ ApplicationWindow {
     width: 400
     height: 600
     visible: true
+    title: "VecsesIoT"
 
     menuBar: MenuBar {
         Menu {
             title: "Fault ticket"
             MenuItem {
                 text: "List all"
-                onTriggered: stackView.push(faultticketlist.createObject())
+                onTriggered: stackView.push(faultticketlist)
             }
             MenuItem {
                 text: "Create new"
-                onTriggered: stackView.push(faultticketform.createObject())
+                onTriggered: stackView.push(faultticketform)
             }
         }
     }
@@ -31,12 +32,12 @@ ApplicationWindow {
 
             FaultTicketList {
                 onAdd: function() {
-                    stackView.push(faultticketform.createObject());
+                    stackView.push(faultticketform);
                 }
 
                 onSelectedItem: function(item){
                     console.log(item);
-                    stackView.push(faultticketdetail.createObject());
+                    stackView.push(faultticketdetail);
                 }
             }
 
@@ -69,6 +70,6 @@ ApplicationWindow {
             }
         }
 
-        initialItem: faultticketlist.createObject()
+        initialItem: faultticketlist
     }
 }
