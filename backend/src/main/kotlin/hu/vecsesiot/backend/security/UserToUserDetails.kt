@@ -7,9 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails
 
 class UserToUserDetails(val user: User) : UserDetails {
 	// GrantedAuthority is refined to read, write access
-	override fun getAuthorities(): MutableCollection<out GrantedAuthority> {
+	override fun getAuthorities(): Collection<GrantedAuthority> {
 		// sends it to ctor
-		return user.roles.map(::SimpleGrantedAuthority).toMutableList()
+		return user.roles.map(::SimpleGrantedAuthority)
 	}
 
 	override fun getPassword() = user.password
