@@ -10,7 +10,11 @@ ApplicationWindow {
     visible: true
     title: "VecsesIoT"
 
+    property var cookie
+    property var role
+
     menuBar: MenuBar {
+        visible: (app.cookie !== undefined)
         Menu {
             title: "Fault ticket"
             MenuItem {
@@ -20,6 +24,7 @@ ApplicationWindow {
             MenuItem {
                 text: "Create new"
                 onTriggered: stackView.push(faultticketform)
+                enabled: (app.role === "DRIVER")
             }
         }
     }
@@ -33,16 +38,16 @@ ApplicationWindow {
             id: faultticketlist
             FaultTicketList {
 
-                Component.onCompleted: function(){
-                    app.getAllTickets()
-                }
-
                 onAdd: function() {
                     stackView.push(faultticketform);
                 }
 
                 onSelectedItem: function(item){
-                    stackView.push(faultticketdetail, {"fid" : item});
+                    stackView.push(faultticketdetail, {"url" : item});
+                }
+
+                onEditItem: function(item) {
+                    stackView.push(faultticketedit, {"url" : item});
                 }
             }
         }
@@ -51,7 +56,13 @@ ApplicationWindow {
         Component {
             id: faultticketdetail
             FaultTicketDetail {
-                id: detailView
+                onBack: function(){ stackView.pop(); }
+            }
+        }
+
+        Component {
+            id: faultticketedit
+            FaultTicketEdit {
                 onBack: function(){ stackView.pop(); }
             }
         }
@@ -67,9 +78,31 @@ ApplicationWindow {
             }
         }
 
+        Component {
+            id: login
+            Login {
+                onLoggedIn: function() {
+                    stackView.push(faultticketlist)
+                }
+                onSignUp: function() {
+                    stackView.push(signup)
+                }
+            }
+        }
 
+        Component {
+            id: signup
+            SignUp {
+                onSignedUp: function() {
+                    stackView.pop()
+                }
+                onBack: function() {
+                    stackView.pop()
+                }
+            }
 
+        }
 
-        initialItem: faultticketlist
+        initialItem: login
     }
 }
