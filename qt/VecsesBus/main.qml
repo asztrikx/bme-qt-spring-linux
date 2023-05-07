@@ -4,6 +4,7 @@ import QtQuick.Layouts 1.12
 import QtQuick.Window 2.15
 
 ApplicationWindow {
+    id: app
     width: 400
     height: 600
     visible: true
@@ -25,50 +26,49 @@ ApplicationWindow {
 
     StackView {
         id: stackView
-        anchors.fill: parent
+        width: app.width
+        height: app.height
 
         Component {
             id: faultticketlist
-
             FaultTicketList {
+
+                Component.onCompleted: function(){
+                    app.getAllTickets()
+                }
+
                 onAdd: function() {
                     stackView.push(faultticketform);
                 }
 
                 onSelectedItem: function(item){
-                    console.log(item);
-                    stackView.push(faultticketdetail);
-                }
-            }
-
-        }
-
-        Component {
-            id: faultticketform
-
-            FaultTicketForm {
-                onSubmitClicked: function(ticket){
-                    stackView.pop();
-                    console.log(ticket);
+                    stackView.push(faultticketdetail, {"fid" : item});
                 }
             }
         }
+
 
         Component {
             id: faultticketdetail
             FaultTicketDetail {
+                id: detailView
                 onBack: function(){ stackView.pop(); }
-                faultTicket: {
-                    "description": "Engine is broken",
-                    "startDate": "2022.10.22.",
-                    "resolveDate": "-",
-                    "coordinate": "Lon 43.1111 Lat 35.123",
-                    "state": "In Progress",
-                    "user_name": "Aladar Alajos",
-                    "bus_name": "KGF123"
+            }
+        }
+
+
+        Component {
+            id: faultticketform
+            FaultTicketForm {
+
+                onSubmitClicked: function(){
+                    stackView.pop()
                 }
             }
         }
+
+
+
 
         initialItem: faultticketlist
     }

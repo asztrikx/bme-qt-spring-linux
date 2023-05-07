@@ -3,32 +3,33 @@ import QtQuick.Controls 2.15
 
 Item {
     anchors.fill: parent
+
+    property var xhr: new XMLHttpRequest()
+
     property var onAdd
     property var onSelectedItem
 
+    Component.onCompleted: function(){
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                if (xhr.status === 200) {
+                    var responseText = JSON.parse(xhr.responseText)
+                    for (const product of responseText["products"]){
+                        ticketModel.append({
+                                               "pid" : product["id"],
+                                               "title" : product["title"],
+                                               "description" : product["description"]
+                                           })
+                    }
+                }
+            }
+        }
+        xhr.open("GET", "https://dummyjson.com/products/");
+        xhr.send();
+    }
+
     ListModel {
         id: ticketModel
-        ListElement {
-            _id: "1"
-            startDate: "2022.10.11."
-            resolveDate: "2023.01.01."
-            description: "Ticket 1"
-            state: 2
-        }
-        ListElement {
-            _id: "2"
-            startDate: "2023.10.11."
-            resolveDate: ""
-            description: "Ticket 2"
-            state: 0
-        }
-        ListElement {
-            _id: "3"
-            startDate: "2022.12.11."
-            resolveDate: "2023.01.11."
-            description: "Ticket 3"
-            state: 2
-        }
     }
 
     ListView {
@@ -43,15 +44,17 @@ Item {
             border.color: "gray"
 
             Text {
-                text: description
+                text: title
+                width: parent.width - 20
                 anchors.verticalCenter: parent.verticalCenter
                 anchors.left: parent.left
                 anchors.leftMargin: 10
+                anchors.rightMargin: 10
             }
             MouseArea {
                 anchors.fill: parent
                 onClicked: function(){
-                    onSelectedItem(_id);
+                    onSelectedItem(pid);
                 }
             }
         }

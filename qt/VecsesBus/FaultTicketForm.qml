@@ -4,6 +4,9 @@ import QtQuick.Controls 2.15
 
 Item {
     anchors.fill: parent
+
+    property var xhr: new XMLHttpRequest()
+
     property var onSubmitClicked
 
     Rectangle {
@@ -67,11 +70,11 @@ Item {
                                 "latitude": latField.text,
                                 "longitude": longField.text
                             },
-                            "state": stateComboBox.currentText,
+                            "state": 0,
                             "startDate": startDateField.text
                         }
                         if (onSubmitClicked !== undefined) {
-                            onSubmitClicked(newTicket);
+                            onSubmitClicked();
                         }
                     }
                 }
