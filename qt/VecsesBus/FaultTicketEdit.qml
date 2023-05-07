@@ -17,7 +17,7 @@ Rectangle {
                     descriptionLabel.text = "Description: " + responseText["description"]
                     startDateLabel.text = "Description: " + responseText["startDate"]
                     resolveDateLabel.text = "Description: " + responseText["resolveDate"]
-                    stateLabel.text = "Description: " + responseText["state"]
+                    stateLabel.currentIndex = parseInt(responseText["state"])
                     coordinateLabel.text = "Description: " + responseText["coordinate"]["latitude"] + ", " + responseText["coordinate"]["longitude"]
                 }
             }
@@ -35,7 +35,7 @@ Rectangle {
         width: parent.width * 0.8
 
         Label {
-            text: "Fault Ticket Details"
+            text: "Fault Ticket Edit"
             font.bold: true
             font.pixelSize: 24
         }
@@ -62,10 +62,12 @@ Rectangle {
             text: "Coordinates: -"
         }
 
-        Label {
+        ComboBox {
             id: stateLabel
-            text: "State: -"
+            model: ["Created", "In Progress", "Resolved"]
+            currentIndex: 0
         }
+
         /*
         Label {
             text: "User: " + faultTicket.user_name
@@ -74,11 +76,25 @@ Rectangle {
         Label {
             text: "Bus: " + faultTicket.bus_name
         }*/
+        Row {
+            spacing: 10
+            Button{
+                text: "Back"
+                font.pixelSize: 16
+                onClicked: onBack()
+            }
 
-        Button{
-            text: "Back"
-            font.pixelSize: 16
-            onClicked: onBack()
+            Button{
+                text: "Save"
+                font.pixelSize: 16
+                onClicked: onBack()
+            }
+
+            Button{
+                text: "Delete"
+                font.pixelSize: 16
+                onClicked: onBack()
+            }
         }
     }
 }

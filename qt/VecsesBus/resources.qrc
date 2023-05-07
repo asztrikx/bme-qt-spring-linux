@@ -9,5 +9,8 @@
         <file>image/bus.png</file>
         <file>image/location.png</file>
         <file>image/station.png</file>
+	    <file>FaultTicketEdit.qml</file>
+        <file>Login.qml</file>
+        <file>SignUp.qml</file>
     </qresource>
 </RCC>

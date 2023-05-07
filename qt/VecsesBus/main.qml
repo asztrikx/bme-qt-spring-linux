@@ -4,12 +4,17 @@ import QtQuick.Layouts 1.12
 import QtQuick.Window 2.15
 
 ApplicationWindow {
+    id: app
     width: 400
     height: 600
     visible: true
     title: "VecsesIoT"
 
+    property var cookie
+    property var role
+
     menuBar: MenuBar {
+        visible: (app.cookie !== undefined)
         Menu {
             title: "Fault ticket"
             MenuItem {
@@ -19,6 +24,7 @@ ApplicationWindow {
             MenuItem {
                 text: "Create new"
                 onTriggered: stackView.push(faultticketform)
+                enabled: (app.role === "DRIVER")
             }
         }
         Menu {
@@ -32,49 +38,76 @@ ApplicationWindow {
 
     StackView {
         id: stackView
-        anchors.fill: parent
+        width: app.width
+        height: app.height
 
         Component {
             id: faultticketlist
-
             FaultTicketList {
+
                 onAdd: function() {
                     stackView.push(faultticketform);
                 }
 
                 onSelectedItem: function(item){
-                    console.log(item);
-                    stackView.push(faultticketdetail);
+                    stackView.push(faultticketdetail, {"url" : item});
                 }
-            }
 
-        }
-
-        Component {
-            id: faultticketform
-
-            FaultTicketForm {
-                onSubmitClicked: function(ticket){
-                    stackView.pop();
-                    console.log(ticket);
+                onEditItem: function(item) {
+                    stackView.push(faultticketedit, {"url" : item});
                 }
             }
         }
+
 
         Component {
             id: faultticketdetail
             FaultTicketDetail {
                 onBack: function(){ stackView.pop(); }
-                faultTicket: {
-                    "description": "Engine is broken",
-                    "startDate": "2022.10.22.",
-                    "resolveDate": "-",
-                    "coordinate": "Lon 43.1111 Lat 35.123",
-                    "state": "In Progress",
-                    "user_name": "Aladar Alajos",
-                    "bus_name": "KGF123"
+            }
+        }
+
+        Component {
+            id: faultticketedit
+            FaultTicketEdit {
+                onBack: function(){ stackView.pop(); }
+            }
+        }
+
+
+        Component {
+            id: faultticketform
+            FaultTicketForm {
+
+                onSubmitClicked: function(){
+                    stackView.pop()
                 }
             }
+        }
+
+        Component {
+            id: login
+            Login {
+                onLoggedIn: function() {
+                    stackView.push(faultticketlist)
+                }
+                onSignUp: function() {
+                    stackView.push(signup)
+                }
+            }
+        }
+
+        Component {
+            id: signup
+            SignUp {
+                onSignedUp: function() {
+                    stackView.pop()
+                }
+                onBack: function() {
+                    stackView.pop()
+                }
+            }
+
         }
 
         Component {
@@ -83,6 +116,6 @@ ApplicationWindow {
             }
         }
 
-        initialItem: faultticketlist
+        initialItem: login
     }
 }
