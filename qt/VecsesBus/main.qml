@@ -21,6 +21,13 @@ ApplicationWindow {
                 onTriggered: stackView.push(faultticketform)
             }
         }
+        Menu {
+            title: "Map"
+            MenuItem {
+                text: "Show"
+                onTriggered: stackView.push(map)
+            }
+        }
     }
 
     StackView {
@@ -67,6 +74,12 @@ ApplicationWindow {
                     "user_name": "Aladar Alajos",
                     "bus_name": "KGF123"
                 }
+            }
+        }
+
+        Component {
+            id: map
+            BusMap {
             }
         }
 

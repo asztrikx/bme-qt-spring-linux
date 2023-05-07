@@ -4,5 +4,10 @@
         <file>FaultTicketForm.qml</file>
         <file>FaultTicketList.qml</file>
         <file>FaultTicketDetail.qml</file>
+        <file>BusMap.qml</file>
+        <file>image/broken.png</file>
+        <file>image/bus.png</file>
+        <file>image/location.png</file>
+        <file>image/station.png</file>
     </qresource>
 </RCC>
