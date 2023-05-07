@@ -38,6 +38,7 @@ class SecurityConfig {
 				// More generale rules here
 				// TODO refine this
 				authorize("/api/**", hasAuthority("User"))
+				authorize("/**", hasAuthority("User"))
 			}
 			cors {
 				disable()
