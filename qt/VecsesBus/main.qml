@@ -12,9 +12,6 @@ ApplicationWindow {
 
     property string actualView: "login"
 
-    signal getAllTickets()
-    signal getTicketById(string url)
-
     property var role
 
     menuBar: MenuBar {
@@ -42,7 +39,11 @@ ApplicationWindow {
 
     FaultTicketList {
         visible: actualView === "faultticketlist"
+
         objectName: "faultticketlist"
+        signal getAllTickets()
+        signal getTicketById(string url)
+
         onAdd: function() {
             actualView = "faultticketform"
         }
@@ -50,13 +51,13 @@ ApplicationWindow {
         onSelectedItem: function(item){
             actualView = "faultticketdetail"
             //stackView.push(faultticketdetail, {enableEdit: false});
-            app.getTicketById(item)
+            getTicketById(item)
         }
 
         onEditItem: function(item) {
             actualView = "faultticketdetail"
             //stackView.push(faultticketdetail, {enableEdit: true});
-            app.getTicketById(item)
+            getTicketById(item)
         }
     }
 

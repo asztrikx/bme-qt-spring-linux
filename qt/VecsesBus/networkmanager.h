@@ -4,30 +4,25 @@
 
 
 #include <QObject>
-#include <QNetworkAccessManager>
 #include <QList>
-#include <QNetworkCookieJar>
+#include <QNetworkAccessManager>
 #include <QNetworkCookie>
-
+#include <QNetworkCookieJar>
 
 class NetworkManager : public QObject
 {
     Q_OBJECT
 public:
     NetworkManager(QObject* rootObject);
-public slots:
-    void getAllFaultTicketsHandler();
-    void getFaultTicketByIdHandler(QString url);
-
-    void responseAllFaultTicketsHandler();
-    void responseFaultTicketByIdHandler();
-
-private:
+    static void setCookie(QString value) { cookie = value; }
+    void setupCookie(QUrl url);
+protected:
     QObject* rootObject;
     QNetworkAccessManager mgr;
     QNetworkReply* reply;
     QNetworkCookieJar cookieJar;
     QList<QNetworkCookie> cookies;
+    static QString cookie;
 };
 
 #endif // NETWORKMANAGER_H

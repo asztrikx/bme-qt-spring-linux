@@ -27,7 +27,7 @@ Item {
 
     onVisibleChanged: () => {
         if (!visible) return;
-        app.getAllTickets()
+        getAllTickets()
     }
 
     ListModel {
