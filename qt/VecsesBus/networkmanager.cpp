@@ -14,7 +14,6 @@ NetworkManager::NetworkManager(QObject* rootObject): QObject(nullptr), rootObjec
     QObject::connect(rootObject, SIGNAL(getTicketById(QString)), this, SLOT(getFaultTicketByIdHandler(QString)));
     mgr.setCookieJar(&cookieJar);
     cookies.append(QNetworkCookie("SESSION", "MDM0NmJjNDctNWFkNS00YjA4LTlkNGItYzYzNWQxZGIxYjYw"));
-
 }
 
 void NetworkManager::getAllFaultTicketsHandler()

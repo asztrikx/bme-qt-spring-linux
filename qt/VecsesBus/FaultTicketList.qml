@@ -10,7 +10,7 @@ Item {
     property var onEditItem
 
     property var tickets
-    onTicketsChanged: function(){
+    onTicketsChanged: () => {
         if(!tickets["_embedded"]) return;
         ticketModel.clear()
         for (const ticket of tickets["_embedded"]["faultTickets"]){
@@ -25,7 +25,8 @@ Item {
         }
     }
 
-    Component.onCompleted: function(){
+    onVisibleChanged: () => {
+        if (!visible) return;
         app.getAllTickets()
     }
 

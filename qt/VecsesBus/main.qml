@@ -10,6 +10,8 @@ ApplicationWindow {
     visible: true
     title: "VecsesIoT"
 
+    property string actualView: "login"
+
     signal getAllTickets()
     signal getTicketById(string url)
 
@@ -21,11 +23,11 @@ ApplicationWindow {
             title: "Fault ticket"
             MenuItem {
                 text: "List all"
-                onTriggered: stackView.push(faultticketlist)
+                onTriggered: { actualView = "faultticketlist" }
             }
             MenuItem {
                 text: "Create new"
-                onTriggered: stackView.push(faultticketform)
+                onTriggered: { actualView = "faultticketform" }
                 enabled: (app.role === "DRIVER")
             }
         }
@@ -33,88 +35,86 @@ ApplicationWindow {
             title: "Map"
             MenuItem {
                 text: "Show"
-                onTriggered: stackView.push(map)
+                onTriggered: { actualView = "map" }
             }
         }
     }
 
-    StackView {
+    FaultTicketList {
+        visible: actualView === "faultticketlist"
+        objectName: "faultticketlist"
+        onAdd: function() {
+            actualView = "faultticketform"
+        }
+
+        onSelectedItem: function(item){
+            actualView = "faultticketdetail"
+            //stackView.push(faultticketdetail, {enableEdit: false});
+            app.getTicketById(item)
+        }
+
+        onEditItem: function(item) {
+            actualView = "faultticketdetail"
+            //stackView.push(faultticketdetail, {enableEdit: true});
+            app.getTicketById(item)
+        }
+    }
+
+
+
+    FaultTicketDetail {
+        visible: actualView === "faultticketdetail"
+        objectName: "faultticketdetail"
+        onBack: function(){ actualView = "faultticketlist" }
+    }
+
+
+
+
+    FaultTicketForm {
+        visible: actualView === "faultticketform"
+        onSubmitClicked: function(){
+            actualView = "faultticketlist"
+        }
+    }
+
+
+
+    Login {
+        visible: (actualView === "login")
+        onLoggedIn: function() {
+            actualView = "faultticketlist"
+        }
+        onSignUp: function() {
+            actualView = "signup"
+        }
+    }
+
+
+    SignUp {
+        visible: actualView === "signup"
+        onSignedUp: function() {
+            actualView = "login"
+        }
+        onBack: function() {
+            actualView = "login"
+        }
+    }
+
+
+    /*StackView {
         id: stackView
         width: app.width
         height: app.height
 
-        Component {
-            id: faultticketlist
-            FaultTicketList {
-                objectName: "faultticketlist"
-                onAdd: function() {
-                    stackView.push(faultticketform);
-                }
-
-                onSelectedItem: function(item){
-                    stackView.push(faultticketdetail, {enableEdit: false});
-                    app.getTicketById(item)
-                }
-
-                onEditItem: function(item) {
-                    stackView.push(faultticketdetail, {enableEdit: true});
-                    app.getTicketById(item)
-                }
-            }
-        }
 
 
         Component {
-            id: faultticketdetail
-            FaultTicketDetail {
-                objectName: "faultticketdetail"
-                onBack: function(){ stackView.pop(); }
-            }
-        }
-
-
-
-        Component {
-            id: faultticketform
-            FaultTicketForm {
-
-                onSubmitClicked: function(){
-                    stackView.pop()
-                }
-            }
-        }
-
-        Component {
-            id: login
-            Login {
-                onLoggedIn: function() {
-                    stackView.push(faultticketlist)
-                }
-                onSignUp: function() {
-                    stackView.push(signup)
-                }
-            }
-        }
-
-        Component {
-            id: signup
-            SignUp {
-                onSignedUp: function() {
-                    stackView.pop()
-                }
-                onBack: function() {
-                    stackView.pop()
-                }
-            }
-
-        }
-
-        /*Component {
             id: map
             BusMap {
             }
-        }*/
+        }
 
         initialItem: login
-    }
+    }*/
 }

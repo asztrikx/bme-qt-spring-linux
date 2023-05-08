@@ -6,7 +6,6 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-    property var xhr: new XMLHttpRequest()
 
     property var onLoggedIn
     property var onSignUp

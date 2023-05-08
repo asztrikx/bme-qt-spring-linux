@@ -6,7 +6,6 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-    property var xhr: new XMLHttpRequest()
 
     property var onSignedUp
     property var onBack
@@ -21,7 +20,7 @@ Item {
             anchors.centerIn: parent
 
             Label {
-                text: "Login"
+                text: "Sign Up"
                 font.bold: true
                 font.pixelSize: 24
             }
