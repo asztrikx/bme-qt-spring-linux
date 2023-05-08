@@ -5,63 +5,32 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-    property var xhr: new XMLHttpRequest()
-
     property var onAdd
     property var onSelectedItem
     property var onEditItem
 
-    Component.onCompleted: function(){
-        console.log(app.cookie)
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    console.log(xhr.responseText)
-                    var responseText = JSON.parse(xhr.responseText)
-                    for (const ticket of responseText["_embedded"]["faultTickets"]){
-                        ticketModel.append({
-                                               "startDate" : ticket["startDate"],
-                                               "resolveDate" : ticket["resolveDate"],
-                                               "description" : ticket["description"],
-                                               "coordinate" : ticket["coordinate"],
-                                               "state" : ticket["startDate"],
-                                               "url" : ticket["_links"]["self"]["href"]
-                                           })
-                    }
-                }
-            }
+    property var tickets
+    onTicketsChanged: function(){
+        if(!tickets["_embedded"]) return;
+        ticketModel.clear()
+        for (const ticket of tickets["_embedded"]["faultTickets"]){
+            ticketModel.append({
+                                   "startDate" : ticket["startDate"],
+                                   "resolveDate" : (!ticket["resolveDate"]) ? "" : ticket["resolveDate"],
+                                   "description" : ticket["description"],
+                                   "coordinate" : ticket["coordinate"],
+                                   "_state" : ticket["state"],
+                                   "url" : ticket["_links"]["self"]["href"]
+                               })
         }
-        xhr.open("GET", "http://localhost:8080/api/faultTickets/", true);
-        //xhr.setRequestHeader('Cookie', 'SESSION=Njc1ZjI0MDctYTQ2Ny00YjdlLThlNjYtOTU3ZjkwNTAwODEy');
-        xhr.send();
+    }
+
+    Component.onCompleted: function(){
+        app.getAllTickets()
     }
 
     ListModel {
         id: ticketModel
-        ListElement{
-            startDate : "2022.10.12."
-            resolveDate : "-"
-            description : "Engine is broken"
-            coordinate : '{"latitude" : 43.11, "longitude" : 34.45}'
-            _state : 2
-            url : "http://example.com"
-        }
-        ListElement{
-            startDate : "2022.10.12."
-            resolveDate : "-"
-            description : "Engine is broken 3"
-            coordinate : '{"latitude" : 43.11, "longitude" : 34.45}'
-            _state : 1
-            url : "http://example.com"
-        }
-        ListElement{
-            startDate : "2022.10.12."
-            resolveDate : "-"
-            description : "Engine is broken 2"
-            coordinate : '{"latitude" : 43.11, "longitude" : 34.45}'
-            _state : 0
-            url : "http://example.com"
-        }
     }
 
     ListView {
@@ -89,11 +58,19 @@ Item {
                 leftPadding: 10
                 rightPadding: 10
 
-                Text {
-                    id: descriptionText
+                Column{
                     width: parent.width * 0.6
                     anchors.verticalCenter: parent.verticalCenter
-                    text: description + " (" + startDate + ")"
+                    Text {
+                        id: descriptionText
+                        text: description
+                        elide: Text.ElideRight
+                        width: parent.width
+                    }
+                    Text {
+                        id: dateText
+                        text: "(" + startDate + ")"
+                    }
                 }
 
                 Canvas {
@@ -106,7 +83,7 @@ Item {
                         ctx.clearRect(0, 0, width, height)
                         ctx.beginPath()
                         ctx.arc(12, 12, 10, 0, 2 * Math.PI)
-                        ctx.fillStyle = ((_state === 0) ? "red" : ((_state === 1) ? "yellow" : "green"))
+                        ctx.fillStyle = ((_state === "Created") ? "red" : ((_state === "Resolved") ? "green" : "yellow"))
                         ctx.fill()
                         ctx.stroke()
                     }

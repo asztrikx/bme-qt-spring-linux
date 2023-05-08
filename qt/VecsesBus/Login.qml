@@ -46,7 +46,6 @@ Item {
                 font.pixelSize: 16
                 onClicked: {
                     if (onLoggedIn !== undefined) {
-                        app.cookie = "SESSION=1233"
                         app.role = "DRIVER"
                         onLoggedIn();
                     }

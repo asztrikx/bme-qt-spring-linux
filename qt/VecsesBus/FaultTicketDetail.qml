@@ -6,25 +6,17 @@ Rectangle {
     anchors.fill: parent
     color: "white"
 
-    property var xhr: new XMLHttpRequest()
+    property bool enableEdit: false
+    property var ticket
+    onTicketChanged: function() {
+        if (!ticket) return;
+        descriptionLabel.text = "Description: " + ticket["description"]
+        startDateLabel.text = "Description: " + ticket["startDate"]
+        resolveDateLabel.text = "Description: " + (!ticket["resolveDate"]) ? ticket["resolveDate"] : "-"
+        coordinateLabel.text = "Description: " + ticket["coordinate"]["latitude"] + ", " + ticket["coordinate"]["longitude"]
+        if(!enableEdit) stateLabel.text = "Description: " + ticket["state"]
+        else stateLabelBox.currentIndex = ((ticket["state"] === "Created") ? 0 : ((ticket["state"] === "Resolved") ? 2 : 1))
 
-    property var url
-    onUrlChanged: function() {
-        xhr.onreadystatechange = function() {
-            if (xhr.readyState === XMLHttpRequest.DONE) {
-                if (xhr.status === 200) {
-                    var responseText = JSON.parse(xhr.responseText)
-                    descriptionLabel.text = "Description: " + responseText["description"]
-                    startDateLabel.text = "Description: " + responseText["startDate"]
-                    resolveDateLabel.text = "Description: " + responseText["resolveDate"]
-                    stateLabel.text = "Description: " + responseText["state"]
-                    coordinateLabel.text = "Description: " + responseText["coordinate"]["latitude"] + ", " + responseText["coordinate"]["longitude"]
-                }
-            }
-        }
-        xhr.open("GET", url, true);
-        //xhr.setRequestHeader('Cookie', 'SESSION=Njc1ZjI0MDctYTQ2Ny00YjdlLThlNjYtOTU3ZjkwNTAwODEy');
-        xhr.send();
     }
     property var onBack
 
@@ -65,6 +57,14 @@ Rectangle {
         Label {
             id: stateLabel
             text: "State: -"
+            visible: !enableEdit
+        }
+
+        ComboBox {
+            id: stateLabelBox
+            model: ["Created", "In Progress", "Resolved"]
+            currentIndex: 0
+            visible: enableEdit
         }
         /*
         Label {

@@ -10,11 +10,13 @@ ApplicationWindow {
     visible: true
     title: "VecsesIoT"
 
-    property var cookie
+    signal getAllTickets()
+    signal getTicketById(string url)
+
     property var role
 
     menuBar: MenuBar {
-        visible: (app.cookie !== undefined)
+        visible: (app.role !== undefined)
         Menu {
             title: "Fault ticket"
             MenuItem {
@@ -44,17 +46,19 @@ ApplicationWindow {
         Component {
             id: faultticketlist
             FaultTicketList {
-
+                objectName: "faultticketlist"
                 onAdd: function() {
                     stackView.push(faultticketform);
                 }
 
                 onSelectedItem: function(item){
-                    stackView.push(faultticketdetail, {"url" : item});
+                    stackView.push(faultticketdetail, {enableEdit: false});
+                    app.getTicketById(item)
                 }
 
                 onEditItem: function(item) {
-                    stackView.push(faultticketedit, {"url" : item});
+                    stackView.push(faultticketdetail, {enableEdit: true});
+                    app.getTicketById(item)
                 }
             }
         }
@@ -63,16 +67,11 @@ ApplicationWindow {
         Component {
             id: faultticketdetail
             FaultTicketDetail {
+                objectName: "faultticketdetail"
                 onBack: function(){ stackView.pop(); }
             }
         }
 
-        Component {
-            id: faultticketedit
-            FaultTicketEdit {
-                onBack: function(){ stackView.pop(); }
-            }
-        }
 
 
         Component {
@@ -110,11 +109,11 @@ ApplicationWindow {
 
         }
 
-        Component {
+        /*Component {
             id: map
             BusMap {
             }
-        }
+        }*/
 
         initialItem: login
     }
