@@ -50,13 +50,13 @@ ApplicationWindow {
 
         onSelectedItem: function(item){
             actualView = "faultticketdetail"
-            //stackView.push(faultticketdetail, {enableEdit: false});
+            faultticketdetail.enableEdit = false;
             getTicketById(item)
         }
 
         onEditItem: function(item) {
             actualView = "faultticketdetail"
-            //stackView.push(faultticketdetail, {enableEdit: true});
+            faultticketdetail.enableEdit = true;
             getTicketById(item)
         }
     }
@@ -64,6 +64,7 @@ ApplicationWindow {
 
 
     FaultTicketDetail {
+        id: faultticketdetail
         visible: actualView === "faultticketdetail"
         objectName: "faultticketdetail"
         onBack: function(){ actualView = "faultticketlist" }
@@ -74,6 +75,7 @@ ApplicationWindow {
 
     FaultTicketForm {
         visible: actualView === "faultticketform"
+        objectName: "faultticketform"
         onSubmitClicked: function(){
             actualView = "faultticketlist"
         }

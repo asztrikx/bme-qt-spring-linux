@@ -6,8 +6,7 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-    property var xhr: new XMLHttpRequest()
-
+    signal createTicket(var ticket)
     property var onSubmitClicked
 
     Rectangle {
@@ -49,15 +48,6 @@ Item {
                 }
             }
 
-            Row {
-                width: parent.width
-                TextField {
-                    id: startDateField
-                    width: parent.width
-                    placeholderText: "Start Date"
-                    font.pixelSize: 16
-                }
-            }
 
             Row {
                 width: parent.width
@@ -72,9 +62,11 @@ Item {
                                 "longitude": longField.text
                             },
                             "state": 0,
-                            "startDate": startDateField.text
+                            "startDate": new Date(),
+                            "resolvedDate": null
                         }
                         if (onSubmitClicked !== undefined) {
+                            createTicket(JSON.stringify(newTicket));
                             onSubmitClicked();
                         }
                     }

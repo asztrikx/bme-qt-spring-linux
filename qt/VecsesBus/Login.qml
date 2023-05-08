@@ -45,7 +45,7 @@ Item {
                 font.pixelSize: 16
                 onClicked: {
                     if (onLoggedIn !== undefined) {
-                        app.role = "DRIVER"
+                        app.role = "MAINTENANCE"
                         onLoggedIn();
                     }
                 }

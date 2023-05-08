@@ -11,9 +11,17 @@ public:
 public slots:
     void getAllFaultTicketsHandler();
     void getFaultTicketByIdHandler(QString url);
+    void createFaultTicketHandler(QVariant ticket);
+    void saveFaultTicketHandler(QVariant ticket, QString url);
+    void deleteFaultTicketHandler(QString url);
 
     void responseAllFaultTicketsHandler();
     void responseFaultTicketByIdHandler();
+    void responseCreateFaultTicketHandler();
+    void responseSaveFaultTicketHandler();
+    void responseDeleteFaultTicketHandler();
+
+
 };
 
 #endif // FAULTTICKETMANAGER_H
