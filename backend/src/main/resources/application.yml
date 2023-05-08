@@ -45,3 +45,7 @@ logging:
     org:
       hibernate:
         type: trace
+server:
+  servlet:
+    session:
+      timeout: 21900m
