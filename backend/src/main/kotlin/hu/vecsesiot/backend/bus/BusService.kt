@@ -13,15 +13,4 @@ import kotlin.jvm.optionals.getOrNull
 class BusService {
 	@Autowired
 	private lateinit var busRepository: BusRepository
-
-	@Transactional
-	fun getAllFaultTickets(id: Long): List<FaultTicket>? {
-		return busRepository.findById(id).getOrNull()
-			?.faultTickets
-	}
-
-	fun getTimeTable(id: Long): Timetable? {
-		return busRepository.findById(id).getOrNull()
-			?.timetable
-	}
 }
