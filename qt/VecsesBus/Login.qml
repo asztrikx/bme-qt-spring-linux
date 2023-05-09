@@ -6,9 +6,11 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-
-    property var onLoggedIn
-    property var onSignUp
+    signal login(string username, string password)
+    function handleError(msg) {
+        errorText.text = msg;
+        errorText.visible = true;
+    }
 
     Rectangle {
         width: parent.width
@@ -40,14 +42,21 @@ Item {
                 echoMode: TextInput.Password
             }
 
+            Text {
+                id: errorText
+                width: parent.width
+                text: "No error"
+                font.pixelSize: 16
+                color: Material.accent
+                visible: false
+            }
+
             Button {
                 text: "Submit"
                 font.pixelSize: 16
                 onClicked: {
-                    if (onLoggedIn !== undefined) {
-                        app.role = "MAINTENANCE"
-                        onLoggedIn();
-                    }
+                    errorText.visible = false;
+                    login(usernameField.text, passwordField.text);
                 }
             }
 
@@ -55,7 +64,7 @@ Item {
                 text: "Don't have an account yet? Create one"
                 font.pixelSize: 12
                 font.family: "Roboto"
-                color: Material.accent
+                color: "blue"
 
                 MouseArea {
                     anchors.fill: parent
@@ -71,9 +80,7 @@ Item {
                     }
 
                     onClicked: {
-                        if(onSignUp !== undefined){
-                            onSignUp()
-                        }
+                        onSignUp()
                     }
                 }
             }

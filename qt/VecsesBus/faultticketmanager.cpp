@@ -22,7 +22,7 @@ void FaultTicketManager::getAllFaultTicketsHandler()
 {
     QUrl url = QUrl("http://localhost:8080/api/faultTickets");
     QNetworkRequest request(url);
-    setupCookie(url);
+    setAuthHeader(request);
     reply = mgr.get(request);
     QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseAllFaultTicketsHandler()));
 }
@@ -40,7 +40,7 @@ void FaultTicketManager::getFaultTicketByIdHandler(QString url)
 {
     QUrl qurl = QUrl(url);
     QNetworkRequest request(qurl);
-    setupCookie(qurl);
+    setAuthHeader(request);
     reply = mgr.get(request);
     QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseFaultTicketByIdHandler()));
 }
@@ -55,12 +55,11 @@ void FaultTicketManager::responseFaultTicketByIdHandler()
 
 void FaultTicketManager::saveFaultTicketHandler(QVariant ticket, QString url)
 {
-    qDebug() << url;
     QByteArray data = ticket.toByteArray();
     QUrl qurl = QUrl(url);
     QNetworkRequest request(qurl);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    setupCookie(qurl);
+    setAuthHeader(request);
     reply = mgr.put(request, data);
     QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseSaveFaultTicketHandler()));
 }
@@ -68,14 +67,15 @@ void FaultTicketManager::deleteFaultTicketHandler(QString url)
 {
     QUrl qurl = QUrl(url);
     QNetworkRequest request(qurl);
-    setupCookie(qurl);
+    setAuthHeader(request);
     reply = mgr.deleteResource(request);
     QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseDeleteFaultTicketHandler()));
 }
 
 void FaultTicketManager::responseSaveFaultTicketHandler()
 {
-    qDebug() << reply->readAll();
+    QQuickItem* ticketDetail = rootObject->findChild<QQuickItem*>("faultticketdetail");
+    QMetaObject::invokeMethod(ticketDetail, "onBack");
 }
 
 void FaultTicketManager::responseDeleteFaultTicketHandler(){
@@ -88,7 +88,7 @@ void FaultTicketManager::createFaultTicketHandler(QVariant ticket){
     QUrl url = QUrl("http://localhost:8080/api/faultTickets");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
-    setupCookie(url);
+    setAuthHeader(request);
     reply = mgr.post(request, data);
     QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseCreateFaultTicketHandler()));
 }

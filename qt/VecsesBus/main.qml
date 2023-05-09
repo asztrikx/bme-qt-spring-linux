@@ -13,6 +13,7 @@ ApplicationWindow {
     property string actualView: "login"
 
     property var role
+    property var userData
 
     menuBar: MenuBar {
         visible: (app.role !== undefined)
@@ -101,11 +102,13 @@ ApplicationWindow {
 
 
     Login {
+        objectName: "login"
         visible: (actualView === "login")
-        onLoggedIn: function() {
+        function onLoggedIn() {
+            app.role = "MAINTENANCE"
             actualView = "faultticketlist"
         }
-        onSignUp: function() {
+        function onSignUp() {
             actualView = "signup"
         }
     }
@@ -113,10 +116,10 @@ ApplicationWindow {
 
     SignUp {
         visible: actualView === "signup"
-        onSignedUp: function() {
+        function onSignedUp() {
             actualView = "login"
         }
-        onBack: function() {
+        function onBack() {
             actualView = "login"
         }
     }

@@ -6,23 +6,19 @@
 #include <QObject>
 #include <QList>
 #include <QNetworkAccessManager>
-#include <QNetworkCookie>
-#include <QNetworkCookieJar>
 
 class NetworkManager : public QObject
 {
     Q_OBJECT
 public:
     NetworkManager(QObject* rootObject);
-    static void setCookie(QString value) { cookie = value; }
-    void setupCookie(QUrl url);
+    static void setAuth(QString value) { auth = value.toUtf8().toBase64(); }
+    void setAuthHeader(QNetworkRequest& request);
 protected:
     QObject* rootObject;
     QNetworkAccessManager mgr;
     QNetworkReply* reply;
-    QNetworkCookieJar cookieJar;
-    QList<QNetworkCookie> cookies;
-    static QString cookie;
+    static QByteArray auth;
 };
 
 #endif // NETWORKMANAGER_H

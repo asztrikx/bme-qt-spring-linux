@@ -1,7 +1,7 @@
 #include <QApplication>
 #include <QQmlApplicationEngine>
 #include "faultticketmanager.h"
-
+#include "loginmanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,5 +10,6 @@ int main(int argc, char *argv[])
     engine.load(QUrl(QStringLiteral("qrc:/main.qml")));
     QObject* root = engine.rootObjects()[0];
     FaultTicketManager ftmgr(root);
+    LoginManager lmgr(root);
     return app.exec();
 }
