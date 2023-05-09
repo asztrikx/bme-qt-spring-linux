@@ -13,7 +13,7 @@ class JpaUserDetailsService : UserDetailsService {
 	private lateinit var userRepository: UserRepository
 
 	override fun loadUserByUsername(username: String): UserDetails {
-		val user = userRepository.findByUsername(username)
+		val user = userRepository.findUserByUsername(username)
 		user ?: throw UsernameNotFoundException(username)
 		return UserToUserDetails(user)
 	}

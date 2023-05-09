@@ -1,14 +1,17 @@
 package hu.vecsesiot.backend.user
 
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.security.crypto.password.PasswordEncoder
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 
 
 @RestController
 @RequestMapping("/users")
 class UserController {
+
+	@Autowired
+	private lateinit var userService: UserService
+
+
 	// TODO dto for registration
 	/*
 	@Autowired

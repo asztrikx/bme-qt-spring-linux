@@ -6,10 +6,6 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-
-    property var onSignedUp
-    property var onBack
-
     Rectangle {
         width: parent.width
         height: parent.height
@@ -57,9 +53,7 @@ Item {
                     text: "Submit"
                     font.pixelSize: 16
                     onClicked: {
-                        if (onSignedUp !== undefined) {
-                            onSignedUp();
-                        }
+                        onSignedUp();
                     }
                 }
 
@@ -67,9 +61,7 @@ Item {
                     text: "Back"
                     font.pixelSize: 16
                     onClicked: {
-                        if (onBack !== undefined) {
-                            onBack();
-                        }
+                        onBack();
                     }
                 }
             }

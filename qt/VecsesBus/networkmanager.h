@@ -4,30 +4,21 @@
 
 
 #include <QObject>
-#include <QNetworkAccessManager>
 #include <QList>
-#include <QNetworkCookieJar>
-#include <QNetworkCookie>
-
+#include <QNetworkAccessManager>
 
 class NetworkManager : public QObject
 {
     Q_OBJECT
 public:
     NetworkManager(QObject* rootObject);
-public slots:
-    void getAllFaultTicketsHandler();
-    void getFaultTicketByIdHandler(QString url);
-
-    void responseAllFaultTicketsHandler();
-    void responseFaultTicketByIdHandler();
-
-private:
+    static void setAuth(QString value) { auth = value.toUtf8().toBase64(); }
+    void setAuthHeader(QNetworkRequest& request);
+protected:
     QObject* rootObject;
     QNetworkAccessManager mgr;
     QNetworkReply* reply;
-    QNetworkCookieJar cookieJar;
-    QList<QNetworkCookie> cookies;
+    static QByteArray auth;
 };
 
 #endif // NETWORKMANAGER_H

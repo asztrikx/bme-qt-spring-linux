@@ -12,10 +12,8 @@ ApplicationWindow {
 
     property string actualView: "login"
 
-    signal getAllTickets()
-    signal getTicketById(string url)
-
     property var role
+    property var userData
 
     menuBar: MenuBar {
         visible: (app.role !== undefined)
@@ -42,30 +40,43 @@ ApplicationWindow {
 
     FaultTicketList {
         visible: actualView === "faultticketlist"
+
         objectName: "faultticketlist"
-        onAdd: function() {
+        signal getAllTickets()
+        signal getTicketById(string url)
+
+        function onAdd() {
             actualView = "faultticketform"
         }
 
-        onSelectedItem: function(item){
-            actualView = "faultticketdetail"
-            //stackView.push(faultticketdetail, {enableEdit: false});
-            app.getTicketById(item)
+        function onStats(stats) {
+            faultticketstats.created = stats["created"]
+            faultticketstats.inProgress = stats["inProgress"]
+            faultticketstats.resolved = stats["resolved"]
+            faultticketstats.invalidate()
+            actualView = "faultticketstats"
         }
 
-        onEditItem: function(item) {
+        function onSelectedItem(item){
             actualView = "faultticketdetail"
-            //stackView.push(faultticketdetail, {enableEdit: true});
-            app.getTicketById(item)
+            faultticketdetail.enableEdit = false;
+            getTicketById(item)
+        }
+
+        function onEditItem(item) {
+            actualView = "faultticketdetail"
+            faultticketdetail.enableEdit = true;
+            getTicketById(item)
         }
     }
 
 
 
     FaultTicketDetail {
+        id: faultticketdetail
         visible: actualView === "faultticketdetail"
         objectName: "faultticketdetail"
-        onBack: function(){ actualView = "faultticketlist" }
+        function onBack(){ actualView = "faultticketlist" }
     }
 
 
@@ -73,7 +84,17 @@ ApplicationWindow {
 
     FaultTicketForm {
         visible: actualView === "faultticketform"
-        onSubmitClicked: function(){
+        objectName: "faultticketform"
+        function onSubmitClicked(){
+            actualView = "faultticketlist"
+        }
+    }
+
+    FaultTicketStats {
+        id: faultticketstats
+        visible: actualView === "faultticketstats"
+
+        function onBack() {
             actualView = "faultticketlist"
         }
     }
@@ -81,11 +102,13 @@ ApplicationWindow {
 
 
     Login {
+        objectName: "login"
         visible: (actualView === "login")
-        onLoggedIn: function() {
+        function onLoggedIn() {
+            app.role = "MAINTENANCE"
             actualView = "faultticketlist"
         }
-        onSignUp: function() {
+        function onSignUp() {
             actualView = "signup"
         }
     }
@@ -93,10 +116,10 @@ ApplicationWindow {
 
     SignUp {
         visible: actualView === "signup"
-        onSignedUp: function() {
+        function onSignedUp() {
             actualView = "login"
         }
-        onBack: function() {
+        function onBack() {
             actualView = "login"
         }
     }

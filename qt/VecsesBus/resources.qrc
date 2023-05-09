@@ -11,5 +11,6 @@
         <file>image/station.png</file>
         <file>Login.qml</file>
         <file>SignUp.qml</file>
+        <file>FaultTicketStats.qml</file>
     </qresource>
 </RCC>

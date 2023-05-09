@@ -6,19 +6,22 @@ Rectangle {
     anchors.fill: parent
     color: "white"
 
+    signal saveTicket(var ticket, string url)
+    signal deleteTicket(string url)
+
+
     property bool enableEdit: false
     property var ticket
     onTicketChanged: function() {
         if (!ticket) return;
         descriptionLabel.text = "Description: " + ticket["description"]
-        startDateLabel.text = "Description: " + ticket["startDate"]
-        resolveDateLabel.text = "Description: " + (!ticket["resolveDate"]) ? ticket["resolveDate"] : "-"
-        coordinateLabel.text = "Description: " + ticket["coordinate"]["latitude"] + ", " + ticket["coordinate"]["longitude"]
-        if(!enableEdit) stateLabel.text = "Description: " + ticket["state"]
+        startDateLabel.text = "Start Date: " + ticket["startDate"]
+        resolveDateLabel.text = "Resolve Date: " + ((!ticket["resolveDate"]) ? ticket["resolveDate"] : "-")
+        coordinateLabel.text = "Coordinate: " + ticket["coordinate"]["latitude"] + ", " + ticket["coordinate"]["longitude"]
+        if(!enableEdit) stateLabel.text = "State: " + ticket["state"]
         else stateLabelBox.currentIndex = ((ticket["state"] === "Created") ? 0 : ((ticket["state"] === "Resolved") ? 2 : 1))
 
     }
-    property var onBack
 
 
     Column {
@@ -75,10 +78,42 @@ Rectangle {
             text: "Bus: " + faultTicket.bus_name
         }*/
 
-        Button{
-            text: "Back"
-            font.pixelSize: 16
-            onClicked: onBack()
+        Row {
+            spacing: 10
+            Button{
+                text: "Back"
+                font.pixelSize: 16
+                onClicked: onBack()
+            }
+
+            Button{
+                text: "Mentés"
+                font.pixelSize: 16
+                onClicked: {
+                    var newTicket = {
+                        "description": ticket["description"],
+                        "coordinate": {
+                            "latitude": ticket["coordinate"]["latitude"],
+                            "longitude": ticket["coordinate"]["longitude"]
+                        },
+                        "state": ((stateLabelBox.currentIndex === 0) ? "Created" : ((stateLabelBox.currentIndex === 2)) ? "Resolved" : "InProgress"),
+                        "startDate": ticket["startDate"],
+                        "resolvedDate": ticket["resolveDate"]
+                    }
+                    saveTicket(JSON.stringify(newTicket), ticket["_links"]["self"]["href"])
+                }
+                visible: enableEdit
+            }
+
+            Button{
+                text: "Delete"
+                font.pixelSize: 16
+                onClicked: {
+                    deleteTicket(ticket["_links"]["self"]["href"])
+                }
+                visible: enableEdit
+            }
         }
+
     }
 }

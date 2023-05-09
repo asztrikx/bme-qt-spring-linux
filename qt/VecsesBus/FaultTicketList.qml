@@ -5,10 +5,6 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-    property var onAdd
-    property var onSelectedItem
-    property var onEditItem
-
     property var tickets
     onTicketsChanged: () => {
         if(!tickets["_embedded"]) return;
@@ -27,7 +23,7 @@ Item {
 
     onVisibleChanged: () => {
         if (!visible) return;
-        app.getAllTickets()
+        getAllTickets()
     }
 
     ListModel {
@@ -106,16 +102,33 @@ Item {
         }
     }
 
-    Button {
-        text: "+"
-        anchors.bottom: parent.bottom
+    Row {
         anchors.bottomMargin: 50
-        font.pixelSize: 20
         anchors.horizontalCenter: parent.horizontalCenter
-        onClicked: {
-            if (onAdd !== undefined){
+        anchors.bottom: parent.bottom
+        spacing: 10
+        Button {
+            text: "Add"
+            font.pixelSize: 20
+            onClicked: {
                 onAdd();
             }
         }
+        Button {
+            text: "Stats"
+            font.pixelSize: 20
+            onClicked: {
+                let created = 0;
+                let inProgress = 0;
+                let resolved = 0;
+                for (const ticket of tickets["_embedded"]["faultTickets"]){
+                    if (ticket["state"] === "Created") created++;
+                    else if(ticket["state"] === "InProgress") inProgress++;
+                    else if(ticket["state"] === "Resolved") resolved++;
+                }
+                onStats({ "created" : created, "inProgress" : inProgress, "resolved" : resolved });
+            }
+        }
     }
+
 }
