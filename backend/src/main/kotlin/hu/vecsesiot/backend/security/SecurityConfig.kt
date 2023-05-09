@@ -29,10 +29,6 @@ class SecurityConfig {
 	fun filterChain(http: HttpSecurity): SecurityFilterChain {
 		// https://www.baeldung.com/kotlin/spring-security-dsl
 		http {
-			// Allow login page access
-			formLogin {
-				permitAll()
-			}
 			// logout is accessible by default
 			authorizeHttpRequests {
 				// More generale rules here
@@ -46,6 +42,7 @@ class SecurityConfig {
 			csrf {
 				disable()
 			}
+			httpBasic { }
 		}
 		return http.build()
 	}
