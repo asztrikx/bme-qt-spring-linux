@@ -1,10 +1,13 @@
 package hu.vecsesiot.backend.line
 
 import hu.vecsesiot.backend.bus.Bus
+import hu.vecsesiot.backend.bus.BusController
 import hu.vecsesiot.backend.bus.BusRepository
 import hu.vecsesiot.backend.faultticket.FaultTicket
 import hu.vecsesiot.backend.stop.Stop
+import hu.vecsesiot.backend.stop.StopRepository
 import jakarta.transaction.Transactional
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import java.time.Duration
@@ -18,22 +21,30 @@ class LineService {
 	@Autowired
 	private lateinit var busRepository: BusRepository
 
-	// TODO @Transactional
+	@Autowired
+	private lateinit var stopRepository: StopRepository
+
+	var logger = LoggerFactory.getLogger(BusController::class.java)
+
+	@Transactional
 	fun getTimeUntilStop(line: Line, stop: Stop): Duration {
-		// TODO validate whether stop is in the line
+		require(!line.stops.contains(stop))
 
 		var routeTimeToStop = Duration.ZERO
-		// TODO can this fetch from db
 		for (section in line.route) {
 			if (section.start != stop) {
 				routeTimeToStop += section.timespan
 			}
 		}
+		logger.debug("Time until stop ({}) on line ({}): {}", stop.id, line.id, routeTimeToStop)
 		return routeTimeToStop
 	}
 
 	@Transactional
-	fun getNextOperationalBusBeforeStop(line: Line, stop: Stop, time: LocalDateTime): Bus? {
+	fun getNextOperationalBusBeforeStop(lineId: Long, stopId: Long, time: LocalDateTime): Bus? {
+		val line = repository.findById(lineId).get()
+		val stop = stopRepository.findById(stopId).get()
+
 		val timeUntilStop = getTimeUntilStop(line, stop)
 		return busRepository.findByLine(line)
 			.filter { Duration.between(it.timetable!!.startDate, time) < timeUntilStop }
@@ -43,7 +54,10 @@ class LineService {
 	}
 
 	@Transactional
-	fun getAllBrokenBusBeforeStop(line: Line, stop: Stop, time: LocalDateTime): List<Bus> {
+	fun getAllBrokenBusBeforeStop(lineId: Long, stopId: Long, time: LocalDateTime): List<Bus> {
+		val line = repository.findById(lineId).get()
+		val stop = stopRepository.findById(stopId).get()
+
 		val timeUntilStop = getTimeUntilStop(line, stop)
 		return busRepository.findByLine(line)
 			.filter { Duration.between(it.timetable!!.startDate, time) < timeUntilStop }
