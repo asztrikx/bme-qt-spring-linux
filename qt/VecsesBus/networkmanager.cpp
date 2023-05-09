@@ -6,7 +6,7 @@
 #include <QNetworkRequest>
 
 
-QString NetworkManager::cookie = "MDM0NmJjNDctNWFkNS00YjA4LTlkNGItYzYzNWQxZGIxYjYw";
+QString NetworkManager::cookie = "M2UzZjIyODYtYWJhZS00ZWY5LWFmNTctYjkyY2Q5NDM0ZTMx";
 
 NetworkManager::NetworkManager(QObject* rootObject): QObject(nullptr), rootObject(rootObject)
 {

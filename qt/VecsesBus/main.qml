@@ -44,17 +44,25 @@ ApplicationWindow {
         signal getAllTickets()
         signal getTicketById(string url)
 
-        onAdd: function() {
+        function onAdd() {
             actualView = "faultticketform"
         }
 
-        onSelectedItem: function(item){
+        function onStats(stats) {
+            faultticketstats.created = stats["created"]
+            faultticketstats.inProgress = stats["inProgress"]
+            faultticketstats.resolved = stats["resolved"]
+            faultticketstats.invalidate()
+            actualView = "faultticketstats"
+        }
+
+        function onSelectedItem(item){
             actualView = "faultticketdetail"
             faultticketdetail.enableEdit = false;
             getTicketById(item)
         }
 
-        onEditItem: function(item) {
+        function onEditItem(item) {
             actualView = "faultticketdetail"
             faultticketdetail.enableEdit = true;
             getTicketById(item)
@@ -67,7 +75,7 @@ ApplicationWindow {
         id: faultticketdetail
         visible: actualView === "faultticketdetail"
         objectName: "faultticketdetail"
-        onBack: function(){ actualView = "faultticketlist" }
+        function onBack(){ actualView = "faultticketlist" }
     }
 
 
@@ -76,7 +84,16 @@ ApplicationWindow {
     FaultTicketForm {
         visible: actualView === "faultticketform"
         objectName: "faultticketform"
-        onSubmitClicked: function(){
+        function onSubmitClicked(){
+            actualView = "faultticketlist"
+        }
+    }
+
+    FaultTicketStats {
+        id: faultticketstats
+        visible: actualView === "faultticketstats"
+
+        function onBack() {
             actualView = "faultticketlist"
         }
     }

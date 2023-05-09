@@ -79,7 +79,8 @@ void FaultTicketManager::responseSaveFaultTicketHandler()
 }
 
 void FaultTicketManager::responseDeleteFaultTicketHandler(){
-    qDebug() << reply->readAll();
+    QQuickItem* ticketDetail = rootObject->findChild<QQuickItem*>("faultticketdetail");
+    QMetaObject::invokeMethod(ticketDetail, "onBack");
 }
 
 void FaultTicketManager::createFaultTicketHandler(QVariant ticket){
@@ -93,7 +94,8 @@ void FaultTicketManager::createFaultTicketHandler(QVariant ticket){
 }
 
 void FaultTicketManager::responseCreateFaultTicketHandler(){
-    qDebug() << reply->readAll();
+    QQuickItem* ticketForm = rootObject->findChild<QQuickItem*>("faultticketform");
+    QMetaObject::invokeMethod(ticketForm, "onSubmitClicked");
 }
 
 

@@ -9,6 +9,7 @@ Rectangle {
     signal saveTicket(var ticket, string url)
     signal deleteTicket(string url)
 
+
     property bool enableEdit: false
     property var ticket
     onTicketChanged: function() {
@@ -21,7 +22,6 @@ Rectangle {
         else stateLabelBox.currentIndex = ((ticket["state"] === "Created") ? 0 : ((ticket["state"] === "Resolved") ? 2 : 1))
 
     }
-    property var onBack
 
 
     Column {
@@ -110,7 +110,6 @@ Rectangle {
                 font.pixelSize: 16
                 onClicked: {
                     deleteTicket(ticket["_links"]["self"]["href"])
-                    onBack()
                 }
                 visible: enableEdit
             }

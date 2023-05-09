@@ -7,7 +7,6 @@ Item {
     anchors.fill: parent
 
     signal createTicket(var ticket)
-    property var onSubmitClicked
 
     Rectangle {
         width: parent.width
@@ -65,10 +64,7 @@ Item {
                             "startDate": new Date(),
                             "resolvedDate": null
                         }
-                        if (onSubmitClicked !== undefined) {
-                            createTicket(JSON.stringify(newTicket));
-                            onSubmitClicked();
-                        }
+                        createTicket(JSON.stringify(newTicket));
                     }
                 }
             }
