@@ -196,19 +196,19 @@ class SqlInitializer : ApplicationRunner {
 	private fun getLines(sections: List<Section>): List<Line> {
 		return mutableListOf<Line>().apply {
 			add(
-				Line(name = "1 - Hosszú járat").apply {
+				Line(name = "7 (Vörösmarty utca)").apply {
 					route = listOf(sections[0], sections[1], sections[3], sections[4])
 					stops = listOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
 				}
 			)
 			add(
-				Line(name = "2 - Körjárat").apply {
+				Line(name = "8 (OTP lakótelep)").apply {
 					route = listOf(sections[0], sections[2], sections[5], sections[6])
 					stops = listOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
 				}
 			)
 			add(
-				Line(name = "3 - Visszirányú járat").apply {
+				Line(name = "123E (Autóbuszállomás)").apply {
 					route = listOf(sections[10], sections[7], sections[8], sections[9])
 					stops = listOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
 				}
