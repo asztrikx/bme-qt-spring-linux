@@ -14,5 +14,6 @@
         <file>FaultTicketStats.qml</file>
         <file>LineList.qml</file>
         <file>StopList.qml</file>
+        <file>TimeTableList.qml</file>
     </qresource>
 </RCC>

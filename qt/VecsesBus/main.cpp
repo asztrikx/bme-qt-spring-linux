@@ -3,6 +3,7 @@
 #include "faultticketmanager.h"
 #include "loginmanager.h"
 #include "linemanager.h"
+#include "timetablemanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -13,5 +14,6 @@ int main(int argc, char *argv[])
     FaultTicketManager ftmgr(root);
     LoginManager lmgr(root);
     LineManager linemgr(root);
+    TimeTableManager tmgr(root);
     return app.exec();
 }

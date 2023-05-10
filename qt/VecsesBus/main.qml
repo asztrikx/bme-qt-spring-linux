@@ -38,6 +38,14 @@ ApplicationWindow {
         }
 
         Menu {
+            title: "Timetable"
+            MenuItem {
+                text: "List all"
+                onTriggered: { actualView = "timetablelist" }
+            }
+        }
+
+        Menu {
             title: "Map"
             MenuItem {
                 text: "Show"
@@ -128,6 +136,17 @@ ApplicationWindow {
 
         function onBack(){
             actualView = "linelist"
+        }
+    }
+
+    TimeTableList {
+        visible: actualView === "timetablelist"
+        objectName: "timetablelist"
+
+        signal getAllTimeTables()
+        signal getTimeTableLine(var id, string url)
+
+        function onSelectedItem() {
         }
     }
 
