@@ -21,4 +21,7 @@ class UserController {
 			ResponseEntity.status(HttpStatus.CONFLICT).build()
 		}
 	}
+
+	@GetMapping("/details")
+	fun details() = service.details()
 }

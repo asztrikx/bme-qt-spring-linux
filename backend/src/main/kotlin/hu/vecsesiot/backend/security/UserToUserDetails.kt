@@ -23,4 +23,6 @@ class UserToUserDetails(val user: User) : UserDetails {
 	override fun isCredentialsNonExpired() = true
 
 	override fun isEnabled() = true
+
+	val id = user.id!!
 }

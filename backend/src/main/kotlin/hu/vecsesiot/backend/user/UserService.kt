@@ -1,7 +1,9 @@
 package hu.vecsesiot.backend.user
 
+import hu.vecsesiot.backend.security.UserToUserDetails
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 
@@ -27,5 +29,16 @@ class UserService {
 			passwordEncoder.encode(registerDto.password),
 			listOf(),
 		))
+	}
+
+	@Transactional
+	fun details(): DetailsDto {
+		val authentication = SecurityContextHolder.getContext().authentication
+		val principal = authentication.principal as UserToUserDetails
+
+		return DetailsDto(
+			principal.id,
+			principal.authorities.map { it.authority },
+		)
 	}
 }
