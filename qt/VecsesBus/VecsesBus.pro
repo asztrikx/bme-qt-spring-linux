@@ -13,13 +13,15 @@ SOURCES += \
     linemanager.cpp \
     loginmanager.cpp \
     main.cpp \
-    networkmanager.cpp
+    networkmanager.cpp \
+    timetablemanager.cpp
 
 HEADERS += \
     faultticketmanager.h \
     linemanager.h \
     loginmanager.h \
-    networkmanager.h
+    networkmanager.h \
+    timetablemanager.h
 
 FORMS +=
 
