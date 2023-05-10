@@ -16,5 +16,6 @@
         <file>StopList.qml</file>
         <file>TimeTableList.qml</file>
         <file>TimeTableDetailList.qml</file>
+        <file>DriverProfile.qml</file>
     </qresource>
 </RCC>

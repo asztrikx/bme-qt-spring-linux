@@ -14,6 +14,7 @@ public:
 public slots:
     void getAllTimeTablesHandler();
     void responseGetAllTimeTablesHandler();
+    void getAllAvailableTimeTablesHandler(QString date);
     void getTimeTableLineHandler(QVariant id, QString url);
     void getAllSectionByTimeTableHandler(QString url, QString startDate);
     void getTimeTableSectionHandler(QVariant id, QString url);

@@ -27,7 +27,12 @@ Item {
 
     onVisibleChanged: () => {
         if (!visible) return;
-        getAllTimeTables()
+        if (app.userData !== undefined && app.userData["roles"].includes("Driver")){
+            getAllAvailableTimeTables("2023-03-30T15:12:03")
+        } else {
+            getAllTimeTables()
+        }
+
     }
 
     ListModel {
@@ -64,13 +69,39 @@ Item {
                 Row{
                     width: parent.width
                     height: parent.height
-
+                    spacing: 10
                     Text {
                         id: dateText
                         text: startDate + " - " + name
                         elide: Text.ElideRight
                         font.pixelSize: 16
                         anchors.verticalCenter: parent.verticalCenter
+                        width: parent.width * 0.8
+                    }
+
+                    Text {
+                        text: "Take"
+                        anchors.verticalCenter: parent.verticalCenter
+                        visible: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
+                        font.pixelSize: 16
+                        font.family: "Roboto"
+                        MouseArea {
+                            anchors.fill: parent
+                            cursorShape: Qt.PointingHandCursor
+                            hoverEnabled: true
+
+                            onEntered: {
+                                textDecoration: Text.Underline
+                            }
+
+                            onExited: {
+                                textDecoration: Text.NoUnderline
+                            }
+
+                            onClicked: {
+                                console.log("took")
+                            }
+                        }
                     }
                 }
 

@@ -42,6 +42,15 @@ ApplicationWindow {
         }
 
         Menu {
+            title: "Profile"
+            enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
+            MenuItem {
+                text: "Show"
+                onTriggered: { actualView = "driverprofile" }
+            }
+        }
+
+        Menu {
             title: "Fault ticket"
             enabled: (app.userData !== undefined && (app.userData["roles"].includes("Driver") || app.userData["roles"].includes("Maintenance")))
             MenuItem {
@@ -149,6 +158,7 @@ ApplicationWindow {
         objectName: "timetablelist"
 
         signal getAllTimeTables()
+        signal getAllAvailableTimeTables(string date)
         signal getTimeTableLine(var id, string url)
         signal getAllSectionByTimeTable(string url, string startDate)
 
@@ -167,6 +177,14 @@ ApplicationWindow {
         function onBack() {
             actualView = "timetablelist"
         }
+    }
+
+    DriverProfile {
+        visible: actualView === "driverprofile"
+        objectName: "driverprofile"
+
+        signal getDriverActiveTimeTable(string id)
+        signal getDriverActiveTimeTableLine(string url)
     }
 
 

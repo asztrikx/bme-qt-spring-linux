@@ -9,6 +9,7 @@ TimeTableManager::TimeTableManager(QObject* rootObject): NetworkManager(rootObje
 {
     QQuickItem* timeTableListView = rootObject->findChild<QQuickItem*>("timetablelist");
     QObject::connect(timeTableListView, SIGNAL(getAllTimeTables()), this, SLOT(getAllTimeTablesHandler()));
+    QObject::connect(timeTableListView, SIGNAL(getAllAvailableTimeTables(QString)), this, SLOT(getAllAvailableTimeTablesHandler(QString)));
     QObject::connect(timeTableListView, SIGNAL(getTimeTableLine(QVariant, QString)), this, SLOT(getTimeTableLineHandler(QVariant, QString)));
     QObject::connect(timeTableListView, SIGNAL(getAllSectionByTimeTable(QString, QString)), this, SLOT(getAllSectionByTimeTableHandler(QString, QString)));
     QQuickItem* timeTableDetailView = rootObject->findChild<QQuickItem*>("timetabledetaillist");
@@ -77,3 +78,16 @@ void TimeTableManager::getTimeTableSectionHandler(QVariant id, QString url)
     });
 }
 
+void TimeTableManager::getAllAvailableTimeTablesHandler(QString date)
+{
+    QUrl url = QUrl("http://localhost:8080/api/timetables/search/findAllByBusIsNullAndStartDateIsAfterOrderByStartDateAsc?date=" + date);
+    QNetworkRequest request(url);
+    setAuthHeader(request);
+    reply = mgr.get(request);
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
+        QJsonObject jsonObject = jsonResponse.object();
+        QQuickItem* timeTableList = rootObject->findChild<QQuickItem*>("timetablelist");
+        timeTableList->setProperty("timetables", QVariant(jsonObject));
+    });
+}

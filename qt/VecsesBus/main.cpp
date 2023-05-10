@@ -4,6 +4,7 @@
 #include "loginmanager.h"
 #include "linemanager.h"
 #include "timetablemanager.h"
+#include "driverprofilemanager.h"
 
 int main(int argc, char *argv[])
 {
@@ -15,5 +16,6 @@ int main(int argc, char *argv[])
     LoginManager lmgr(root);
     LineManager linemgr(root);
     TimeTableManager tmgr(root);
+    DriverProfileManager dpmgr(root);
     return app.exec();
 }
