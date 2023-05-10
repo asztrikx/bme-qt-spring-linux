@@ -43,7 +43,7 @@ void LoginManager::responseGetUserHandler()
     QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
     QJsonObject jsonObject = jsonResponse.object();
     rootObject->setProperty("userData", QVariant(jsonObject));
-    qDebug() << jsonObject;
+    //qDebug() << jsonObject;
     QQuickItem* login = rootObject->findChild<QQuickItem*>("login");
     QMetaObject::invokeMethod(login, "onLoggedIn");
 }

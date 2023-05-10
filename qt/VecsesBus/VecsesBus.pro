@@ -10,12 +10,14 @@ CONFIG += c++17
 
 SOURCES += \
     faultticketmanager.cpp \
+    linemanager.cpp \
     loginmanager.cpp \
     main.cpp \
     networkmanager.cpp
 
 HEADERS += \
     faultticketmanager.h \
+    linemanager.h \
     loginmanager.h \
     networkmanager.h
 
