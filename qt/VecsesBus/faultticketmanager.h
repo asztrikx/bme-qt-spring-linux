@@ -14,6 +14,7 @@ public slots:
     void createFaultTicketHandler(QVariant ticket);
     void saveFaultTicketHandler(QVariant ticket, QString url);
     void deleteFaultTicketHandler(QString url);
+    void getAllFaultTicketsByUser(QVariant id);
 
     void responseAllFaultTicketsHandler();
     void responseFaultTicketByIdHandler();

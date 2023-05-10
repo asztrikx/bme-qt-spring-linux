@@ -13,6 +13,8 @@ Item {
             ticketModel.append({
                                    "startDate" : ticket["startDate"],
                                    "description" : ticket["description"],
+                                   "resolveDate" : ticket["resolveDate"],
+                                   "coordinate" : ticket["coordinate"],
                                    "_state" : ticket["state"],
                                    "url" : ticket["_links"]["self"]["href"]
                                })
@@ -21,7 +23,12 @@ Item {
 
     onVisibleChanged: () => {
         if (!visible) return;
-        getAllTickets()
+        if (app.userData !== undefined && app.userData["roles"].includes("Driver")){
+            getAllTicketsByUser(app.userData["id"])
+        } else if ((app.userData !== undefined && app.userData["roles"].includes("Maintenance"))){
+            getAllTickets()
+        }
+
     }
 
     ListModel {
@@ -108,7 +115,7 @@ Item {
         Button {
             text: "Add"
             font.pixelSize: 20
-            visible: (app.userData !== undefined && app.userData["roles"].includes("Maintenance"))
+            visible: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
             onClicked: {
                 onAdd();
             }

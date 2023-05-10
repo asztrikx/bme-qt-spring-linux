@@ -4,9 +4,15 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 
 Item {
+    id: faultticketform
     anchors.fill: parent
 
     signal createTicket(var ticket)
+
+    function setError(msg){
+        errorText.text = msg;
+        errorText.visible = true;
+    }
 
     Rectangle {
         width: parent.width
@@ -47,6 +53,12 @@ Item {
                 }
             }
 
+            Text {
+                id: errorText
+                text: ""
+                visible: false
+                color: Material.accent
+            }
 
             Row {
                 width: parent.width
@@ -54,6 +66,15 @@ Item {
                     text: "Submit"
                     font.pixelSize: 16
                     onClicked: {
+                        errorText.visible = false
+                        if(descriptionField.text.trim() === ""){
+                            faultticketform.setError("Empty description");
+                            return;
+                        }
+                        if(isNaN(parseFloat(latField.text)) || isNaN(parseFloat(longField.text))){
+                            faultticketform.setError("Bad coordinate format");
+                            return;
+                        }
                         var newTicket = {
                             "description": descriptionField.text,
                             "coordinate": {

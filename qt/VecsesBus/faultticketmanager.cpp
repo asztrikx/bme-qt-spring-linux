@@ -11,6 +11,7 @@ FaultTicketManager::FaultTicketManager(QObject* rootObject) : NetworkManager(roo
     QQuickItem* ticketListView = rootObject->findChild<QQuickItem*>("faultticketlist");
     QObject::connect(ticketListView, SIGNAL(getAllTickets()), this, SLOT(getAllFaultTicketsHandler()));
     QObject::connect(ticketListView, SIGNAL(getTicketById(QString)), this, SLOT(getFaultTicketByIdHandler(QString)));
+    QObject::connect(ticketListView, SIGNAL(getAllTicketsByUser(QVariant)), this, SLOT(getAllFaultTicketsByUser(QVariant)));
     QQuickItem* ticketDetailView = rootObject->findChild<QQuickItem*>("faultticketdetail");
     QObject::connect(ticketDetailView, SIGNAL(saveTicket(QVariant, QString)), this, SLOT(saveFaultTicketHandler(QVariant, QString)));
     QObject::connect(ticketDetailView, SIGNAL(deleteTicket(QString)), this, SLOT(deleteFaultTicketHandler(QString)));
@@ -98,4 +99,12 @@ void FaultTicketManager::responseCreateFaultTicketHandler(){
     QMetaObject::invokeMethod(ticketForm, "onSubmitClicked");
 }
 
-
+void FaultTicketManager::getAllFaultTicketsByUser(QVariant id)
+{
+    QString user = id.toString();
+    QUrl url = QUrl("http://localhost:8080/api/faultTickets/search/findAllByUser?user=" + user);
+    QNetworkRequest request(url);
+    setAuthHeader(request);
+    reply = mgr.get(request);
+    QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseAllFaultTicketsHandler()));
+}
