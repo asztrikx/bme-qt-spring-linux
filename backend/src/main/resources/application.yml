@@ -13,7 +13,7 @@ spring:
         physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
   data:
     rest:
-      base-path: /api
+      detection-strategy: annotated
   sql:
     init:
       mode: always
@@ -45,3 +45,6 @@ logging:
     org:
       hibernate:
         type: trace
+server:
+  servlet:
+    context-path: /api
