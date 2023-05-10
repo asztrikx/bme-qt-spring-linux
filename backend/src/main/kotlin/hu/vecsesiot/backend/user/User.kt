@@ -1,5 +1,6 @@
 package hu.vecsesiot.backend.user
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.faultticket.FaultTicket
 import jakarta.persistence.*
@@ -11,10 +12,14 @@ class User(
 	var id: Long? = null,
 	@Column(unique = true)
 	var username: String,
+	@JsonIgnore
 	@Column(unique = true)
 	var email: String,
+	@JsonIgnore
 	var name: String,
+	@JsonIgnore
 	var password: String,
+	@JsonIgnore
 	@ElementCollection(fetch = FetchType.EAGER)
 	val roles: List<String>,
 ) {
