@@ -23,7 +23,7 @@ class UserService {
 	@Transactional
 	fun register(registerDto: RegisterDto) {
 		val user = repository.findUserByUsername(registerDto.username)
-		check(user != null)
+		check(user == null)
 
 		repository.save(User(
 			null,

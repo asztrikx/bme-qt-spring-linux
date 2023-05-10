@@ -12,7 +12,7 @@ class UserController {
 	@Autowired
 	private lateinit var service: UserService
 
-	@GetMapping("/register")
+	@PostMapping("/register")
 	fun register(@RequestBody registerDto: RegisterDto): ResponseEntity<Any> {
 		return try {
 			service.register(registerDto)
