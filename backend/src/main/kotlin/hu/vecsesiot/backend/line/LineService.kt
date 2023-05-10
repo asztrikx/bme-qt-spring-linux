@@ -24,7 +24,7 @@ class LineService {
 	@Autowired
 	private lateinit var stopRepository: StopRepository
 
-	var logger = LoggerFactory.getLogger(BusController::class.java)
+	private val logger = LoggerFactory.getLogger(BusController::class.java)
 
 	@Transactional
 	fun getTimeUntilStop(line: Line, stop: Stop): Duration {

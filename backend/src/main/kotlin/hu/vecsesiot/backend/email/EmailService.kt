@@ -8,13 +8,12 @@ import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
 import org.springframework.stereotype.Service
 
-
 @Service
 class EmailService {
 	@Autowired
 	private lateinit var mailSender: JavaMailSender
 
-	var logger = LoggerFactory.getLogger(BusController::class.java)
+	private val logger = LoggerFactory.getLogger(BusController::class.java)
 
 	fun sendEmail(to: String, subject: String, body: String) {
 		val message = SimpleMailMessage()
