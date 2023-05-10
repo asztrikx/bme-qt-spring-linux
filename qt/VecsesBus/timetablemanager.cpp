@@ -10,6 +10,9 @@ TimeTableManager::TimeTableManager(QObject* rootObject): NetworkManager(rootObje
     QQuickItem* timeTableListView = rootObject->findChild<QQuickItem*>("timetablelist");
     QObject::connect(timeTableListView, SIGNAL(getAllTimeTables()), this, SLOT(getAllTimeTablesHandler()));
     QObject::connect(timeTableListView, SIGNAL(getTimeTableLine(QVariant, QString)), this, SLOT(getTimeTableLineHandler(QVariant, QString)));
+    QObject::connect(timeTableListView, SIGNAL(getAllSectionByTimeTable(QString, QString)), this, SLOT(getAllSectionByTimeTableHandler(QString, QString)));
+    QQuickItem* timeTableDetailView = rootObject->findChild<QQuickItem*>("timetabledetaillist");
+    QObject::connect(timeTableDetailView, SIGNAL(getTimeTableSection(QVariant, QString)), this, SLOT(getTimeTableSectionHandler(QVariant, QString)));
 }
 
 
@@ -36,11 +39,41 @@ void TimeTableManager::getTimeTableLineHandler(QVariant id, QString url)
     QNetworkRequest request(qurl);
     setAuthHeader(request);
     QNetworkReply* reply = mgr.get(request);
-    QQuickItem* timeTableList = rootObject->findChild<QQuickItem*>("timetablelist");
+
     QObject::connect(reply, &QNetworkReply::finished, [=]() {
         QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
         QJsonObject jsonObject = jsonResponse.object();
-        QMetaObject::invokeMethod(timeTableList, "setTimeTableName", Q_ARG(QVariant, id), Q_ARG(QVariant, jsonObject.value("name")));
+        QQuickItem* timeTableList = rootObject->findChild<QQuickItem*>("timetablelist");
+        QMetaObject::invokeMethod(timeTableList, "setTimeTableLine", Q_ARG(QVariant, id), Q_ARG(QVariant, jsonObject));
+    });
+}
+
+void TimeTableManager::getAllSectionByTimeTableHandler(QString url, QString startDate)
+{
+    QUrl qurl = QUrl(url);
+    QNetworkRequest request(qurl);
+    setAuthHeader(request);
+    QNetworkReply* reply = mgr.get(request);
+    QQuickItem* timeTableDetailList = rootObject->findChild<QQuickItem*>("timetabledetaillist");
+    timeTableDetailList->setProperty("startDate", startDate);
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
+        QJsonObject jsonObject = jsonResponse.object();
+        timeTableDetailList->setProperty("sections", jsonObject);
+    });
+}
+
+void TimeTableManager::getTimeTableSectionHandler(QVariant id, QString url)
+{
+    QUrl qurl = QUrl(url);
+    QNetworkRequest request(qurl);
+    setAuthHeader(request);
+    QNetworkReply* reply = mgr.get(request);
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
+        QJsonObject jsonObject = jsonResponse.object();
+        QQuickItem* timeTableDetailList = rootObject->findChild<QQuickItem*>("timetabledetaillist");
+        QMetaObject::invokeMethod(timeTableDetailList, "setStop", Q_ARG(QVariant, id), Q_ARG(QVariant, jsonObject.value("name")));
     });
 }
 

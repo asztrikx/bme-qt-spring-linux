@@ -11,23 +11,12 @@ ApplicationWindow {
     title: "VecsesIoT"
 
     property string actualView: "login"
+    //property string actualView: "faultticketform"
 
     property var userData
 
     menuBar: MenuBar {
         visible: (app.userData !== undefined)
-        Menu {
-            title: "Fault ticket"
-            MenuItem {
-                text: "List all"
-                onTriggered: { actualView = "faultticketlist" }
-            }
-            MenuItem {
-                text: "Create new"
-                onTriggered: { actualView = "faultticketform" }
-                enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
-            }
-        }
         Menu {
             title: "Line"
             MenuItem {
@@ -51,6 +40,21 @@ ApplicationWindow {
                 onTriggered: { actualView = "map" }
             }
         }
+
+        Menu {
+            title: "Fault ticket"
+            enabled: (app.userData !== undefined && (app.userData["roles"].includes("Driver") || app.userData["roles"].includes("Maintenance")))
+            MenuItem {
+                text: "List all"
+                onTriggered: { actualView = "faultticketlist" }
+            }
+            MenuItem {
+                text: "Create new"
+                onTriggered: { actualView = "faultticketform" }
+                enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
+            }
+        }
+
     }
 
     FaultTicketList {
@@ -58,6 +62,7 @@ ApplicationWindow {
 
         objectName: "faultticketlist"
         signal getAllTickets()
+        signal getAllTicketsByUser(var id)
         signal getTicketById(string url)
 
         function onAdd() {
@@ -133,6 +138,7 @@ ApplicationWindow {
         visible: actualView === "stoplist"
         objectName: "stoplist"
 
+        signal getAllTimeTableByLineId(var id);
         function onBack(){
             actualView = "linelist"
         }
@@ -144,16 +150,31 @@ ApplicationWindow {
 
         signal getAllTimeTables()
         signal getTimeTableLine(var id, string url)
+        signal getAllSectionByTimeTable(string url, string startDate)
 
-        function onSelectedItem() {
+    }
+
+    TimeTableDetailList {
+        visible: actualView === "timetabledetaillist"
+        objectName: "timetabledetaillist"
+
+        signal getTimeTableSection(var id, string url)
+
+        function onSectionsLoaded() {
+            actualView = "timetabledetaillist"
+        }
+
+        function onBack() {
+            actualView = "timetablelist"
         }
     }
+
 
     Login {
         objectName: "login"
         visible: (actualView === "login")
         function onLoggedIn() {
-            actualView = "faultticketlist"
+            actualView = "linelist"
         }
         function onSignUp() {
             actualView = "signup"

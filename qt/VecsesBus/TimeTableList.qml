@@ -5,8 +5,9 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-    function setTimeTableName(id, name){
-        timetablemodel.get(id).name = name
+    function setTimeTableLine(id, line){
+        timetablemodel.get(id).name = line["name"]
+        timetablemodel.get(id).line = line
     }
     property var timetables
     onTimetablesChanged: () => {
@@ -15,9 +16,10 @@ Item {
         for (const timetable of timetables["_embedded"]["timetables"]){
             timetablemodel.append({
                                    "startDate" : timetable["startDate"].split("T")[1],
-                                   "line" : timetable["_links"]["line"]["href"],
+                                   "lineUrl" : timetable["_links"]["line"]["href"],
                                    "url" : timetable["_links"]["self"]["href"],
-                                   "name" : "Loading..."
+                                   "name" : "Loading...",
+                                   "line" : {}
                                })
             getTimeTableLine(timetablemodel.count - 1, timetable["_links"]["line"]["href"])
         }
@@ -46,7 +48,9 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: function(){
-                    onSelectedItem(url);
+                    if (line["name"] !== undefined){
+                        getAllSectionByTimeTable(line["_links"]["route"]["href"], startDate)
+                    }
                 }
             }
 

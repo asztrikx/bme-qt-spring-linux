@@ -2,8 +2,9 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Controls.Material 2.12
 
-Item {
+Rectangle {
     anchors.fill: parent
+    color: "white"
 
     property var stops
     onStopsChanged: () => {
@@ -28,17 +29,8 @@ Item {
         model: stopmodel
         delegate: Rectangle {
             width: parent.width
-            height: 75
+            height: 65
             color: "white"
-            border.width: 1
-            border.color: "gray"
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: function(){
-                    onSelectedItem(url);
-                }
-            }
 
             Row {
                 height: parent.height
@@ -54,16 +46,16 @@ Item {
                     Canvas {
                         id: canvas
                         width: 30
-                        height: 75
+                        height: 65
                         onPaint: {
                             var ctx = getContext("2d")
                             ctx.clearRect(0, 0, width, height)
                             ctx.fillStyle = "purple";
-                            let start_y = (index === 0) ? 37.5 : 10
-                            let height_y = (index === 0 || index === stopmodel.count - 1) ? 27.5 : 55
+                            let start_y = (index === 0) ? 32.5 : 0
+                            let height_y = (index === 0 || index === stopmodel.count - 1) ? 32.5 : 65
                             ctx.fillRect(10, start_y, 10, height_y);
                             ctx.beginPath();
-                            ctx.arc(15, 37.5, 10, 0, 2 * Math.PI);
+                            ctx.arc(15, 32.5, 10, 0, 2 * Math.PI);
                             ctx.fillStyle = "white";
                             ctx.fill();
                             ctx.strokeStyle = "purple";

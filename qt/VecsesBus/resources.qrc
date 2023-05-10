@@ -15,5 +15,6 @@
         <file>LineList.qml</file>
         <file>StopList.qml</file>
         <file>TimeTableList.qml</file>
+        <file>TimeTableDetailList.qml</file>
     </qresource>
 </RCC>
