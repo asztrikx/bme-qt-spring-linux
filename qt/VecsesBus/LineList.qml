@@ -11,8 +11,8 @@ Item {
         linemodel.clear()
         for (const line of lines["_embedded"]["lines"]){
             linemodel.append({
-                                   "number": line["name"].split(" - ")[0],
-                                   "name" : line["name"].split(" - ")[1],
+                                   "number": line["name"].split(" ")[0],
+                                   "name" : line["name"].substring(line["name"].indexOf("(") + 1, line["name"].indexOf(")")),
                                    "stops" : line["_links"]["stops"]["href"],
                                    "timetable" : line["_links"]["timetable"]["href"],
                                    "route" : line["_links"]["route"]["href"],
@@ -60,7 +60,7 @@ Item {
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 10
                     Rectangle{
-                        width: 25
+                        width: 20 + number.length * 5
                         height: 25
                         color: "blue"
                         Text {

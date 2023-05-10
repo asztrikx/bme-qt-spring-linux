@@ -14,9 +14,8 @@ public:
 public slots:
     void loginHandler(QString username, QString password);
     void responseLoginHandler();
-    void responseGetUserHandler();
-private:
-    QString username;
+    void signUpHandler(QVariant user);
+    void responseSignUpHandler();
 };
 
 #endif // LOGINMANAGER_H

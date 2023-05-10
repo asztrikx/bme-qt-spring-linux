@@ -12,11 +12,10 @@ ApplicationWindow {
 
     property string actualView: "login"
 
-    property var role
     property var userData
 
     menuBar: MenuBar {
-        visible: (app.role !== undefined)
+        visible: (app.userData !== undefined)
         Menu {
             title: "Fault ticket"
             MenuItem {
@@ -26,7 +25,7 @@ ApplicationWindow {
             MenuItem {
                 text: "Create new"
                 onTriggered: { actualView = "faultticketform" }
-                enabled: (app.role === "DRIVER")
+                enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
             }
         }
         Menu {
@@ -154,7 +153,6 @@ ApplicationWindow {
         objectName: "login"
         visible: (actualView === "login")
         function onLoggedIn() {
-            app.role = "MAINTENANCE"
             actualView = "faultticketlist"
         }
         function onSignUp() {
@@ -164,6 +162,8 @@ ApplicationWindow {
 
 
     SignUp {
+        objectName: "signup"
+        signal signUp(var user)
         visible: actualView === "signup"
         function onSignedUp() {
             actualView = "login"

@@ -16,7 +16,7 @@ Rectangle {
         if (!ticket) return;
         descriptionLabel.text = "Description: " + ticket["description"]
         startDateLabel.text = "Start Date: " + ticket["startDate"]
-        resolveDateLabel.text = "Resolve Date: " + ((!ticket["resolveDate"]) ? ticket["resolveDate"] : "-")
+        resolveDateLabel.text = "Resolve Date: " + ((!ticket["resolveDate"]) ? "-" : ticket["resolveDate"])
         coordinateLabel.text = "Coordinate: " + ticket["coordinate"]["latitude"] + ", " + ticket["coordinate"]["longitude"]
         if(!enableEdit) stateLabel.text = "State: " + ticket["state"]
         else stateLabelBox.currentIndex = ((ticket["state"] === "Created") ? 0 : ((ticket["state"] === "Resolved") ? 2 : 1))

@@ -10,12 +10,13 @@ LoginManager::LoginManager(QObject* rootObject) : NetworkManager(rootObject)
 {
     QQuickItem* loginView = rootObject->findChild<QQuickItem*>("login");
     QObject::connect(loginView, SIGNAL(login(QString, QString)), this, SLOT(loginHandler(QString, QString)));
+    QQuickItem* signUpView = rootObject->findChild<QQuickItem*>("signup");
+    QObject::connect(signUpView, SIGNAL(signUp(QVariant)), this, SLOT(signUpHandler(QVariant)));
 }
 
 
 void LoginManager::loginHandler(QString username, QString password)
 {
-    this->username = username;
     NetworkManager::setAuth(username + ":" + password);
     QUrl url = QUrl(QString("http://localhost:8080/api"));
     QNetworkRequest request(url);
@@ -26,24 +27,40 @@ void LoginManager::loginHandler(QString username, QString password)
 
 void LoginManager::responseLoginHandler()
 {
+    QQuickItem* login = rootObject->findChild<QQuickItem*>("login");
     if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200){
-        QUrl url = QUrl(QString("http://localhost:8080/api/users/search/findUserByUsername?username=" + username));
+        QUrl url = QUrl(QString("http://localhost:8080/api/users/details"));
         QNetworkRequest request(url);
         setAuthHeader(request);
-        reply = mgr.get(request);
-        QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseGetUserHandler()));
+        QNetworkReply* reply = mgr.get(request);
+        QObject::connect(reply, &QNetworkReply::finished, [=](){
+            QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
+            QJsonObject jsonObject = jsonResponse.object();
+            rootObject->setProperty("userData", QVariant(jsonObject));
+            QMetaObject::invokeMethod(login, "onLoggedIn");
+        });
     } else {
-        QQuickItem* login = rootObject->findChild<QQuickItem*>("login");
         QMetaObject::invokeMethod(login, "handleError", Q_ARG(QVariant, "Bad username or password!"));
     }
 }
 
-void LoginManager::responseGetUserHandler()
+void LoginManager::signUpHandler(QVariant user)
 {
-    QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
-    QJsonObject jsonObject = jsonResponse.object();
-    rootObject->setProperty("userData", QVariant(jsonObject));
-    //qDebug() << jsonObject;
-    QQuickItem* login = rootObject->findChild<QQuickItem*>("login");
-    QMetaObject::invokeMethod(login, "onLoggedIn");
+    QByteArray data = user.toByteArray();
+    QUrl url = QUrl(QString("http://localhost:8080/api/users/register"));
+    QNetworkRequest request(url);
+    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
+    reply = mgr.post(request, data);
+    QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseSignUpHandler()));
 }
+
+void LoginManager::responseSignUpHandler()
+{
+    QQuickItem* signUp = rootObject->findChild<QQuickItem*>("signup");
+    if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200){
+        QMetaObject::invokeMethod(signUp, "onSignedUp");
+    } else {
+        QMetaObject::invokeMethod(signUp, "setError", Q_ARG(QVariant, "Registration failed"));
+    }
+}
+

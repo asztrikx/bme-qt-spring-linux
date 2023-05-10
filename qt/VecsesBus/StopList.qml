@@ -59,7 +59,9 @@ Item {
                             var ctx = getContext("2d")
                             ctx.clearRect(0, 0, width, height)
                             ctx.fillStyle = "purple";
-                            ctx.fillRect(10, 10, 10, 55);
+                            let start_y = (index === 0) ? 37.5 : 10
+                            let height_y = (index === 0 || index === stopmodel.count - 1) ? 27.5 : 55
+                            ctx.fillRect(10, start_y, 10, height_y);
                             ctx.beginPath();
                             ctx.arc(15, 37.5, 10, 0, 2 * Math.PI);
                             ctx.fillStyle = "white";

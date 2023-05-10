@@ -6,7 +6,7 @@ Item {
     anchors.fill: parent
 
     function setTimeTableName(id, name){
-        timetablemodel.get(id).name = name.split(" - ")[1] + " (" + name.split(" - ")[0] + ")"
+        timetablemodel.get(id).name = name
     }
     property var timetables
     onTimetablesChanged: () => {

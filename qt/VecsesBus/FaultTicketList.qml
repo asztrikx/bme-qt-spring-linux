@@ -12,9 +12,7 @@ Item {
         for (const ticket of tickets["_embedded"]["faultTickets"]){
             ticketModel.append({
                                    "startDate" : ticket["startDate"],
-                                   "resolveDate" : (!ticket["resolveDate"]) ? "" : ticket["resolveDate"],
                                    "description" : ticket["description"],
-                                   "coordinate" : ticket["coordinate"],
                                    "_state" : ticket["state"],
                                    "url" : ticket["_links"]["self"]["href"]
                                })
@@ -89,7 +87,7 @@ Item {
                 Button {
                     text: "Edit"
                     anchors.verticalCenter: parent.verticalCenter
-                    visible: (app.role === "MAINTENANCE")
+                    visible: (app.userData !== undefined && app.userData["roles"].includes("Maintenance"))
                     onClicked: {
                         onEditItem(url)
                     }
@@ -110,6 +108,7 @@ Item {
         Button {
             text: "Add"
             font.pixelSize: 20
+            visible: (app.userData !== undefined && app.userData["roles"].includes("Maintenance"))
             onClicked: {
                 onAdd();
             }
