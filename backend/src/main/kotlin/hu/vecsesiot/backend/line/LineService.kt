@@ -28,12 +28,14 @@ class LineService {
 
 	@Transactional
 	fun getTimeUntilStop(line: Line, stop: Stop): Duration {
-		require(!line.stops.contains(stop))
+		require(line.stops.contains(stop))
 
 		var routeTimeToStop = Duration.ZERO
 		for (section in line.route) {
 			if (section.start != stop) {
 				routeTimeToStop += section.timespan
+			} else {
+				break
 			}
 		}
 		logger.debug("Time until stop ({}) on line ({}): {}", stop.id, line.id, routeTimeToStop)
