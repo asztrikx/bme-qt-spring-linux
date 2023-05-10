@@ -283,7 +283,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Gipsz Jakab",
 					username = "asd2",
-					roles = listOf("User", "Maintenance"),
+					roles = listOf("User", "Driver"),
 					// ne spammeljünk domaineket...
 					email = "c",
 					// 123
@@ -308,6 +308,17 @@ class SqlInitializer : ApplicationRunner {
 					roles = listOf("User", "Driver"),
 					// ne spammeljünk domaineket...
 					email = "a",
+					// 123
+					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
+				)
+			)
+			add(
+				User(
+					name = "Mekk Elek",
+					username = "asd5",
+					roles = listOf("User", "Maintenance"),
+					// ne spammeljünk domaineket...
+					email = "e",
 					// 123
 					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
 				)
