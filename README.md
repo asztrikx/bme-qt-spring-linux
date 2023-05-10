@@ -23,7 +23,7 @@ Alap feladatok (maximális kapható pontokkal):
 - [x] 15p: Linux alatt eszközvezérlő készítése
 - [ ] 5p: Aszinkron üzenetsorral kommunikáló szerverek (vagyis több backend komponens van).
 - [x] 5p: Java Persistence API használata, legalább 5 osztállyal.
-- [ ] 2p: Spring Data használata
+- [x] 2p: Spring Data használata
 - [x] 3p: Függőséginjektálás Spring alapokon
 - [ ] 3p: Az alapértelmezettől eltérő tranzakció kezelés.
 - [x] 5p: Megfelelő biztonsági óvintézkedések (authorizáció, SQL injection kivédése, szerver oldali validáció, biztonságos jelszó tárolás stb.)
@@ -37,7 +37,7 @@ Bónusz feladatok, melyek plusz utánajárást is igényelhetnek (maximális kap
 - [ ] 5p: Linux alatt megszakítás kezelő készítése
 - [x] 5p: E-mail küldés a backendben.
 - [x] 3-10p: Jelentős automatikus teszt lefedettség, lefedettségtől függően pontozva
-- [ ] 3p: QRC mechanizmus használata nem QML fájlok tárolására és elérésére.
+- [x] 3p: QRC mechanizmus használata nem QML fájlok tárolására és elérésére.
 - [ ] 3p: Saját fejlesztésű dinamikusan linkelt könyvtár használata.
 - [ ] 8p: Induláskor lefutó öntesztelő funkció megvalósítása, mely a rendszer minden komponensének elérhetőségét és alapvető funkcióinak működőképességét teszteli (pl. webes felületről egy adat elmentése adatbázisba, majd visszaolvasása, hardver periféria megszólítása, valamint a vastag kliensen a logba írás).
 
