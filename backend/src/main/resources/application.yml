@@ -44,7 +44,10 @@ logging:
   level:
     org:
       hibernate:
-        type: trace
+        type: debug
+  file:
+    path: logs/
+    name: logs/application.log
 server:
   servlet:
     context-path: /api
