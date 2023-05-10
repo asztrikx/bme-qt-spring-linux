@@ -3,9 +3,7 @@ package hu.vecsesiot.backend.user
 import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.faultticket.FaultTicket
 import jakarta.persistence.*
-import java.io.Serializable
 
-// TODO why does session need deserialization, does it mean out of sync state?
 @Entity
 class User(
 	@Id
@@ -19,7 +17,7 @@ class User(
 	var password: String,
 	@ElementCollection(fetch = FetchType.EAGER)
 	val roles: List<String>,
-) : Serializable {
+) {
 	@OneToOne(mappedBy = "user")
 	val bus: Bus? = null
 
