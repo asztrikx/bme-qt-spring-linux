@@ -30,6 +30,14 @@ ApplicationWindow {
             }
         }
         Menu {
+            title: "Line"
+            MenuItem {
+                text: "List all"
+                onTriggered: { actualView = "linelist" }
+            }
+        }
+
+        Menu {
             title: "Map"
             MenuItem {
                 text: "Show"
@@ -101,6 +109,28 @@ ApplicationWindow {
 
 
 
+    LineList {
+        visible: actualView === "linelist"
+        objectName: "linelist"
+        signal getAllLines()
+        signal getLineStops(string url)
+
+        function onSelectedItem(item){
+            getLineStops(item)
+            actualView = "stoplist"
+        }
+
+    }
+
+    StopList {
+        visible: actualView === "stoplist"
+        objectName: "stoplist"
+
+        function onBack(){
+            actualView = "linelist"
+        }
+    }
+
     Login {
         objectName: "login"
         visible: (actualView === "login")
@@ -125,19 +155,7 @@ ApplicationWindow {
     }
 
 
-    /*StackView {
-        id: stackView
-        width: app.width
-        height: app.height
-
-
-
-        Component {
-            id: map
-            BusMap {
-            }
-        }
-
-        initialItem: login
+    /*BusMap {
     }*/
+
 }
