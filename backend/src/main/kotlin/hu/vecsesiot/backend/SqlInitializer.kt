@@ -283,7 +283,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Gipsz Jakab",
 					username = "asd2",
-					roles = listOf("User"),
+					roles = listOf("User", "Maintenance"),
 					// ne spammeljünk domaineket...
 					email = "c",
 					// 123
@@ -294,7 +294,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Csetneki Péter",
 					username = "asd3",
-					roles = listOf("User"),
+					roles = listOf("User", "Driver"),
 					// ne spammeljünk domaineket...
 					email = "b",
 					// 123
@@ -305,7 +305,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Kis István",
 					username = "asd4",
-					roles = listOf("User"),
+					roles = listOf("User", "Driver"),
 					// ne spammeljünk domaineket...
 					email = "a",
 					// 123
