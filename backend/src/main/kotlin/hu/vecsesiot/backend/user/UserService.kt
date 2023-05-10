@@ -1,5 +1,6 @@
 package hu.vecsesiot.backend.user
 
+import hu.vecsesiot.backend.email.EmailService
 import hu.vecsesiot.backend.security.UserToUserDetails
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
@@ -12,6 +13,9 @@ import org.springframework.stereotype.Service
 class UserService {
 	@Autowired
 	private lateinit var repository: UserRepository
+
+	@Autowired
+	private lateinit var emailService: EmailService
 
 	@Autowired
 	private lateinit var passwordEncoder: PasswordEncoder
@@ -29,6 +33,8 @@ class UserService {
 			passwordEncoder.encode(registerDto.password),
 			listOf(),
 		))
+
+		//emailService.sendEmail(user.email, "Regisztráció", )
 	}
 
 	@Transactional
