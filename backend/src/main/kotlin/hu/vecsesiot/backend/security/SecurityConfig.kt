@@ -33,8 +33,9 @@ class SecurityConfig {
 			authorizeHttpRequests {
 				// More generale rules here
 				authorize("/**", permitAll)
-				// TODO refine this
+				// TODO refine this, then set it to denyAll !
 				authorize("/api/**", hasAuthority("User"))
+				authorize("/api/email", hasAuthority("Developer"))
 				authorize("/api/users/register", permitAll)
 			}
 			cors {
