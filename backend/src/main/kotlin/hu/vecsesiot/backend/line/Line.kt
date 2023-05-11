@@ -3,6 +3,7 @@ package hu.vecsesiot.backend.line
 import hu.vecsesiot.backend.section.Section
 import hu.vecsesiot.backend.stop.Stop
 import hu.vecsesiot.backend.timetable.Timetable
+import hu.vecsesiot.backend.user.User
 import jakarta.persistence.*
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
@@ -27,4 +28,7 @@ class Line(
 
 	@OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
 	lateinit var timetable: List<Timetable>
+
+	@ManyToMany(mappedBy = "lineSubscriptions")
+	lateinit var subscribedUsers: List<User>
 }

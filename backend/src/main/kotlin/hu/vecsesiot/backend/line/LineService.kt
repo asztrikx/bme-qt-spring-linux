@@ -3,6 +3,7 @@ package hu.vecsesiot.backend.line
 import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.bus.BusController
 import hu.vecsesiot.backend.bus.BusRepository
+import hu.vecsesiot.backend.email.EmailService
 import hu.vecsesiot.backend.faultticket.FaultTicket
 import hu.vecsesiot.backend.stop.Stop
 import hu.vecsesiot.backend.stop.StopRepository
@@ -23,6 +24,9 @@ class LineService {
 
 	@Autowired
 	private lateinit var stopRepository: StopRepository
+
+	@Autowired
+	private lateinit var emailService: EmailService
 
 	private val logger = LoggerFactory.getLogger(BusController::class.java)
 
@@ -65,5 +69,11 @@ class LineService {
 			.filter { Duration.between(it.timetable!!.startDate, time) < timeUntilStop }
 			.sortedBy { Duration.between(it.timetable!!.startDate, time) }
 			.filter { it.faultTickets.any { it.state != FaultTicket.State.Resolved } }
+	}
+
+	fun notifyAllSubscribedUserOnBreakdown(lineId: Long){
+		val line = repository.findById(lineId).get()
+		for(user in line.subscribedUsers)
+			emailService.sendFaultNotificationEmail(user.email, user.name, line.name)
 	}
 }

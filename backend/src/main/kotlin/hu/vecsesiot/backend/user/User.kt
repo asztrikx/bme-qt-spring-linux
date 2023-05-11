@@ -28,4 +28,7 @@ class User(
 
 	@OneToMany(mappedBy = "user")
 	lateinit var faultTickets: List<FaultTicket>
+
+	@ManyToMany
+	lateinit var lineSubscriptions: List<User>
 }

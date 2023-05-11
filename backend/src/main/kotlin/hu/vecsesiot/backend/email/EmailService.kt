@@ -2,6 +2,7 @@ package hu.vecsesiot.backend.email
 
 import hu.vecsesiot.backend.bus.BusController
 import hu.vecsesiot.backend.user.RegisterDto
+import hu.vecsesiot.backend.user.User
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.MailException
@@ -32,6 +33,16 @@ class EmailService {
 		val emailBody: String = templateEngine.process("Registration", myContext)
 
 		sendEmail(user.email, "Welcome to VecsesIot", emailBody)
+	}
+
+	fun sendFaultNotificationEmail(email: String, user: String, line: String){
+		val myContext = Context()
+		myContext.setVariable("name", user)
+		myContext.setVariable("line", line)
+
+		val emailBody: String = templateEngine.process("FaultNotification", myContext)
+
+		sendEmail(email, "Bus broke down in your way", emailBody)
 	}
 
 	fun sendEmail(to: String, subject: String, body: String) {
