@@ -1,17 +1,17 @@
 package hu.vecsesiot.backend.email
 
 import hu.vecsesiot.backend.bus.BusController
-import hu.vecsesiot.backend.user.RegisterDto
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.MailException
-import org.springframework.mail.SimpleMailMessage
 import org.springframework.mail.javamail.JavaMailSender
+import org.springframework.mail.javamail.MimeMessageHelper
 import org.springframework.stereotype.Service
 import org.thymeleaf.context.Context
 import org.thymeleaf.spring6.SpringTemplateEngine
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
+import kotlin.reflect.KProperty1
+import kotlin.reflect.full.memberProperties
+
 
 @Service
 class EmailService {
@@ -23,29 +23,25 @@ class EmailService {
 
 	private val logger = LoggerFactory.getLogger(BusController::class.java)
 
-	fun sendRegistrationWelcomeEmail(user: RegisterDto) {
-		val myContext = Context()
-		myContext.setVariable("name", user.name)
-		myContext.setVariable("username", user.username)
-		myContext.setVariable(
-			"date", LocalDateTime.now().format(
-				DateTimeFormatter.ofPattern("yyyy/MM/dd")
-			)
-		)
+	fun <T : Template> sendEmailTemplate(email: String, template: T) {
+		val ctx = Context()
+		var templateName: String? = null
+		var subject: String? = null
+		for (property in template::class.memberProperties) {
+			property as KProperty1<Any, *>
+			val value = property.get(template) as String
 
-		val emailBody: String = templateEngine.process("Registration", myContext)
+			when (property.name) {
+				"templateName" -> templateName = value
+				"subject" -> subject = value
+				else -> ctx.setVariable(property.name, value)
+			}
+		}
+		templateName!!
+		subject!!
 
-		sendEmail(user.email, "Welcome to VecsesIot", emailBody)
-	}
-
-	fun sendFaultNotificationEmail(email: String, user: String, line: String) {
-		val myContext = Context()
-		myContext.setVariable("name", user)
-		myContext.setVariable("line", line)
-
-		val emailBody: String = templateEngine.process("FaultNotification", myContext)
-
-		sendEmail(email, "Bus broke down in your way", emailBody)
+		val emailBody = templateEngine.process(templateName, ctx)
+		sendEmail(email, subject, emailBody)
 	}
 
 	fun sendEmail(to: String, subject: String, body: String) {

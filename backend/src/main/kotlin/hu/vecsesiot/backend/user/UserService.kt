@@ -1,12 +1,14 @@
 package hu.vecsesiot.backend.user
 
 import hu.vecsesiot.backend.email.EmailService
+import hu.vecsesiot.backend.email.RegisterTemplate
 import hu.vecsesiot.backend.security.UserToUserDetails
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 
 @Service
@@ -36,7 +38,13 @@ class UserService {
 			)
 		)
 
-		emailService.sendRegistrationWelcomeEmail(registerDto)
+		emailService.sendEmailTemplate(
+			registerDto.email, RegisterTemplate(
+				registerDto.name,
+				registerDto.username,
+				LocalDateTime.now(),
+			)
+		)
 	}
 
 	@Transactional
