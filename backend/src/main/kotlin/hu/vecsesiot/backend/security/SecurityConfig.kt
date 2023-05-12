@@ -29,15 +29,26 @@ class SecurityConfig {
 	fun filterChain(http: HttpSecurity): SecurityFilterChain {
 		// https://www.baeldung.com/kotlin/spring-security-dsl
 		http {
-			// logout is accessible by default
 			authorizeHttpRequests {
-				// More generale rules here
-				// PermitAll for / overwrites all rules even if at bottom
-				authorize("/**", permitAll)
-				// TODO refine this, then set it to denyAll !
-				authorize("/api/**", hasAuthority("User"))
-				authorize("/api/email", hasAuthority("Developer"))
-				authorize("/api/users/register", permitAll)
+				// All Driver has a User role
+				// All Maintenance has a User role
+
+				// The following config basically tells the servlet to hide /api from us,
+				// so we have to specify urls without it otherwise it becomes /api/api on a client.
+				// server.servlet.context-path: /api
+
+				authorize("/users/register", permitAll)
+				authorize("/users/details", hasAnyAuthority("User"))
+				authorize("/buses/**", hasAnyAuthority("Driver"))
+				authorize("/faultTickets/**", hasAnyAuthority("Driver", "Maintenance"))
+				authorize("/timetables/**", hasAnyAuthority("User"))
+				authorize("/sections/**", hasAnyAuthority("User"))
+				authorize("/lines/**", hasAnyAuthority("User"))
+				authorize("/stops/**", hasAnyAuthority("User"))
+				// Prevent infinite redirects to /error because of BadCredentialException which redirects to /error
+				authorize("/error", permitAll)
+				authorize("/", hasAnyAuthority("User"))
+				authorize(anyRequest, hasAnyAuthority("Developer"))
 			}
 			cors {
 				disable()
