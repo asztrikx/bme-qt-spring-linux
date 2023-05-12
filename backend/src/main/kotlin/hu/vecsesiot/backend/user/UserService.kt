@@ -22,6 +22,9 @@ class UserService {
 	@Autowired
 	private lateinit var passwordEncoder: PasswordEncoder
 
+	/**
+	 * [Transactional] is also good for email sending failure
+	 */
 	@Transactional
 	fun register(registerDto: RegisterDto) {
 		val user = repository.findUserByUsername(registerDto.username)
