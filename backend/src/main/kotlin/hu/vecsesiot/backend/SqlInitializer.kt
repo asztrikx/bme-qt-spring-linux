@@ -271,7 +271,7 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Nagy István",
-					username = "asd",
+					username = "user",
 					roles = listOf("User"),
 					// ne spammeljünk domaineket...
 					email = "d",
@@ -282,7 +282,7 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Gipsz Jakab",
-					username = "asd2",
+					username = "driver",
 					roles = listOf("User", "Driver"),
 					// ne spammeljünk domaineket...
 					email = "c",
@@ -293,7 +293,7 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Csetneki Péter",
-					username = "asd3",
+					username = "driver2",
 					roles = listOf("User", "Driver"),
 					// ne spammeljünk domaineket...
 					email = "b",
@@ -304,7 +304,7 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Kis István",
-					username = "asd4",
+					username = "driver3",
 					roles = listOf("User", "Driver"),
 					// ne spammeljünk domaineket...
 					email = "a",
@@ -315,8 +315,19 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Mekk Elek",
-					username = "asd5",
+					username = "main",
 					roles = listOf("User", "Maintenance"),
+					// ne spammeljünk domaineket...
+					email = "e",
+					// 123
+					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
+				)
+			)
+			add(
+				User(
+					name = "Developer",
+					username = "dev",
+					roles = listOf("Developer", "User", "Driver", "Maintainer"),
 					// ne spammeljünk domaineket...
 					email = "e",
 					// 123
