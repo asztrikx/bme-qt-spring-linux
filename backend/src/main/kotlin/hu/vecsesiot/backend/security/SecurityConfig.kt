@@ -32,7 +32,7 @@ class SecurityConfig {
 			// logout is accessible by default
 			authorizeHttpRequests {
 				// More generale rules here
-				authorize("/**", permitAll)
+				// PermitAll for / overwrites all rules even if at bottom
 				// TODO refine this, then set it to denyAll !
 				authorize("/api/**", hasAuthority("User"))
 				authorize("/api/email", hasAuthority("Developer"))
