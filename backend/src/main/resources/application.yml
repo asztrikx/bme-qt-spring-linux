@@ -44,7 +44,9 @@ logging:
   level:
     org:
       hibernate:
-        type: debug
+        type: warn
+      springframework:
+        security: warn
   file:
     path: logs/
     name: logs/application.log
