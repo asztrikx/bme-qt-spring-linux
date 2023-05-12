@@ -25,16 +25,18 @@ class UserService {
 		val user = repository.findUserByUsername(registerDto.username)
 		check(user == null)
 
-		repository.save(User(
-			null,
-			registerDto.username,
-			registerDto.email,
-			registerDto.name,
-			passwordEncoder.encode(registerDto.password),
-			listOf(),
-		))
+		repository.save(
+			User(
+				null,
+				registerDto.username,
+				registerDto.email,
+				registerDto.name,
+				passwordEncoder.encode(registerDto.password),
+				listOf(),
+			)
+		)
 
-		//emailService.sendEmail(user.email, "Regisztráció", )
+		emailService.sendRegistrationWelcomeEmail(registerDto)
 	}
 
 	@Transactional

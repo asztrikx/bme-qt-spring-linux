@@ -2,7 +2,6 @@ package hu.vecsesiot.backend.email
 
 import hu.vecsesiot.backend.bus.BusController
 import hu.vecsesiot.backend.user.RegisterDto
-import hu.vecsesiot.backend.user.User
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.mail.MailException
@@ -18,24 +17,28 @@ import java.time.format.DateTimeFormatter
 class EmailService {
 	@Autowired
 	private lateinit var mailSender: JavaMailSender
+
 	@Autowired
 	private lateinit var templateEngine: SpringTemplateEngine
 
 	private val logger = LoggerFactory.getLogger(BusController::class.java)
 
-	fun sendRegistrationWelcomeEmail(user:RegisterDto){
+	fun sendRegistrationWelcomeEmail(user: RegisterDto) {
 		val myContext = Context()
 		myContext.setVariable("name", user.name)
 		myContext.setVariable("username", user.username)
-		myContext.setVariable("date", LocalDateTime.now().format(
-			DateTimeFormatter.ofPattern("yyyy/MM/dd")))
+		myContext.setVariable(
+			"date", LocalDateTime.now().format(
+				DateTimeFormatter.ofPattern("yyyy/MM/dd")
+			)
+		)
 
 		val emailBody: String = templateEngine.process("Registration", myContext)
 
 		sendEmail(user.email, "Welcome to VecsesIot", emailBody)
 	}
 
-	fun sendFaultNotificationEmail(email: String, user: String, line: String){
+	fun sendFaultNotificationEmail(email: String, user: String, line: String) {
 		val myContext = Context()
 		myContext.setVariable("name", user)
 		myContext.setVariable("line", line)
