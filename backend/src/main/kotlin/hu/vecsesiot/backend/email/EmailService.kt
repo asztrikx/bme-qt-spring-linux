@@ -45,11 +45,13 @@ class EmailService {
 	}
 
 	fun sendEmail(to: String, subject: String, body: String) {
-		val message = SimpleMailMessage()
-		message.setTo(to)
-		message.from = "alkfejl23@alkfejl2023.org"
+		val message = mailSender.createMimeMessage()
 		message.subject = subject
-		message.text = body
+
+		val helper = MimeMessageHelper(message, true)
+		helper.setFrom("alkfejl23@alkfejl2023.org")
+		helper.setTo(to)
+		helper.setText(body, true)
 
 		try {
 			mailSender.send(message)
