@@ -1,6 +1,5 @@
 package hu.vecsesiot.backend.user
 
-import hu.vecsesiot.backend.email.EmailService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
