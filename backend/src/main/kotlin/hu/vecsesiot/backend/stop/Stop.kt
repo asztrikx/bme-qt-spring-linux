@@ -13,9 +13,9 @@ class Stop(
 	@GeneratedValue
 	var id: Long? = null,
 	var coordinate: GPSCoordinate,
-	@NotBlank
+	@get:NotBlank
 	var name: String,
 ) {
 	@ManyToMany(mappedBy = "stops")
-	lateinit var lines: List<Line>
+	lateinit var lines: List<Line> // TODO How will rest fill this?
 }

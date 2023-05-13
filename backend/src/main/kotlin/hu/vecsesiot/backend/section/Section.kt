@@ -15,12 +15,12 @@ class Section(
 	var id: Long? = null,
 	// Hibernate solves the mapping to SQL primitives without using @Converter
 	// Disallow negative duration
-	@DurationMin(seconds = 1)
+	@get:DurationMin(seconds = 1)
 	var timespan: Duration,
 ) {
 	@ManyToOne
-	lateinit var start: Stop
+	lateinit var start: Stop // TODO How will rest fill this?
 
 	@ManyToOne
-	lateinit var stop: Stop
+	lateinit var stop: Stop // TODO How will rest fill this?
 }

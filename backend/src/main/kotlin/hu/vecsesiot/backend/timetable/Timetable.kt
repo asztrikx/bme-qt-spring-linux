@@ -2,11 +2,7 @@ package hu.vecsesiot.backend.timetable
 
 import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.line.Line
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.Id
-import jakarta.persistence.ManyToOne
-import jakarta.persistence.OneToOne
+import jakarta.persistence.*
 import java.time.LocalDateTime
 
 @Entity
@@ -18,7 +14,7 @@ class Timetable(
 	var startDate: LocalDateTime,
 ) {
 	@ManyToOne
-	lateinit var line: Line
+	lateinit var line: Line // TODO How will rest fill this?
 
 	@OneToOne(mappedBy = "timetable")
 	var bus: Bus? = null

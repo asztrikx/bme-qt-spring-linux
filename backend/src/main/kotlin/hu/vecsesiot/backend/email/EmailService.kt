@@ -12,7 +12,6 @@ import org.thymeleaf.spring6.SpringTemplateEngine
 import kotlin.reflect.KProperty1
 import kotlin.reflect.full.memberProperties
 
-
 @Service
 class EmailService {
 	@Autowired
