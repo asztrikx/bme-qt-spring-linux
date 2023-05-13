@@ -15,8 +15,20 @@ ApplicationWindow {
 
     property var userData
 
+    function isAnyRole(...roles) {
+        if (typeof app.userData === "undefined") return false;
+
+        for (const role of roles) {
+            if (app.userData["roles"].includes(role)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     menuBar: MenuBar {
         visible: (app.userData !== undefined)
+
         Menu {
             title: "Line"
             MenuItem {
@@ -45,7 +57,7 @@ ApplicationWindow {
             title: "Profile"
             MenuItem {
                 text: "Show"
-                enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
+                enabled: isAnyRole("Driver")
                 onTriggered: { actualView = "driverprofile" }
             }
             MenuItem {
@@ -56,18 +68,17 @@ ApplicationWindow {
 
         Menu {
             title: "Fault ticket"
-            enabled: (app.userData !== undefined && (app.userData["roles"].includes("Driver") || app.userData["roles"].includes("Maintenance")))
             MenuItem {
                 text: "List all"
                 onTriggered: { actualView = "faultticketlist" }
+                enabled: isAnyRole("Driver", "Maintenance")
             }
             MenuItem {
                 text: "Create new"
                 onTriggered: { actualView = "faultticketform" }
-                enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
+                enabled: isAnyRole("Driver")
             }
         }
-
     }
 
     FaultTicketList {
