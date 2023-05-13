@@ -11,6 +11,8 @@ Item {
         plugin: mapPlugin
         center: QtPositioning.coordinate(47.41, 19.26)
         zoomLevel: 14
+        maximumZoomLevel: 15
+        minimumZoomLevel: 13
 
         Plugin {
             id: mapPlugin
