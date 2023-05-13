@@ -1,5 +1,6 @@
 package hu.vecsesiot.backend.user
 
+import jakarta.validation.Valid
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,7 +14,7 @@ class UserController {
 	private lateinit var service: UserService
 
 	@PostMapping("/register")
-	fun register(@RequestBody registerDto: RegisterDto): ResponseEntity<Any> {
+	fun register(@Valid @RequestBody registerDto: RegisterDto): ResponseEntity<Nothing> {
 		return try {
 			service.register(registerDto)
 			ResponseEntity.ok().build()

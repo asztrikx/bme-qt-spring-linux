@@ -14,9 +14,8 @@ class Line(
 	@GeneratedValue
 	var id: Long? = null,
 
-	// TODO determine max size
-	@NotBlank
-	@Size(min = 4, max = 50)
+	@get:NotBlank
+	@get:Size(min = 4, max = 50)
 	@Column(unique = true)
 	var name: String,
 ) {

@@ -13,7 +13,7 @@ class Bus(
 	@Id
 	@GeneratedValue
 	var id: Long? = null,
-	@NotBlank
+	@get:NotBlank
 	@Column(unique = true)
 	var serialnumber: String,
 ) {

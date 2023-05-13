@@ -13,7 +13,7 @@ class Stop(
 	@GeneratedValue
 	var id: Long? = null,
 	var coordinate: GPSCoordinate,
-	@NotBlank
+	@get:NotBlank
 	var name: String,
 ) {
 	@ManyToMany(mappedBy = "stops")

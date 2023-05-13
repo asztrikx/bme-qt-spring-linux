@@ -14,7 +14,7 @@ class FaultTicket(
 	var id: Long? = null,
 	var startDate: LocalDateTime,
 	var resolveDate: LocalDateTime? = null,
-	@NotBlank
+	@get:NotBlank
 	var description: String,
 	var coordinate: GPSCoordinate,
 	@Enumerated(EnumType.STRING)
