@@ -340,7 +340,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "BusDisplay",
 					username = "disp",
-					roles = expandRoles(User),
+					roles = expandRoles(Display),
 					email = "f",
 					// 123
 					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
