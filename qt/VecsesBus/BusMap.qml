@@ -4,6 +4,8 @@ import QtLocation 5.15
 import QtGraphicalEffects 1.0
 
 Item {
+    anchors.fill: parent
+
     Map {
         anchors.fill: parent
         plugin: mapPlugin
