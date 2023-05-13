@@ -1,0 +1,26 @@
+#!/usr/bin/make -f
+
+# Specify the source directory
+SOURCE_DIR := $(CURDIR)/src
+
+# Specify the output directory
+OUTPUT_DIR := $(CURDIR)/debian/neXtBus
+
+# Build the application
+build:
+	dotnet build $(SOURCE_DIR)/nextBus.csproj -c Release -o $(OUTPUT_DIR)
+
+# Install the application
+install:
+	# Copy the executable to the binary directory
+	mkdir -p $(CURDIR)/debian/neXtBus/usr/bin
+	cp $(OUTPUT_DIR)/neXtBus $(CURDIR)/debian/neXtBus/usr/bin
+
+# Clean the build directory
+clean:
+	# Remove any files generated during the build process
+	rm -rf $(OUTPUT_DIR)
+
+	# Remove any other files generated during the package creation process
+	rm -rf $(CURDIR)/debian/neXtBus
+
