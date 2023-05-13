@@ -18,7 +18,7 @@ repositories {
 
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect:1.8.21")
-	
+
 	implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
 	implementation("org.springframework.boot:spring-boot-starter-hateoas")
@@ -32,6 +32,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.session:spring-session-jdbc")
+	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 	//implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 	runtimeOnly("org.hsqldb:hsqldb")
