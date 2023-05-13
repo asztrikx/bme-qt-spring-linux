@@ -44,7 +44,8 @@ class UserService {
 		)
 
 		emailService.sendEmailTemplate(
-			registerDto.email, RegisterTemplate(
+			registerDto.email,
+			RegisterTemplate(
 				registerDto.name,
 				registerDto.username,
 				LocalDateTime.now(),
