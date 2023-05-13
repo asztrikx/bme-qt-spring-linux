@@ -40,6 +40,7 @@ Item {
                 placeholderText: "Password"
                 font.pixelSize: 16
                 echoMode: TextInput.Password
+                onAccepted: () => { submit.onClicked(); }
             }
 
             Text {
@@ -52,6 +53,7 @@ Item {
             }
 
             Button {
+                id: submit
                 text: "Submit"
                 font.pixelSize: 16
                 onClicked: {
