@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import hu.vecsesiot.backend.security.RoleType.*
 
 @Configuration
 @EnableWebSecurity
@@ -38,17 +39,17 @@ class SecurityConfig {
 				// server.servlet.context-path: /api
 
 				authorize("/users/register", permitAll)
-				authorize("/users/details", hasAnyAuthority("User"))
-				authorize("/buses/**", hasAnyAuthority("Driver"))
-				authorize("/faultTickets/**", hasAnyAuthority("Driver", "Maintenance"))
-				authorize("/timetables/**", hasAnyAuthority("User"))
-				authorize("/sections/**", hasAnyAuthority("User"))
-				authorize("/lines/**", hasAnyAuthority("User"))
-				authorize("/stops/**", hasAnyAuthority("User"))
+				authorize("/users/details", hasAnyAuthority(User))
+				authorize("/buses/**", hasAnyAuthority(Driver))
+				authorize("/faultTickets/**", hasAnyAuthority(Driver, Maintenance))
+				authorize("/timetables/**", hasAnyAuthority(User))
+				authorize("/sections/**", hasAnyAuthority(User))
+				authorize("/lines/**", hasAnyAuthority(User))
+				authorize("/stops/**", hasAnyAuthority(User))
 				// Prevent infinite redirects to /error because of BadCredentialException which redirects to /error
 				authorize("/error", permitAll)
-				authorize("/", hasAnyAuthority("User"))
-				authorize(anyRequest, hasAnyAuthority("Developer"))
+				authorize("/", hasAnyAuthority(User))
+				authorize(anyRequest, hasAnyAuthority(Developer))
 			}
 			cors {
 				disable()

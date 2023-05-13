@@ -8,6 +8,8 @@ import hu.vecsesiot.backend.line.Line
 import hu.vecsesiot.backend.line.LineRepository
 import hu.vecsesiot.backend.section.Section
 import hu.vecsesiot.backend.section.SectionRepository
+import hu.vecsesiot.backend.security.RoleType.*
+import hu.vecsesiot.backend.security.expandRoles
 import hu.vecsesiot.backend.stop.GPSCoordinate
 import hu.vecsesiot.backend.stop.Stop
 import hu.vecsesiot.backend.stop.StopRepository
@@ -272,7 +274,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Nagy István",
 					username = "user",
-					roles = listOf("User"),
+					roles = expandRoles(User),
 					// ne spammeljünk domaineket...
 					email = "d",
 					// 123
@@ -283,7 +285,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Gipsz Jakab",
 					username = "driver",
-					roles = listOf("User", "Driver"),
+					roles = expandRoles(Driver),
 					// ne spammeljünk domaineket...
 					email = "c",
 					// 123
@@ -294,7 +296,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Csetneki Péter",
 					username = "driver2",
-					roles = listOf("User", "Driver"),
+					roles = expandRoles(Driver),
 					// ne spammeljünk domaineket...
 					email = "b",
 					// 123
@@ -305,7 +307,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Kis István",
 					username = "driver3",
-					roles = listOf("User", "Driver"),
+					roles = expandRoles(Driver),
 					// ne spammeljünk domaineket...
 					email = "a",
 					// 123
@@ -316,7 +318,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Mekk Elek",
 					username = "main",
-					roles = listOf("User", "Maintenance"),
+					roles = expandRoles(Maintenance),
 					// ne spammeljünk domaineket...
 					email = "e",
 					// 123
@@ -327,7 +329,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "Developer",
 					username = "dev",
-					roles = listOf("Developer", "User", "Driver", "Maintainer"),
+					roles = expandRoles(Developer),
 					// ne spammeljünk domaineket...
 					email = "e",
 					// 123
