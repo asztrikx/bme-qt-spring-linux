@@ -13,7 +13,6 @@ class User(
 	@Column(unique = true)
 	var username: String,
 	@JsonIgnore
-	@Column(unique = true)
 	var email: String,
 	@JsonIgnore
 	var name: String,
