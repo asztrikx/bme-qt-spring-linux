@@ -76,7 +76,8 @@ class LineService {
 		val line = repository.findById(lineId).get()
 		for (user in line.subscribedUsers)
 			emailService.sendEmailTemplate(
-				user.email, FaultNotificationTemplate(
+				user.email,
+				FaultNotificationTemplate(
 					user.name,
 					line.name,
 				)
