@@ -32,6 +32,7 @@ dependencies {
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.session:spring-session-jdbc")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.4")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
 	//implementation("org.thymeleaf.extras:thymeleaf-extras-springsecurity6")
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
