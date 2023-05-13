@@ -20,6 +20,10 @@ enum class RoleType {
 	Driver {
 		override val iherits: List<RoleType>
 			get() = listOf(User)
+	},
+	Display {
+		override val iherits: List<RoleType>
+		get() = listOf(User)
 	};
 
 	abstract val iherits: List<RoleType>

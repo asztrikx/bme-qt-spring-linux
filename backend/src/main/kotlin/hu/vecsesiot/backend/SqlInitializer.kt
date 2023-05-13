@@ -221,47 +221,47 @@ class SqlInitializer : ApplicationRunner {
 	private fun getTimetables(lines: List<Line>): List<Timetable> {
 		return mutableListOf<Timetable>().apply {
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 16, 42)).apply {
+				Timetable(startDate = LocalDateTime.now().plusHours(1)).apply {
 					line = lines[0]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 15, 10)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(25)).apply {
 					line = lines[1]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 14, 42)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(20)).apply {
 					line = lines[2]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 15, 42)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(15)).apply {
 					line = lines[0]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 15, 33)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(35)).apply {
 					line = lines[1]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 15, 57)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(28)).apply {
 					line = lines[1]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 16, 5)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(42)).apply {
 					line = lines[1]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 15, 42)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(55)).apply {
 					line = lines[2]
 				}
 			)
 			add(
-				Timetable(startDate = LocalDateTime.of(2023, 3, 30, 16, 42)).apply {
+				Timetable(startDate = LocalDateTime.now().plusMinutes(33)).apply {
 					line = lines[2]
 				}
 			)
@@ -340,7 +340,7 @@ class SqlInitializer : ApplicationRunner {
 				User(
 					name = "BusDisplay",
 					username = "disp",
-					roles = expandRoles(User),
+					roles = expandRoles(Display),
 					email = "f",
 					// 123
 					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
