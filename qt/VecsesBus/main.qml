@@ -43,10 +43,14 @@ ApplicationWindow {
 
         Menu {
             title: "Profile"
-            enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
             MenuItem {
                 text: "Show"
+                enabled: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
                 onTriggered: { actualView = "driverprofile" }
+            }
+            MenuItem {
+                text: "Logout"
+                onTriggered: { actualView = "login"; userData = undefined }
             }
         }
 
