@@ -1,6 +1,5 @@
 package hu.vecsesiot.backend.user
 
-import hu.vecsesiot.backend.email.EmailService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -12,16 +11,11 @@ import org.springframework.web.bind.annotation.*
 class UserController {
 	@Autowired
 	private lateinit var service: UserService
-	@Autowired
-	private lateinit var emailService: EmailService
 
 	@PostMapping("/register")
 	fun register(@RequestBody registerDto: RegisterDto): ResponseEntity<Any> {
 		return try {
 			service.register(registerDto)
-
-			emailService.sendRegistrationWelcomeEmail(registerDto)
-
 			ResponseEntity.ok().build()
 		} catch (e: Exception) {
 			ResponseEntity.status(HttpStatus.CONFLICT).build()

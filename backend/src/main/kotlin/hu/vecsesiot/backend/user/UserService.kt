@@ -1,12 +1,16 @@
 package hu.vecsesiot.backend.user
 
 import hu.vecsesiot.backend.email.EmailService
+import hu.vecsesiot.backend.email.RegisterTemplate
+import hu.vecsesiot.backend.security.RoleType
 import hu.vecsesiot.backend.security.UserToUserDetails
+import hu.vecsesiot.backend.security.expandRoles
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
+import java.time.LocalDateTime
 
 
 @Service
@@ -20,21 +24,33 @@ class UserService {
 	@Autowired
 	private lateinit var passwordEncoder: PasswordEncoder
 
+	/**
+	 * [Transactional] is also good for email sending failure
+	 */
 	@Transactional
 	fun register(registerDto: RegisterDto) {
 		val user = repository.findUserByUsername(registerDto.username)
 		check(user == null)
 
-		repository.save(User(
-			null,
-			registerDto.username,
-			registerDto.email,
-			registerDto.name,
-			passwordEncoder.encode(registerDto.password),
-			listOf(),
-		))
+		repository.save(
+			User(
+				null,
+				registerDto.username,
+				registerDto.email,
+				registerDto.name,
+				passwordEncoder.encode(registerDto.password),
+				expandRoles(RoleType.User),
+			)
+		)
 
-		//emailService.sendEmail(user.email, "Regisztráció", )
+		emailService.sendEmailTemplate(
+			registerDto.email,
+			RegisterTemplate(
+				registerDto.name,
+				registerDto.username,
+				LocalDateTime.now(),
+			)
+		)
 	}
 
 	@Transactional

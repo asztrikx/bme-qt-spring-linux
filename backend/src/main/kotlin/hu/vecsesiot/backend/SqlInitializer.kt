@@ -8,6 +8,8 @@ import hu.vecsesiot.backend.line.Line
 import hu.vecsesiot.backend.line.LineRepository
 import hu.vecsesiot.backend.section.Section
 import hu.vecsesiot.backend.section.SectionRepository
+import hu.vecsesiot.backend.security.RoleType.*
+import hu.vecsesiot.backend.security.expandRoles
 import hu.vecsesiot.backend.stop.GPSCoordinate
 import hu.vecsesiot.backend.stop.Stop
 import hu.vecsesiot.backend.stop.StopRepository
@@ -271,8 +273,8 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Nagy István",
-					username = "asd",
-					roles = listOf("User"),
+					username = "user",
+					roles = expandRoles(User),
 					// ne spammeljünk domaineket...
 					email = "d",
 					// 123
@@ -282,8 +284,8 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Gipsz Jakab",
-					username = "asd2",
-					roles = listOf("User", "Driver"),
+					username = "driver",
+					roles = expandRoles(Driver),
 					// ne spammeljünk domaineket...
 					email = "c",
 					// 123
@@ -293,8 +295,8 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Csetneki Péter",
-					username = "asd3",
-					roles = listOf("User", "Driver"),
+					username = "driver2",
+					roles = expandRoles(Driver),
 					// ne spammeljünk domaineket...
 					email = "b",
 					// 123
@@ -304,8 +306,8 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Kis István",
-					username = "asd4",
-					roles = listOf("User", "Driver"),
+					username = "driver3",
+					roles = expandRoles(Driver),
 					// ne spammeljünk domaineket...
 					email = "a",
 					// 123
@@ -315,8 +317,19 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				User(
 					name = "Mekk Elek",
-					username = "asd5",
-					roles = listOf("User", "Maintenance"),
+					username = "main",
+					roles = expandRoles(Maintenance),
+					// ne spammeljünk domaineket...
+					email = "e",
+					// 123
+					password = "\$2a\$12\$.oQRfzitpL1ACFSTjjas6e3fGNRbI52rOCH4frgE8mwxOuh3RV7o2"
+				)
+			)
+			add(
+				User(
+					name = "Developer",
+					username = "dev",
+					roles = expandRoles(Developer),
 					// ne spammeljünk domaineket...
 					email = "e",
 					// 123
