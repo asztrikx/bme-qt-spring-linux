@@ -2,7 +2,9 @@ package hu.vecsesiot.backend.user
 
 import hu.vecsesiot.backend.email.EmailService
 import hu.vecsesiot.backend.email.RegisterTemplate
+import hu.vecsesiot.backend.security.RoleType
 import hu.vecsesiot.backend.security.UserToUserDetails
+import hu.vecsesiot.backend.security.expandRoles
 import jakarta.transaction.Transactional
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
@@ -37,7 +39,7 @@ class UserService {
 				registerDto.email,
 				registerDto.name,
 				passwordEncoder.encode(registerDto.password),
-				listOf(),
+				expandRoles(RoleType.User),
 			)
 		)
 
