@@ -19,8 +19,8 @@ class Section(
 	var timespan: Duration,
 ) {
 	@ManyToOne
-	lateinit var start: Stop
+	lateinit var start: Stop // TODO How will rest fill this?
 
 	@ManyToOne
-	lateinit var stop: Stop
+	lateinit var stop: Stop // TODO How will rest fill this?
 }

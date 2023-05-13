@@ -15,7 +15,6 @@ interface TimetableRepository : JpaRepository<Timetable, Long> {
 	fun findTimetableByBusIsNotNullAndBusUserId(user_id: Long): Timetable?
 	fun findTimetablesByLineId(line_id: Long): List<Timetable>
 
-	// TODO check if param is necessary
 	@Query("SELECT t FROM Timetable t WHERE t.line.id = :line_id AND t.startDate > :date ORDER BY t.startDate ASC")
 	fun findAllByLineAndAfterDate(@Param("line_id") line_id: Long, @Param("date") date: LocalDateTime): List<Timetable>
 }

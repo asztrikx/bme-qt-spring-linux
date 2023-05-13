@@ -14,7 +14,7 @@ class Timetable(
 	var startDate: LocalDateTime,
 ) {
 	@ManyToOne
-	lateinit var line: Line
+	lateinit var line: Line // TODO How will rest fill this?
 
 	@OneToOne(mappedBy = "timetable")
 	var bus: Bus? = null

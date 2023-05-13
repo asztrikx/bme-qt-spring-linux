@@ -21,11 +21,11 @@ class FaultTicket(
 	var state: State
 ) {
 	@ManyToOne
-	lateinit var user: User
+	lateinit var user: User // TODO How will rest fill this?
 
 	// could be a computed value
 	@ManyToOne
-	lateinit var bus: Bus
+	lateinit var bus: Bus // TODO How will rest fill this?
 
 	enum class State {
 		Created, InProgress, Resolved

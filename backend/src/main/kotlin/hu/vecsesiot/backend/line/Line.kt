@@ -23,7 +23,7 @@ class Line(
 	lateinit var route: List<Section>
 
 	@ManyToMany
-	lateinit var stops: List<Stop>
+	lateinit var stops: List<Stop> // TODO How will rest fill this?
 
 	@OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
 	lateinit var timetable: List<Timetable>
