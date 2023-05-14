@@ -10,6 +10,7 @@ CONFIG += c++17
 
 SOURCES += \
     driverprofilemanager.cpp \
+    mapmanager.cpp \
     faultticketmanager.cpp \
     linemanager.cpp \
     loginmanager.cpp \
@@ -19,6 +20,7 @@ SOURCES += \
 
 HEADERS += \
     driverprofilemanager.h \
+    mapmanager.h \
     faultticketmanager.h \
     linemanager.h \
     loginmanager.h \

@@ -5,6 +5,28 @@ import QtGraphicalEffects 1.0
 
 Item {
     anchors.fill: parent
+    required property var lineId;
+    required property var stopId;
+
+    signal network2(var lineId2, var stopId2)
+    Component.onCompleted: () => { console.log(lineId,stopId, "XDD"); network2(lineId, stopId) }
+
+    property var stops;
+    property var nextBus;
+    property var brokenBuses;
+
+    onStopsChanged: () => {
+        var coords = [];
+        for (const stop of stops["_embedded"]["stops"]) {
+           coords.push(stop["coordinate"]);
+        }
+
+        routePoly.path = coords;
+
+        for (const coord of coords) {
+            routeStops.append(coord);
+        }
+    }
 
     Map {
         anchors.fill: parent
@@ -17,25 +39,6 @@ Item {
         Plugin {
             id: mapPlugin
             name: "osm"
-        }
-
-        Component.onCompleted: () => {
-            var coords = [
-                { latitude: 47.419804, longitude: 19.247528 },
-                { latitude: 47.39992883987876, longitude: 19.25913066972342 },
-                { latitude: 47.40366317296768, longitude: 19.2533053122232 },
-                { latitude: 47.40128681145784, longitude: 19.249980961251165 },
-                { latitude: 47.4173987343762, longitude: 19.241270529370745 },
-                { latitude: 47.41502039841608, longitude: 19.26243241570361 },
-                { latitude: 47.407785632881705, longitude: 19.281104668262078 },
-                { latitude: 47.399162080014555, longitude: 19.299996594292413 },
-                { latitude: 47.416556419436255, longitude: 19.25811216892971 },
-            ]
-            routePoly.path = coords;
-
-            for (const coord of coords) {
-                routeStops.append(coord);
-            }
         }
 
         MapItemGroup {

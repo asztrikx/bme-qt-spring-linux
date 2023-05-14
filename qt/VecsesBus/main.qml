@@ -10,7 +10,7 @@ ApplicationWindow {
     visible: true
     title: "VecsesIoT"
 
-    property string actualView: "login"
+    property string actualView: "map"
     //property string actualView: "faultticketform"
 
     property var userData
@@ -227,8 +227,10 @@ ApplicationWindow {
         }
     }
 
-
-    /*BusMap {
-    }*/
-
+    BusMap {
+        objectName: "map"
+        visible: actualView === "map"
+        lineId: 1
+        stopId: 1
+    }
 }
