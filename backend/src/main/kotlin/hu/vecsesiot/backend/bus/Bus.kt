@@ -9,7 +9,6 @@ import jakarta.validation.constraints.NotBlank
 import java.time.Duration
 import java.time.LocalDateTime
 
-
 // Bus represent a physical bus.
 // Bus may be temporarily linked to a bus or even to a timetable.
 @Entity
@@ -28,7 +27,7 @@ class Bus(
 	var timetable: Timetable? = null
 
 	@OneToMany(mappedBy = "bus")
-	lateinit var faultTickets: List<FaultTicket>
+	lateinit var faultTickets: MutableList<FaultTicket>
 
 	val coordinate: GPSCoordinate?
 		get() {

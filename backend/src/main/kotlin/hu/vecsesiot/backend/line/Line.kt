@@ -26,8 +26,8 @@ class Line(
 	lateinit var stops: List<Stop> // TODO How will rest fill this?
 
 	@OneToMany(mappedBy = "line", cascade = [CascadeType.REMOVE])
-	lateinit var timetable: List<Timetable>
+	lateinit var timetable: MutableList<Timetable>
 
 	@ManyToMany(mappedBy = "lineSubscriptions")
-	lateinit var subscribedUsers: List<User>
+	lateinit var subscribedUsers: MutableList<User>
 }
