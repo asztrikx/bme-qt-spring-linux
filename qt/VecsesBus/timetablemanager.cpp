@@ -12,6 +12,7 @@ TimeTableManager::TimeTableManager(QObject* rootObject): NetworkManager(rootObje
     QObject::connect(timeTableListView, SIGNAL(getAllAvailableTimeTables(QString)), this, SLOT(getAllAvailableTimeTablesHandler(QString)));
     QObject::connect(timeTableListView, SIGNAL(getTimeTableLine(QVariant, QString)), this, SLOT(getTimeTableLineHandler(QVariant, QString)));
     QObject::connect(timeTableListView, SIGNAL(getAllSectionByTimeTable(QString, QString)), this, SLOT(getAllSectionByTimeTableHandler(QString, QString)));
+    QObject::connect(timeTableListView, SIGNAL(takeTimeTable(QVariant)), this, SLOT(postTakeTimetableHandler(QVariant)));
     QQuickItem* timeTableDetailView = rootObject->findChild<QQuickItem*>("timetabledetaillist");
     QObject::connect(timeTableDetailView, SIGNAL(getTimeTableSection(QVariant, QString)), this, SLOT(getTimeTableSectionHandler(QVariant, QString)));
 }
@@ -74,7 +75,7 @@ void TimeTableManager::getTimeTableSectionHandler(QVariant id, QString url)
         QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
         QJsonObject jsonObject = jsonResponse.object();
         QQuickItem* timeTableDetailList = rootObject->findChild<QQuickItem*>("timetabledetaillist");
-        QMetaObject::invokeMethod(timeTableDetailList, "setStop", Q_ARG(QVariant, id), Q_ARG(QVariant, jsonObject.value("name")));
+        QMetaObject::invokeMethod(timeTableDetailList, "setStop", Q_ARG(QVariant, id), Q_ARG(QVariant, jsonObject));
     });
 }
 
@@ -89,5 +90,17 @@ void TimeTableManager::getAllAvailableTimeTablesHandler(QString date)
         QJsonObject jsonObject = jsonResponse.object();
         QQuickItem* timeTableList = rootObject->findChild<QQuickItem*>("timetablelist");
         timeTableList->setProperty("timetables", QVariant(jsonObject));
+    });
+}
+
+void TimeTableManager::postTakeTimetableHandler(QVariant id)
+{
+    QUrl url = QUrl("http://localhost:8080/api/buses/take/" + id.toString());
+    QNetworkRequest request(url);
+    setAuthHeader(request);
+    reply = mgr.post(request, QByteArray());
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        QQuickItem* timeTableList = rootObject->findChild<QQuickItem*>("timetablelist");
+        QMetaObject::invokeMethod(timeTableList, "showProfile");
     });
 }

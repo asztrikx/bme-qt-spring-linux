@@ -18,6 +18,7 @@ public slots:
     void getTimeTableLineHandler(QVariant id, QString url);
     void getAllSectionByTimeTableHandler(QString url, QString startDate);
     void getTimeTableSectionHandler(QVariant id, QString url);
+    void postTakeTimetableHandler(QVariant id);
 };
 
 #endif // TIMETABLEMANAGER_H

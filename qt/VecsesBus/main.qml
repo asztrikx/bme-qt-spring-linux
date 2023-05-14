@@ -10,8 +10,7 @@ ApplicationWindow {
     visible: true
     title: "VecsesIoT"
 
-    property string actualView: "map"
-    //property string actualView: "faultticketform"
+    property string actualView: "login"
 
     property var userData
 
@@ -176,10 +175,15 @@ ApplicationWindow {
         signal getAllAvailableTimeTables(string date)
         signal getTimeTableLine(var id, string url)
         signal getAllSectionByTimeTable(string url, string startDate)
+        signal takeTimeTable(var id)
+        function showProfile() {
+            actualView = "driverprofile"
+        }
 
     }
 
     TimeTableDetailList {
+        id: timeTableDetailList
         visible: actualView === "timetabledetaillist"
         objectName: "timetabledetaillist"
 
@@ -192,12 +196,18 @@ ApplicationWindow {
         function onBack() {
             actualView = "timetablelist"
         }
+
+        function onSelectedItem(lineId, stopId){
+            map.lineId = lineId
+            map.stopId = stopId
+            actualView = "map"
+        }
     }
 
     DriverProfile {
         visible: actualView === "driverprofile"
         objectName: "driverprofile"
-
+        signal finishTimetable()
         signal getDriverActiveTimeTable(string id)
         signal getDriverActiveTimeTableLine(string url)
     }
@@ -229,9 +239,14 @@ ApplicationWindow {
 
     // TODO remove timer from Busmap, replace it
     BusMap {
+        id: map
         objectName: "map"
         visible: actualView === "map"
         lineId: 1
         stopId: 1
+
+        function onBack(){
+            actualView = "timetabledetaillist"
+        }
     }
 }

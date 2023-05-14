@@ -1,7 +1,8 @@
 import QtQuick 2.15
 import QtPositioning 5.15
 import QtLocation 5.15
-import QtGraphicalEffects 1.0
+import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.12
 
 Item {
     anchors.fill: parent
@@ -9,13 +10,10 @@ Item {
     required property var stopId;
 
     signal network(var lineId2, var stopId2)
-    Timer {
-        interval: 500
-        running: true
-        repeat: false
-        onTriggered: () => {
-            network(1, 1);
-        }
+
+    onVisibleChanged: () => {
+        if(!visible) return;
+        network(lineId, stopId)
     }
 
     property var stops;
@@ -133,5 +131,14 @@ Item {
                 }
             }
         }
+    }
+
+    Button{
+        anchors.bottomMargin: 50
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        text: "Back"
+        font.pixelSize: 16
+        onClicked: onBack()
     }
 }

@@ -6,7 +6,7 @@ Rectangle {
     anchors.fill: parent
     color: "white"
 
-    signal saveTicket(var ticket, string url)
+    signal saveTicket(string state, string url)
     signal deleteTicket(string url)
 
 
@@ -16,7 +16,7 @@ Rectangle {
         if (!ticket) return;
         descriptionLabel.text = "Description: " + ticket["description"]
         startDateLabel.text = "Start Date: " + ticket["startDate"]
-        resolveDateLabel.text = "Resolve Date: " + ((!ticket["resolveDate"]) ? "-" : ticket["resolveDate"])
+        resolveDateLabel.text = "Resolve Date: " + (!!ticket["resolveDate"] ? ticket["resolveDate"] : "-")
         coordinateLabel.text = "Coordinate: " + ticket["coordinate"]["latitude"] + ", " + ticket["coordinate"]["longitude"]
         if(!enableEdit) stateLabel.text = "State: " + ticket["state"]
         else stateLabelBox.currentIndex = ((ticket["state"] === "Created") ? 0 : ((ticket["state"] === "Resolved") ? 2 : 1))
@@ -69,14 +69,6 @@ Rectangle {
             currentIndex: 0
             visible: enableEdit
         }
-        /*
-        Label {
-            text: "User: " + faultTicket.user_name
-        }
-
-        Label {
-            text: "Bus: " + faultTicket.bus_name
-        }*/
 
         Row {
             spacing: 10
@@ -90,17 +82,7 @@ Rectangle {
                 text: "Mentés"
                 font.pixelSize: 16
                 onClicked: {
-                    var newTicket = {
-                        "description": ticket["description"],
-                        "coordinate": {
-                            "latitude": ticket["coordinate"]["latitude"],
-                            "longitude": ticket["coordinate"]["longitude"]
-                        },
-                        "state": ((stateLabelBox.currentIndex === 0) ? "Created" : ((stateLabelBox.currentIndex === 2)) ? "Resolved" : "InProgress"),
-                        "startDate": ticket["startDate"],
-                        "resolvedDate": ticket["resolveDate"]
-                    }
-                    saveTicket(JSON.stringify(newTicket), ticket["_links"]["self"]["href"])
+                    saveTicket(((stateLabelBox.currentIndex === 0) ? "Created" : ((stateLabelBox.currentIndex === 2)) ? "Resolved" : "InProgress"), ticket["_links"]["self"]["href"])
                 }
                 visible: enableEdit
             }

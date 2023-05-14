@@ -13,7 +13,6 @@ Item {
             ticketModel.append({
                                    "startDate" : ticket["startDate"],
                                    "description" : ticket["description"],
-                                   "resolveDate" : ticket["resolveDate"],
                                    "coordinate" : ticket["coordinate"],
                                    "_state" : ticket["state"],
                                    "url" : ticket["_links"]["self"]["href"]

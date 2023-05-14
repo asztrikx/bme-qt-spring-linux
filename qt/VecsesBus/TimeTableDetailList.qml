@@ -5,8 +5,9 @@ import QtQuick.Controls.Material 2.12
 Item {
     anchors.fill: parent
 
-    function setStop(id, stopName){
-        sectionmodel.get(id).name = stopName
+    function setStop(id, stop){
+        sectionmodel.get(id).name = stop.name
+        stopUrl = stop["_links"]["self"]["href"]
         let timespan = 0
         for(let i = id; i >= 0; i--){
             timespan += sectionmodel.get(i).timespan;
@@ -39,6 +40,8 @@ Item {
     }
 
     property string startDate
+    property var lineUrl
+    property var stopUrl
     property var sections
     onSectionsChanged: () => {
         if(!sections["_embedded"]) return;
@@ -83,7 +86,11 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: function(){
-                    onSelectedItem(url);
+                    const lineUrlParts = lineUrl.split("/")
+                    const lineId = lineUrlParts[lineUrlParts.length - 1]
+                    const stopUrlParts = stopUrl.split("/")
+                    const stopId = stopUrlParts[stopUrlParts.length - 1]
+                    onSelectedItem(lineId, stopId);
                 }
             }
 
@@ -119,7 +126,7 @@ Item {
 
         Button {
             text: "Back"
-            font.pixelSize: 20
+            font.pixelSize: 16
             onClicked: onBack()
         }
     }

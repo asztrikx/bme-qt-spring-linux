@@ -10,6 +10,7 @@ DriverProfileManager::DriverProfileManager(QObject* rootObject): NetworkManager(
     QQuickItem* driverProfile = rootObject->findChild<QQuickItem*>("driverprofile");
     QObject::connect(driverProfile, SIGNAL(getDriverActiveTimeTable(QString)), this, SLOT(getDriverActiveTimeTableHandler(QString)));
     QObject::connect(driverProfile, SIGNAL(getDriverActiveTimeTableLine(QString)), this, SLOT(getDriverActiveTimeTableLineHandler(QString)));
+    QObject::connect(driverProfile, SIGNAL(finishTimetable()), this, SLOT(postFinishTimetable()));
 }
 
 void DriverProfileManager::getDriverActiveTimeTableHandler(QString id)
@@ -42,6 +43,19 @@ void DriverProfileManager::getDriverActiveTimeTableLineHandler(QString url)
             QJsonObject jsonObject = jsonResponse.object();
             QQuickItem* driverProfile = rootObject->findChild<QQuickItem*>("driverprofile");
             driverProfile->setProperty("lineName", QVariant(jsonObject.value("name")));
+        }
+    });
+}
+
+void DriverProfileManager::postFinishTimetable()
+{
+    QNetworkRequest request(QUrl("http://localhost:8080/api/buses/finish"));
+    setAuthHeader(request);
+    reply = mgr.post(request, QByteArray());
+    QObject::connect(reply, &QNetworkReply::finished, [=]() {
+        if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200){
+            QQuickItem* driverProfile = rootObject->findChild<QQuickItem*>("driverprofile");
+            driverProfile->setProperty("timetable", QVariant("No data"));
         }
     });
 }

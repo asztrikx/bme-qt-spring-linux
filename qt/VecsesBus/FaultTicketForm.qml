@@ -81,9 +81,7 @@ Item {
                                 "latitude": latField.text,
                                 "longitude": longField.text
                             },
-                            "state": 0,
-                            "startDate": new Date(),
-                            "resolvedDate": null
+                            "startDate": new Date()
                         }
                         createTicket(JSON.stringify(newTicket));
                     }

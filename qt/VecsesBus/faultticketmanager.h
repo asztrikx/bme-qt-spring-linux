@@ -12,7 +12,7 @@ public slots:
     void getAllFaultTicketsHandler();
     void getFaultTicketByIdHandler(QString url);
     void createFaultTicketHandler(QVariant ticket);
-    void saveFaultTicketHandler(QVariant ticket, QString url);
+    void saveFaultTicketHandler(QString state, QString url);
     void deleteFaultTicketHandler(QString url);
     void getAllFaultTicketsByUser(QVariant id);
 

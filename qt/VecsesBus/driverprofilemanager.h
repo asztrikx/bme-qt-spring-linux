@@ -14,6 +14,7 @@ public:
 public slots:
     void getDriverActiveTimeTableHandler(QString id);
     void getDriverActiveTimeTableLineHandler(QString url);
+    void postFinishTimetable();
 };
 
 #endif // DRIVERPROFILEMANAGER_H

@@ -372,22 +372,22 @@ class SqlInitializer : ApplicationRunner {
 	}
 
 	private fun getFaultTickets(buses: List<Bus>): List<FaultTicket> {
+		val now = LocalDateTime.now()
 		return mutableListOf<FaultTicket>().apply {
 			add(
 				FaultTicket(
-					startDate = LocalDateTime.of(2023, 3, 30, 15, 45),
+					startDate = now.minusDays(1),
 					description = "The engine is fucked up.",
 					coordinate = GPSCoordinate(47.416674, 19.254866),
 					state = FaultTicket.State.Created
 				).apply {
 					bus = buses[0]
 					user = bus.user!!
-
 				}
 			)
 			add(
 				FaultTicket(
-					startDate = LocalDateTime.of(2023, 3, 30, 15, 45),
+					startDate = now.minusHours(5),
 					description = "The engine is fucked up and first door is locked.",
 					coordinate = GPSCoordinate(47.416674, 19.254866),
 					state = FaultTicket.State.InProgress
@@ -398,10 +398,10 @@ class SqlInitializer : ApplicationRunner {
 				}
 			)
 			add(FaultTicket(
-				startDate = LocalDateTime.of(2023, 3, 30, 12, 23),
+				startDate = now.minusHours(1),
 				description = "The engine is broken.",
 				coordinate = GPSCoordinate(47.409671, 19.270102),
-				resolveDate = LocalDateTime.of(2023, 3, 30, 13, 48),
+				resolveDate = now.minusSeconds(1),
 				state = FaultTicket.State.Resolved
 			).apply {
 				bus = buses[0]
@@ -411,10 +411,10 @@ class SqlInitializer : ApplicationRunner {
 			)
 			add(
 				FaultTicket(
-					startDate = LocalDateTime.of(2023, 3, 30, 12, 45),
+					startDate = now.minusMinutes(2),
 					description = "The doors are locked.",
 					coordinate = GPSCoordinate(47.41458957260982, 19.25814141217378),
-					resolveDate = LocalDateTime.of(2023, 3, 30, 13, 48),
+					resolveDate = now.plusMinutes(5),
 					state = FaultTicket.State.Resolved
 				).apply {
 					bus = buses[1]

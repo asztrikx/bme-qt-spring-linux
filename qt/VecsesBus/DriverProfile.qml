@@ -1,4 +1,6 @@
 import QtQuick 2.15
+import QtQuick.Controls 2.15
+import QtQuick.Controls.Material 2.12
 
 Rectangle {
     color: "white"
@@ -53,10 +55,24 @@ Rectangle {
                 font.pixelSize: 16
             }
             Text {
-                text: startDate
+                text: startDate.split(".")[0].replace(/T/g, " ")
                 font.pixelSize: 16
             }
         }
 
+    }
+    Row {
+        anchors.bottomMargin: 50
+        anchors.horizontalCenter: parent.horizontalCenter
+        anchors.bottom: parent.bottom
+        spacing: 10
+        Button {
+            text: "Finish"
+            font.pixelSize: 20
+            visible: lineName !== "No data"
+            onClicked: {
+                finishTimetable();
+            }
+        }
     }
 }

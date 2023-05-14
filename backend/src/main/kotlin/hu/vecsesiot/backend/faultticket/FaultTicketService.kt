@@ -29,8 +29,7 @@ class FaultTicketService {
 	fun refreshState(id : Long, state : FaultTicket.State){
 		val ticket = repository.findById(id).get()
 		ticket.state = state
-		val now = LocalDateTime.now()
-		if (state == FaultTicket.State.Resolved) ticket.resolveDate = LocalDateTime.of(now.year, now.month, now.dayOfMonth, now.hour, now.minute)
+		if (state == FaultTicket.State.Resolved) ticket.resolveDate = LocalDateTime.now()
 		repository.save(ticket)
 	}
 }

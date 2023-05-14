@@ -13,7 +13,7 @@ FaultTicketManager::FaultTicketManager(QObject* rootObject) : NetworkManager(roo
     QObject::connect(ticketListView, SIGNAL(getTicketById(QString)), this, SLOT(getFaultTicketByIdHandler(QString)));
     QObject::connect(ticketListView, SIGNAL(getAllTicketsByUser(QVariant)), this, SLOT(getAllFaultTicketsByUser(QVariant)));
     QQuickItem* ticketDetailView = rootObject->findChild<QQuickItem*>("faultticketdetail");
-    QObject::connect(ticketDetailView, SIGNAL(saveTicket(QVariant, QString)), this, SLOT(saveFaultTicketHandler(QVariant, QString)));
+    QObject::connect(ticketDetailView, SIGNAL(saveTicket(QString, QString)), this, SLOT(saveFaultTicketHandler(QString, QString)));
     QObject::connect(ticketDetailView, SIGNAL(deleteTicket(QString)), this, SLOT(deleteFaultTicketHandler(QString)));
     QQuickItem* ticketFormView = rootObject->findChild<QQuickItem*>("faultticketform");
     QObject::connect(ticketFormView, SIGNAL(createTicket(QVariant)), this, SLOT(createFaultTicketHandler(QVariant)));
@@ -54,14 +54,12 @@ void FaultTicketManager::responseFaultTicketByIdHandler()
     ticketDetail->setProperty("ticket", QVariant(jsonObject));
 }
 
-void FaultTicketManager::saveFaultTicketHandler(QVariant ticket, QString url)
+void FaultTicketManager::saveFaultTicketHandler(QString state, QString url)
 {
-    QByteArray data = ticket.toByteArray();
-    QUrl qurl = QUrl(url);
+    QUrl qurl = QUrl(url + "/refresh/" + state);
     QNetworkRequest request(qurl);
-    request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     setAuthHeader(request);
-    reply = mgr.put(request, data);
+    reply = mgr.post(request, QByteArray());
     QObject::connect(reply, SIGNAL(finished()), this, SLOT(responseSaveFaultTicketHandler()));
 }
 void FaultTicketManager::deleteFaultTicketHandler(QString url)
@@ -86,7 +84,7 @@ void FaultTicketManager::responseDeleteFaultTicketHandler(){
 
 void FaultTicketManager::createFaultTicketHandler(QVariant ticket){
     QByteArray data = ticket.toByteArray();
-    QUrl url = QUrl("http://localhost:8080/api/faultTickets");
+    QUrl url = QUrl("http://localhost:8080/api/faultTickets/create");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     setAuthHeader(request);

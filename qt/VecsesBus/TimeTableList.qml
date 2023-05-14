@@ -15,7 +15,7 @@ Item {
         timetablemodel.clear()
         for (const timetable of timetables["_embedded"]["timetables"]){
             timetablemodel.append({
-                                   "startDate" : timetable["startDate"].split("T")[1],
+                                   "startDate" : timetable["startDate"].split("T")[1].split(".")[0],
                                    "lineUrl" : timetable["_links"]["line"]["href"],
                                    "url" : timetable["_links"]["self"]["href"],
                                    "name" : "Loading...",
@@ -28,7 +28,7 @@ Item {
     onVisibleChanged: () => {
         if (!visible) return;
         if (app.userData !== undefined && app.userData["roles"].includes("Driver")){
-            getAllAvailableTimeTables("2023-03-30T15:12:03")
+            getAllAvailableTimeTables((new Date()).toISOString().split(".")[0])
         } else {
             getAllTimeTables()
         }
@@ -54,6 +54,7 @@ Item {
                 anchors.fill: parent
                 onClicked: function(){
                     if (line["name"] !== undefined){
+                        timeTableDetailList.lineUrl = line["_links"]["self"]["href"]
                         getAllSectionByTimeTable(line["_links"]["route"]["href"], startDate)
                     }
                 }
@@ -99,7 +100,8 @@ Item {
                             }
 
                             onClicked: {
-                                console.log("took")
+                                const urlParts = url.split("/");
+                                takeTimeTable(urlParts[urlParts.length - 1]);
                             }
                         }
                     }
