@@ -8,5 +8,5 @@ import org.springframework.web.bind.annotation.RestController
 @RequestMapping("/buses")
 class BusController {
 	@Autowired
-	private lateinit var busService: BusService
+	private lateinit var service: BusService
 }

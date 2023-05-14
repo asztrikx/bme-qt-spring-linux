@@ -24,14 +24,32 @@ Item {
 
     onStopsChanged: () => {
         var coords = [];
-        for (const stop of stops["_embedded"]["stops"]) {
-           coords.push(stop["coordinate"]);
+        for (const stop of stops._embedded.stops) {
+            coords.push(stop.coordinate);
+
+            if (stop.id === stopId) {
+                location.coordinate = QtPositioning.coordinate(stop.coordinate.latitude, stop.coordinate.longitude)
+            }
         }
 
         routePoly.path = coords;
 
         for (const coord of coords) {
             routeStops.append(coord);
+        }
+    }
+
+    onNextBusChanged: () => {
+        // TODO check for bad data
+        var coord = nextBus.coordinate;
+        nextBus.coordinate = QtPositioning.coordinate(coord.latitude, coord.longitude)
+    }
+
+    onBrokenBusesChanged: () => {
+        // TODO check for bad data
+        for (const brokenBus of brokenBuses) {
+            var coord = brokenBus.coordinate;
+            brokenBusesModel.append(QtPositioning.coordinate(coord.latitude, coord.longitude));
         }
     }
 
@@ -76,11 +94,10 @@ Item {
         }
 
         MapQuickItem {
-            coordinate: QtPositioning.coordinate(47.39992883987876, 19.25913066972342)
-            anchorPoint.x: bus.width / 2
-            anchorPoint.y: bus.height / 2
+            id: nextBus
+            anchorPoint: Qt.point(busImage.width / 2, busImage.height / 2)
             sourceItem: Image {
-                id: bus
+                id: busImage
                 smooth: true
                 width:25
                 height:25
@@ -88,27 +105,32 @@ Item {
             }
         }
         MapQuickItem {
-            coordinate: QtPositioning.coordinate(47.40128681145784, 19.249980961251165)
-            anchorPoint.x: location.width / 2
-            anchorPoint.y: location.height / 2
+            id: location
+            anchorPoint: Qt.point(locationImage.width / 2, locationImage.height / 2)
             sourceItem: Image {
-                id: location
+                id: locationImage
                 smooth: true
                 width:25
                 height:25
                 source: "image/location.png"
             }
         }
-        MapQuickItem {
-            coordinate: QtPositioning.coordinate(47.41620956639614, 19.25185147253718)
-            anchorPoint.x: broken1.width / 2
-            anchorPoint.y: broken1.height / 2
-            sourceItem: Image {
-                id: broken1
-                smooth: true
-                width:25
-                height:25
-                source: "image/broken.png"
+
+        MapItemView {
+            model: ListModel {
+                id: brokenBusesModel
+            }
+
+            delegate: MapQuickItem {
+                coordinate: QtPositioning.coordinate(latitude, longitude)
+                anchorPoint: Qt.point(brokenImage.width / 2, brokenImage.height / 2)
+                sourceItem: Image {
+                    id: brokenImage
+                    smooth: true
+                    width:25
+                    height:25
+                    source: "image/broken.png"
+                }
             }
         }
     }

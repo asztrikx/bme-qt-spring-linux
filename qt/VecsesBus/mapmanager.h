@@ -10,9 +10,6 @@ class MapManager: public NetworkManager {
     MapManager(QObject* rootObject);
   public slots:
     void drawHandler(QVariant lineId, QVariant stopId);
-    void responseStops();
-    void responseNextBus();
-    void responseBrokenBuses();
 };
 
 #endif // MAPMANAGER_H
