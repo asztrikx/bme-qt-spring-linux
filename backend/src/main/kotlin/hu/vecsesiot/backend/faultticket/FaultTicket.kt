@@ -18,7 +18,7 @@ class FaultTicket(
 	var description: String,
 	var coordinate: GPSCoordinate,
 	@Enumerated(EnumType.STRING)
-	var state: State
+	var state: State = State.Created
 ) {
 	@ManyToOne
 	lateinit var user: User // TODO How will rest fill this?
@@ -28,6 +28,6 @@ class FaultTicket(
 	lateinit var bus: Bus // TODO How will rest fill this?
 
 	enum class State {
-		Created, InProgress, Resolved
+		Created, InProgress, Resolved;
 	}
 }

@@ -2,7 +2,6 @@
 
 package hu.vecsesiot.backend.bus
 
-import hu.vecsesiot.backend.email.EmailService
 import hu.vecsesiot.backend.security.UserToUserDetails
 import hu.vecsesiot.backend.timetable.TimetableRepository
 import hu.vecsesiot.backend.user.UserRepository
