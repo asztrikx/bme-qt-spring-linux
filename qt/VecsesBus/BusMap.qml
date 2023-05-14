@@ -19,10 +19,8 @@ Item {
             name: "osm"
         }
 
-        MapPolyline {
-            line.width: 5
-            line.color: "#009ee3"
-            path: [
+        Component.onCompleted: () => {
+            var coords = [
                 { latitude: 47.419804, longitude: 19.247528 },
                 { latitude: 47.39992883987876, longitude: 19.25913066972342 },
                 { latitude: 47.40366317296768, longitude: 19.2533053122232 },
@@ -33,7 +31,57 @@ Item {
                 { latitude: 47.399162080014555, longitude: 19.299996594292413 },
                 { latitude: 47.416556419436255, longitude: 19.25811216892971 },
             ]
+            routePoly.path = coords;
+
+            routeStations.append({
+                latitude: 47.419804,
+                longitude: 19.247528
+            });
+            routeStations.append({
+                latitude: 47.419804,
+                longitude: 19.247528
+            });
+            console.log(routeStations);
+            console.log(routeStations.get(0).latitude);
+            console.log(routeStations.get(1));
+            routeStations.get(1).latitude = 47.429804;
+
+            for (const coord of coords) {
+                console.log(coord.longitude);
+                console.log(coord.latitude);
+                routeStations.append(coord);
+            }
         }
+
+        MapPolyline {
+            id: routePoly
+            line.width: 5
+            line.color: "#009ee3"
+        }
+
+        ListModel {
+            id: routeStations
+            ListElement {
+                latitude: 47.419804
+                longitude: 19.247528
+            }
+        }
+        Repeater {
+            model: routeStations
+            MapQuickItem {
+                coordinate: QtPositioning.coordinate(latitude, longitude)
+                anchorPoint.x: station.width / 2
+                anchorPoint.y: station.height / 2
+                sourceItem: Image {
+                    id: station
+                    smooth: true
+                    width: 25
+                    height: 25
+                    source: "image/station.png"
+                }
+            }
+        }
+
         MapQuickItem {
             coordinate: QtPositioning.coordinate(47.39992883987876, 19.25913066972342)
             anchorPoint.x: bus.width / 2
@@ -59,18 +107,6 @@ Item {
             }
         }
         MapQuickItem {
-            coordinate: QtPositioning.coordinate(47.419804, 19.247528)
-            anchorPoint.x: station.width / 2
-            anchorPoint.y: station.height / 2
-            sourceItem: Image {
-                id: station
-                smooth: true
-                width:25
-                height:25
-                source: "image/station.png"
-            }
-        }
-        MapQuickItem {
             coordinate: QtPositioning.coordinate(47.41620956639614, 19.25185147253718)
             anchorPoint.x: broken1.width / 2
             anchorPoint.y: broken1.height / 2
@@ -83,6 +119,4 @@ Item {
             }
         }
     }
-
-
 }
