@@ -2,6 +2,7 @@ package hu.vecsesiot.backend.user
 
 import hu.vecsesiot.backend.email.EmailService
 import hu.vecsesiot.backend.email.RegisterTemplate
+import hu.vecsesiot.backend.line.LineRepository
 import hu.vecsesiot.backend.security.RoleType
 import hu.vecsesiot.backend.security.UserToUserDetails
 import hu.vecsesiot.backend.security.expandRoles
@@ -19,10 +20,23 @@ class UserService {
 	private lateinit var repository: UserRepository
 
 	@Autowired
+	private lateinit var lineRepository : LineRepository
+
+	@Autowired
 	private lateinit var emailService: EmailService
 
 	@Autowired
 	private lateinit var passwordEncoder: PasswordEncoder
+
+	@Transactional
+	fun subscribeForLine(id: Long){
+		val authentication = SecurityContextHolder.getContext().authentication
+		val principal = authentication.principal as UserToUserDetails
+		val user = repository.findById(principal.id).get()
+		val line = lineRepository.findById(id).get()
+		user.lineSubscriptions.add(line)
+		repository.save(user)
+	}
 
 	/**
 	 * [Transactional] is also good for email sending failure

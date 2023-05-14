@@ -24,5 +24,5 @@ class Bus(
 	var timetable: Timetable? = null
 
 	@OneToMany(mappedBy = "bus")
-	lateinit var faultTickets: List<FaultTicket>
+	lateinit var faultTickets: MutableList<FaultTicket>
 }

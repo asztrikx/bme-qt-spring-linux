@@ -17,5 +17,5 @@ class Stop(
 	var name: String,
 ) {
 	@ManyToMany(mappedBy = "stops")
-	lateinit var lines: List<Line> // TODO How will rest fill this?
+	lateinit var lines: MutableList<Line> // TODO How will rest fill this?
 }

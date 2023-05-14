@@ -3,6 +3,7 @@ package hu.vecsesiot.backend.user
 import com.fasterxml.jackson.annotation.JsonIgnore
 import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.faultticket.FaultTicket
+import hu.vecsesiot.backend.line.Line
 import jakarta.persistence.*
 
 @Entity
@@ -26,8 +27,8 @@ class User(
 	val bus: Bus? = null
 
 	@OneToMany(mappedBy = "user")
-	lateinit var faultTickets: List<FaultTicket>
+	lateinit var faultTickets: MutableList<FaultTicket>
 
 	@ManyToMany
-	lateinit var lineSubscriptions: List<User>
+	lateinit var lineSubscriptions: MutableList<Line>
 }
