@@ -8,6 +8,7 @@ Item {
     anchors.fill: parent
     required property var lineId;
     required property var stopId;
+    required property var currentCoo;
 
     signal network(var lineId2, var stopId2)
 
@@ -54,7 +55,7 @@ Item {
     Map {
         anchors.fill: parent
         plugin: mapPlugin
-        center: QtPositioning.coordinate(47.41, 19.26)
+        center: QtPositioning.coordinate(currentCoo.latitude, currentCoo.longitude)
         zoomLevel: 14
         maximumZoomLevel: 15
         minimumZoomLevel: 13

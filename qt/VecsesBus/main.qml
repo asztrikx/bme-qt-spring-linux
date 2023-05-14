@@ -197,9 +197,10 @@ ApplicationWindow {
             actualView = "timetablelist"
         }
 
-        function onSelectedItem(lineId, stopId){
+        function onSelectedItem(lineId, stopId, coordinate){
             map.lineId = lineId
             map.stopId = stopId
+            map.currentCoo = coordinate
             actualView = "map"
         }
     }
@@ -244,6 +245,7 @@ ApplicationWindow {
         visible: actualView === "map"
         lineId: 1
         stopId: 1
+        currentCoo: QtPositioning.coordinate(0, 0)
 
         function onBack(){
             actualView = "timetabledetaillist"
