@@ -27,6 +27,17 @@ class LineController {
 		return ResponseEntity.ofNullable(bus)
 	}
 
+	@GetMapping("/{id}/nextbustime/{stopid}")
+	fun getNextOperationalBusTimeBeforeStop(@PathVariable id: Long, @PathVariable stopid: Long): ResponseEntity<LocalDateTime> {
+		val time = try {
+			service.getNextOperationalBusTimeBeforeStop(id, stopid, LocalDateTime.now())
+		} catch (e: Exception) {
+			return ResponseEntity.badRequest().build()
+		}
+
+		return ResponseEntity.ofNullable(time)
+	}
+
 
 	@GetMapping("/{id}/brokenbuses/{stopid}")
 	fun getAllBrokenBusBeforeStop(@PathVariable id: Long, @PathVariable stopid: Long): ResponseEntity<List<Bus>> {

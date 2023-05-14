@@ -61,6 +61,19 @@ class LineService {
 	}
 
 	@Transactional
+	fun getNextOperationalBusTimeBeforeStop(lineId: Long, stopId: Long, time: LocalDateTime): LocalDateTime? {
+		val line = repository.findById(lineId).get()
+		val stop = stopRepository.findById(stopId).get()
+
+		val timeUntilStop = getTimeUntilStop(line, stop)
+		return busRepository.findByLine(line)
+				.filter { Duration.between(it.timetable!!.startDate, time) < timeUntilStop }
+				.filter { it.faultTickets.isEmpty() }
+				.sortedBy { Duration.between(it.timetable!!.startDate, time) }
+				.lastOrNull()?.timetable?.startDate?.plus(timeUntilStop)
+	}
+
+	@Transactional
 	fun getAllBrokenBusBeforeStop(lineId: Long, stopId: Long, time: LocalDateTime): List<Bus> {
 		val line = repository.findById(lineId).get()
 		val stop = stopRepository.findById(stopId).get()
