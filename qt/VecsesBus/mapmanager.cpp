@@ -8,11 +8,10 @@
 
 MapManager::MapManager(QObject* rootObject) : NetworkManager(rootObject) {
     QQuickItem* mapView = rootObject->findChild<QQuickItem*>("map");
-    QObject::connect(mapView, SIGNAL(network2(QVariant, QVariant)), this, SLOT(drawHandler(QVariant, QVariant)));
+    QObject::connect(mapView, SIGNAL(network(QVariant, QVariant)), this, SLOT(drawHandler(QVariant, QVariant)));
 }
 
 void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
-    qDebug() << "################################x";
     QUrl url = QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/stops");
     QNetworkRequest request(url);
     setAuthHeader(request);
@@ -32,6 +31,7 @@ void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
 }
 
 void MapManager::responseStops() {
+    qDebug() << "################################x";
     QJsonDocument jsonResponse = QJsonDocument::fromJson(reply->readAll());
     QJsonObject jsonObject = jsonResponse.object();
     QQuickItem* mapView = rootObject->findChild<QQuickItem*>("map");

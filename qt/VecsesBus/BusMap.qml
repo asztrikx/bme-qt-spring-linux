@@ -8,8 +8,15 @@ Item {
     required property var lineId;
     required property var stopId;
 
-    signal network2(var lineId2, var stopId2)
-    Component.onCompleted: () => { console.log(lineId,stopId, "XDD"); network2(lineId, stopId) }
+    signal network(var lineId2, var stopId2)
+    Timer {
+        interval: 500
+        running: true
+        repeat: false
+        onTriggered: () => {
+            network(1, 1);
+        }
+    }
 
     property var stops;
     property var nextBus;

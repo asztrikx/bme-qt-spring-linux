@@ -6,7 +6,7 @@
 #include <QNetworkRequest>
 
 
-QByteArray NetworkManager::auth = QString("no_login").toUtf8().toBase64();
+QByteArray NetworkManager::auth = QString("dev:123").toUtf8().toBase64();
 
 NetworkManager::NetworkManager(QObject* rootObject): QObject(nullptr), rootObject(rootObject)
 {
