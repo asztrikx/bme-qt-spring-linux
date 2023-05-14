@@ -29,7 +29,7 @@ class LineService {
 	@Autowired
 	private lateinit var emailService: EmailService
 
-	private val logger = LoggerFactory.getLogger(BusController::class.java)
+	private val logger = LoggerFactory.getLogger(LineService::class.java)
 
 	@Transactional
 	fun getTimeUntilStop(line: Line, stop: Stop): Duration {

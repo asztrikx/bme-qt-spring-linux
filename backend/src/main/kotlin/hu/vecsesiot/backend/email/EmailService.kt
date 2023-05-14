@@ -20,7 +20,7 @@ class EmailService {
 	@Autowired
 	private lateinit var templateEngine: SpringTemplateEngine
 
-	private val logger = LoggerFactory.getLogger(BusController::class.java)
+	private val logger = LoggerFactory.getLogger(EmailService::class.java)
 
 	fun <T : Template> sendEmailTemplate(email: String, template: T) {
 		val ctx = Context()

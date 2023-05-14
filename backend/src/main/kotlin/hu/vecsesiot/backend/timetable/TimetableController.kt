@@ -8,4 +8,6 @@ import org.springframework.web.bind.annotation.*
 class TimetableController {
 	@Autowired
 	private lateinit var service: TimetableService
+
+
 }
