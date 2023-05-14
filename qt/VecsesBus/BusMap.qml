@@ -33,6 +33,7 @@ Item {
 
         routePoly.path = coords;
 
+        routeStops.clear();
         for (const coord of coords) {
             routeStops.append(coord);
         }
@@ -46,6 +47,7 @@ Item {
 
     onBrokenBusesChanged: () => {
         // TODO check for bad data
+        brokenBusesModel.clear();
         for (const brokenBus of brokenBuses) {
             var coord = brokenBus.coordinate;
             brokenBusesModel.append(QtPositioning.coordinate(coord.latitude, coord.longitude));
