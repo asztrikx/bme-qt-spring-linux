@@ -33,51 +33,34 @@ Item {
             ]
             routePoly.path = coords;
 
-            routeStations.append({
-                latitude: 47.419804,
-                longitude: 19.247528
-            });
-            routeStations.append({
-                latitude: 47.419804,
-                longitude: 19.247528
-            });
-            console.log(routeStations);
-            console.log(routeStations.get(0).latitude);
-            console.log(routeStations.get(1));
-            routeStations.get(1).latitude = 47.429804;
-
             for (const coord of coords) {
-                console.log(coord.longitude);
-                console.log(coord.latitude);
-                routeStations.append(coord);
+                routeStops.append(coord);
             }
         }
 
-        MapPolyline {
-            id: routePoly
-            line.width: 5
-            line.color: "#009ee3"
-        }
-
-        ListModel {
-            id: routeStations
-            ListElement {
-                latitude: 47.419804
-                longitude: 19.247528
+        MapItemGroup {
+            MapPolyline {
+                id: routePoly
+                line.width: 5
+                line.color: "#009ee3"
             }
-        }
-        Repeater {
-            model: routeStations
-            MapQuickItem {
-                coordinate: QtPositioning.coordinate(latitude, longitude)
-                anchorPoint.x: station.width / 2
-                anchorPoint.y: station.height / 2
-                sourceItem: Image {
-                    id: station
-                    smooth: true
-                    width: 25
-                    height: 25
-                    source: "image/station.png"
+
+            MapItemView {
+                model: ListModel {
+                    id: routeStops
+                }
+
+                delegate: MapQuickItem {
+                    coordinate: QtPositioning.coordinate(latitude, longitude)
+                    anchorPoint: Qt.point(station.width / 2, station.height / 2)
+
+                    sourceItem: Image {
+                        id: station
+                        smooth: true
+                        width: 25
+                        height: 25
+                        source: "image/station.png"
+                    }
                 }
             }
         }
