@@ -2,6 +2,7 @@ package hu.vecsesiot.backend.line
 
 
 import hu.vecsesiot.backend.bus.Bus
+import hu.vecsesiot.backend.bus.BusDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
@@ -17,14 +18,23 @@ class LineController {
 	private lateinit var service: LineService
 
 	@GetMapping("/{id}/nextbus/{stopid}")
-	fun getNextOperationalBusBeforeStop(@PathVariable id: Long, @PathVariable stopid: Long): ResponseEntity<Bus> {
+	fun getNextOperationalBusBeforeStop(@PathVariable id: Long, @PathVariable stopid: Long): ResponseEntity<BusDto> {
 		val bus = try {
 			service.getNextOperationalBusBeforeStop(id, stopid, LocalDateTime.now())
 		} catch (e: Exception) {
 			return ResponseEntity.badRequest().build()
 		}
 
-		return ResponseEntity.ofNullable(bus)
+		val busDto = if (bus == null) {
+			null
+		} else {
+			BusDto(
+				bus.id,
+				bus.serialnumber,
+				bus.coordinate,
+			)
+		}
+		return ResponseEntity.ofNullable(busDto)
 	}
 
 	@GetMapping("/{id}/nextbustime/{stopid}")
@@ -40,13 +50,20 @@ class LineController {
 
 
 	@GetMapping("/{id}/brokenbuses/{stopid}")
-	fun getAllBrokenBusBeforeStop(@PathVariable id: Long, @PathVariable stopid: Long): ResponseEntity<List<Bus>> {
+	fun getAllBrokenBusBeforeStop(@PathVariable id: Long, @PathVariable stopid: Long): ResponseEntity<List<BusDto>> {
 		val buses = try {
 			service.getAllBrokenBusBeforeStop(id, stopid, LocalDateTime.now())
 		} catch (e: Exception) {
 			return ResponseEntity.badRequest().build()
 		}
 
-		return ResponseEntity.ofNullable(buses)
+		val busesDto = buses.map {
+			BusDto(
+				it.id,
+				it.serialnumber,
+				it.coordinate,
+			)
+		}
+		return ResponseEntity.ok(busesDto)
 	}
 }

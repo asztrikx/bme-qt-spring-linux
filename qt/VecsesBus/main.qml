@@ -2,6 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.15
+import QtPositioning 5.15
 
 ApplicationWindow {
     id: app
@@ -41,14 +42,6 @@ ApplicationWindow {
             MenuItem {
                 text: "List all"
                 onTriggered: { actualView = "timetablelist" }
-            }
-        }
-
-        Menu {
-            title: "Map"
-            MenuItem {
-                text: "Show"
-                onTriggered: { actualView = "map" }
             }
         }
 
@@ -238,7 +231,6 @@ ApplicationWindow {
         }
     }
 
-    // TODO remove timer from Busmap, replace it
     BusMap {
         id: map
         objectName: "map"

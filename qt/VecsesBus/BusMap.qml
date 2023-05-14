@@ -40,13 +40,14 @@ Item {
     }
 
     onNextBusChanged: () => {
-        // TODO check for bad data
+        if (nextBus === "nodata") return;
         var coord = nextBus.coordinate;
-        nextBus.coordinate = QtPositioning.coordinate(coord.latitude, coord.longitude)
+        nextBusItem.coordinate = QtPositioning.coordinate(coord.latitude, coord.longitude)
     }
 
     onBrokenBusesChanged: () => {
-        // TODO check for bad data
+        console.log(JSON.stringify(brokenBuses));
+        if (brokenBuses === "nodata") return;
         brokenBusesModel.clear();
         for (const brokenBus of brokenBuses) {
             var coord = brokenBus.coordinate;
@@ -95,7 +96,7 @@ Item {
         }
 
         MapQuickItem {
-            id: nextBus
+            id: nextBusItem
             anchorPoint: Qt.point(busImage.width / 2, busImage.height / 2)
             sourceItem: Image {
                 id: busImage
