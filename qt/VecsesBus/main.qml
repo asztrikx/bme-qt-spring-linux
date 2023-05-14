@@ -227,6 +227,7 @@ ApplicationWindow {
         }
     }
 
+    // TODO remove timer from Busmap, replace it
     BusMap {
         objectName: "map"
         visible: actualView === "map"
