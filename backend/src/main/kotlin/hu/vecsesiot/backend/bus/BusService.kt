@@ -8,6 +8,7 @@ import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.stereotype.Service
+import kotlin.jvm.optionals.getOrNull
 
 @Service
 class BusService {
@@ -26,9 +27,14 @@ class BusService {
 	fun takeTimetable(id: Long){
 		val authentication = SecurityContextHolder.getContext().authentication
 		val principal = authentication.principal as UserToUserDetails
-		val user = userRepository.findById(principal.id).get()
-		val timetable = timetableRepository.findById(id).get()
-		user.bus!!.timetable = timetable
+		val user = userRepository.findById(principal.id).getOrNull()
+		val timetable = timetableRepository.findById(id).getOrNull()
+
+		check(user != null)
+		check(user.bus != null)
+		check(timetable != null)
+
+		user.bus.timetable = timetable
 		logger.info("The user ({}) took up the timetable ({}) for line ({})", user.id, timetable.id, timetable.line.id)
 		busRepository.save(user.bus)
 	}
@@ -37,8 +43,13 @@ class BusService {
 	fun finishTimetable(){
 		val authentication = SecurityContextHolder.getContext().authentication
 		val principal = authentication.principal as UserToUserDetails
-		val user = userRepository.findById(principal.id).get()
-		val timetable = user.bus!!.timetable
+		val user = userRepository.findById(principal.id).getOrNull()
+
+		check(user != null)
+		check(user.bus != null)
+		check(user.bus.timetable != null)
+
+		val timetable = user.bus.timetable
 		user.bus.timetable = null
 		logger.info("The user ({}) finished the timetable ({}) for line ({})", user.id, timetable?.id, timetable?.line?.id)
 		busRepository.save(user.bus)
