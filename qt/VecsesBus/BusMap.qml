@@ -61,7 +61,6 @@ Item {
     }
 
     onBrokenBusesChanged: () => {
-        console.log(JSON.stringify(brokenBuses));
         if (brokenBuses === "nodata") return;
         brokenBusesModel.clear();
         for (const brokenBus of brokenBuses) {

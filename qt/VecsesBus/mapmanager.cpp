@@ -4,6 +4,8 @@
 #include <QMetaObject>
 #include <QJsonDocument>
 #include <QJsonObject>
+#include <QJsonArray>
+#include <QJsonValue>
 #include <QDebug>
 
 MapManager::MapManager(QObject* rootObject) : NetworkManager(rootObject) {
@@ -41,13 +43,9 @@ void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
     QNetworkReply* reply3 = mgr.get(request3);
     QObject::connect(reply3, &QNetworkReply::finished, [=]() {
         QJsonDocument jsonResponse = QJsonDocument::fromJson(reply3->readAll());
-        QJsonObject jsonObject = jsonResponse.object();
         QQuickItem* mapView = rootObject->findChild<QQuickItem*>("map");
-        qDebug() << lineId;
-        qDebug() << stopId;
-        qDebug() << jsonObject; // TODO this is bad, but return is 200, json is "{}"
         if (reply3->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
-            mapView->setProperty("brokenBuses", QVariant(jsonObject));
+            mapView->setProperty("brokenBuses", QVariant(jsonResponse.array()));
         } else {
             mapView->setProperty("brokenBuses", QVariant("nodata"));
         }
