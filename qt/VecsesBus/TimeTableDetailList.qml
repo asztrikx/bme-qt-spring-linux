@@ -7,6 +7,7 @@ Item {
 
     function setStop(id, stop){
         sectionmodel.get(id).name = stop.name
+        sectionmodel.get(id).coordinate = stop.coordinate
         stopUrl = stop["_links"]["self"]["href"]
         let timespan = 0
         for(let i = id; i >= 0; i--){
@@ -53,7 +54,8 @@ Item {
                               "time" : toDate(startDate),
                               "stop" : first["_links"]["start"]["href"],
                               "url" : first["_links"]["self"]["href"],
-                              "name" : "Loading..."
+                              "name" : "Loading...",
+                              "coordinate" : {}
                           })
         getTimeTableSection(0, first["_links"]["start"]["href"])
         for (const section of sections["_embedded"]["sections"]){
@@ -62,7 +64,8 @@ Item {
                                    "time" : toDate(startDate),
                                    "stop" : section["_links"]["stop"]["href"],
                                    "url" : section["_links"]["self"]["href"],
-                                   "name" : "Loading..."
+                                   "name" : "Loading...",
+                                    "coordinate" : {}
                                })
             getTimeTableSection(sectionmodel.count - 1, section["_links"]["stop"]["href"])
         }
@@ -90,7 +93,7 @@ Item {
                     const lineId = lineUrlParts[lineUrlParts.length - 1]
                     const stopUrlParts = stopUrl.split("/")
                     const stopId = stopUrlParts[stopUrlParts.length - 1]
-                    onSelectedItem(lineId, stopId);
+                    onSelectedItem(lineId, stopId, coordinate);
                 }
             }
 

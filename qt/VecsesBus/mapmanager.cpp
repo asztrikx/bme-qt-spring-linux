@@ -29,7 +29,11 @@ void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
         QJsonDocument jsonResponse = QJsonDocument::fromJson(reply2->readAll());
         QJsonObject jsonObject = jsonResponse.object();
         QQuickItem* mapView = rootObject->findChild<QQuickItem*>("map");
-        mapView->setProperty("nextBus", QVariant(jsonObject));
+        if (reply2->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
+            mapView->setProperty("nextBus", QVariant(jsonObject));
+        } else {
+            mapView->setProperty("nextBus", QVariant("nodata"));
+        }
     });
 
     QNetworkRequest request3(QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/brokenbuses/" + stopId.toString()));
@@ -39,6 +43,13 @@ void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
         QJsonDocument jsonResponse = QJsonDocument::fromJson(reply3->readAll());
         QJsonObject jsonObject = jsonResponse.object();
         QQuickItem* mapView = rootObject->findChild<QQuickItem*>("map");
-        mapView->setProperty("brokenBuses", QVariant(jsonObject));
+        qDebug() << lineId;
+        qDebug() << stopId;
+        qDebug() << jsonObject; // TODO this is bad, but return is 200, json is "{}"
+        if (reply3->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200) {
+            mapView->setProperty("brokenBuses", QVariant(jsonObject));
+        } else {
+            mapView->setProperty("brokenBuses", QVariant("nodata"));
+        }
     });
 }

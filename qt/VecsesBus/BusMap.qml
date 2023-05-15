@@ -8,12 +8,28 @@ Item {
     anchors.fill: parent
     required property var lineId;
     required property var stopId;
+    required property var currentCoo;
 
     signal network(var lineId2, var stopId2)
 
     onVisibleChanged: () => {
-        if(!visible) return;
-        network(lineId, stopId)
+        if(!visible) {
+            updater.running = false;
+            return;
+        }
+        updater.running = true;
+    }
+
+    Timer {
+        id: updater
+        interval: 1500
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: () => {
+            // a bit overkill
+            network(lineId, stopId)
+        }
     }
 
     property var stops;
@@ -32,19 +48,22 @@ Item {
 
         routePoly.path = coords;
 
+        routeStops.clear();
         for (const coord of coords) {
             routeStops.append(coord);
         }
     }
 
     onNextBusChanged: () => {
-        // TODO check for bad data
+        if (nextBus === "nodata") return;
         var coord = nextBus.coordinate;
-        nextBus.coordinate = QtPositioning.coordinate(coord.latitude, coord.longitude)
+        nextBusItem.coordinate = QtPositioning.coordinate(coord.latitude, coord.longitude)
     }
 
     onBrokenBusesChanged: () => {
-        // TODO check for bad data
+        console.log(JSON.stringify(brokenBuses));
+        if (brokenBuses === "nodata") return;
+        brokenBusesModel.clear();
         for (const brokenBus of brokenBuses) {
             var coord = brokenBus.coordinate;
             brokenBusesModel.append(QtPositioning.coordinate(coord.latitude, coord.longitude));
@@ -54,7 +73,7 @@ Item {
     Map {
         anchors.fill: parent
         plugin: mapPlugin
-        center: QtPositioning.coordinate(47.41, 19.26)
+        center: QtPositioning.coordinate(currentCoo.latitude, currentCoo.longitude)
         zoomLevel: 14
         maximumZoomLevel: 15
         minimumZoomLevel: 13
@@ -92,7 +111,7 @@ Item {
         }
 
         MapQuickItem {
-            id: nextBus
+            id: nextBusItem
             anchorPoint: Qt.point(busImage.width / 2, busImage.height / 2)
             sourceItem: Image {
                 id: busImage
