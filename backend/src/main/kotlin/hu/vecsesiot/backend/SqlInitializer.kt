@@ -130,66 +130,110 @@ class SqlInitializer : ApplicationRunner {
 				Section(timespan = Duration.ofSeconds(120)).apply {
 					start = stops[0]
 					stop = stops[1]
+					sectionPoints = mutableListOf(
+						stops[0].coordinate,
+						stops[1].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(100)).apply {
 					start = stops[1]
 					stop = stops[2]
+					sectionPoints = mutableListOf(
+						stops[1].coordinate,
+						stops[2].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(90)).apply {
 					start = stops[1]
 					stop = stops[3]
+					sectionPoints = mutableListOf(
+						stops[1].coordinate,
+						stops[3].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(65)).apply {
 					start = stops[2]
 					stop = stops[4]
+					sectionPoints = mutableListOf(
+						stops[2].coordinate,
+						stops[4].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(34)).apply {
 					start = stops[4]
 					stop = stops[5]
+					sectionPoints = mutableListOf(
+						stops[4].coordinate,
+						stops[5].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(123)).apply {
 					start = stops[3]
 					stop = stops[7]
+					sectionPoints = mutableListOf(
+						stops[3].coordinate,
+						stops[7].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(145)).apply {
 					start = stops[7]
 					stop = stops[8]
+					sectionPoints = mutableListOf(
+						stops[7].coordinate,
+						stops[8].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(170)).apply {
 					start = stops[6]
 					stop = stops[4]
+					sectionPoints = mutableListOf(
+						stops[6].coordinate,
+						stops[4].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(53)).apply {
 					start = stops[4]
 					stop = stops[2]
+					sectionPoints = mutableListOf(
+						stops[4].coordinate,
+						stops[2].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(102)).apply {
 					start = stops[2]
 					stop = stops[0]
+					sectionPoints = mutableListOf(
+						stops[2].coordinate,
+						stops[0].coordinate,
+					)
 				}
 			)
 			add(
 				Section(timespan = Duration.ofSeconds(200)).apply {
 					start = stops[8]
 					stop = stops[6]
+					sectionPoints = mutableListOf(
+						stops[8].coordinate,
+						stops[6].coordinate,
+					)
 				}
 			)
 		}
@@ -199,20 +243,20 @@ class SqlInitializer : ApplicationRunner {
 		return mutableListOf<Line>().apply {
 			add(
 				Line(name = "7 (Vörösmarty utca)").apply {
-					route = listOf(sections[0], sections[1], sections[3], sections[4])
-					stops = listOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
+					route = mutableListOf(sections[0], sections[1], sections[3], sections[4])
+					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
 				}
 			)
 			add(
 				Line(name = "8 (OTP lakótelep)").apply {
-					route = listOf(sections[0], sections[2], sections[5], sections[6])
-					stops = listOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
+					route = mutableListOf(sections[0], sections[2], sections[5], sections[6])
+					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
 				}
 			)
 			add(
 				Line(name = "123E (Autóbuszállomás)").apply {
-					route = listOf(sections[10], sections[7], sections[8], sections[9])
-					stops = listOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
+					route = mutableListOf(sections[10], sections[7], sections[8], sections[9])
+					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
 				}
 			)
 		}

@@ -21,7 +21,7 @@ class User(
 	var password: String,
 	@JsonIgnore
 	@ElementCollection(fetch = FetchType.EAGER)
-	val roles: List<String>,
+	val roles: MutableList<String>,
 ) {
 	@OneToOne(mappedBy = "user")
 	val bus: Bus? = null

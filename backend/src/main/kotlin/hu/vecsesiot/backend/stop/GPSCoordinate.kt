@@ -1,6 +1,7 @@
 package hu.vecsesiot.backend.stop
 
 import jakarta.persistence.Embeddable
+import kotlin.math.sqrt
 
 @Embeddable
 class GPSCoordinate(
@@ -17,5 +18,9 @@ class GPSCoordinate(
 
 	operator fun times(d: Double): GPSCoordinate {
 		return GPSCoordinate(latitude * d, longitude * d)
+	}
+
+	fun length(): Double {
+		return sqrt(latitude * latitude + longitude * longitude)
 	}
 }

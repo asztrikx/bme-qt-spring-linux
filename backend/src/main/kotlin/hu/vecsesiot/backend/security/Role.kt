@@ -23,7 +23,7 @@ enum class RoleType {
 	},
 	Display {
 		override val iherits: List<RoleType>
-		get() = listOf(User)
+			get() = listOf(User)
 	};
 
 	abstract val iherits: List<RoleType>
@@ -36,6 +36,7 @@ fun expandRoles(vararg highRoles: RoleType) = highRoles
 	.flatten()
 	.toHashSet()
 	.map { it.name }
+	.toMutableList()
 
 fun AuthorizeHttpRequestsDsl.hasAnyAuthority(vararg authorities: RoleType): AuthorizationManager<RequestAuthorizationContext> {
 	val authorityNames = Array(authorities.size) { authorities[it].name }

@@ -1,6 +1,7 @@
 package hu.vecsesiot.backend.bus
 
 import hu.vecsesiot.backend.faultticket.FaultTicket
+import hu.vecsesiot.backend.section.Section
 import hu.vecsesiot.backend.stop.GPSCoordinate
 import hu.vecsesiot.backend.timetable.Timetable
 import hu.vecsesiot.backend.user.User
@@ -37,23 +38,57 @@ class Bus(
 
 			var travelTime = Duration.between(timetable.startDate, LocalDateTime.now())
 
+			// Get section we are in
 			var travelTimeAtEndOfSection = Duration.ZERO
-			var currentSection = line.route.last()
+			var currentSection: Section? = null
 			for (section in line.route) {
 				travelTimeAtEndOfSection += section.timespan
-				if (travelTimeAtEndOfSection > travelTime) {
+				if (travelTimeAtEndOfSection >= travelTime) {
 					currentSection = section
 					break
 				}
 			}
-			val travelTimeAtSectionStart = travelTimeAtEndOfSection.minus(currentSection.timespan)
+			currentSection!!
+			val travelTimeAtStartOfSection = travelTimeAtEndOfSection.minus(currentSection.timespan)
 
+			// Fix traveltime (travel isn't started yet or travel is already over)
 			travelTime = min(travelTime, Duration.ZERO)
 			travelTime = max(travelTime, travelTimeAtEndOfSection)
-			val ratioInsideSection = (travelTime - travelTimeAtSectionStart).seconds.toDouble() / (travelTimeAtEndOfSection - travelTimeAtSectionStart).seconds
-			return currentSection.start.coordinate + (currentSection.stop.coordinate - currentSection.start.coordinate) * ratioInsideSection
+
+			// Get distance in subsection
+			var distanceOfSection = 0.0
+			for (subsection in currentSection.sectionPoints.zipWithNext()) {
+				distanceOfSection += subsection.length()
+			}
+
+			val ratioInsideSection = (travelTime - travelTimeAtStartOfSection).seconds.toDouble() / (travelTimeAtEndOfSection - travelTimeAtStartOfSection).seconds
+			val distanceInSection = distanceOfSection * ratioInsideSection
+
+			// Get subsection we are in
+			var distanceAtEndOfSubsection = 0.0
+			var currentSubsection: Pair<GPSCoordinate, GPSCoordinate>? = null
+			for (subsection in currentSection.sectionPoints.zipWithNext()) {
+				val vector = subsection.second - subsection.first
+				distanceAtEndOfSubsection += vector.length()
+
+				if (distanceAtEndOfSubsection > distanceInSection) {
+					currentSubsection = subsection
+					break
+				}
+			}
+			currentSubsection!!
+
+			// Get gps inside subsection
+			val distanceAtStartOfSubSection = distanceAtEndOfSubsection - currentSubsection.length()
+			val ratioInsideSubSection = (distanceInSection - distanceAtStartOfSubSection) / (distanceAtEndOfSubsection - distanceAtStartOfSubSection)
+			return currentSubsection.first + (currentSubsection.second - currentSubsection.first) * ratioInsideSubSection
 		}
 
 	fun max(a: Duration, b: Duration) = if (a >= b) a else b
 	fun min(a: Duration, b: Duration) = if (a >= b) b else a
+
+	fun Pair<GPSCoordinate, GPSCoordinate>.length(): Double {
+		val vector = second - first
+		return vector.length()
+	}
 }
