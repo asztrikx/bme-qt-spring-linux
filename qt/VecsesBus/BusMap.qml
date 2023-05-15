@@ -13,8 +13,23 @@ Item {
     signal network(var lineId2, var stopId2)
 
     onVisibleChanged: () => {
-        if(!visible) return;
-        network(lineId, stopId)
+        if(!visible) {
+            updater.running = false;
+            return;
+        }
+        updater.running = true;
+    }
+
+    Timer {
+        id: updater
+        interval: 1500
+        repeat: true
+        running: false
+        triggeredOnStart: true
+        onTriggered: () => {
+            // a bit overkill
+            network(lineId, stopId)
+        }
     }
 
     property var stops;
