@@ -31,12 +31,16 @@ class BusService {
 		val timetable = timetableRepository.findById(id).getOrNull()
 
 		check(user != null)
-		check(user.bus != null)
-		check(timetable != null)
 
-		user.bus.timetable = timetable
+		val bus = user.bus
+
+		check(bus != null)
+		check(timetable != null)
+		check(bus.timetable == null)
+
+		bus.timetable = timetable
 		logger.info("The user ({}) took up the timetable ({}) for line ({})", user.id, timetable.id, timetable.line.id)
-		busRepository.save(user.bus)
+		busRepository.save(bus)
 	}
 
 	@Transactional
@@ -46,12 +50,15 @@ class BusService {
 		val user = userRepository.findById(principal.id).getOrNull()
 
 		check(user != null)
-		check(user.bus != null)
-		check(user.bus.timetable != null)
 
-		val timetable = user.bus.timetable
-		user.bus.timetable = null
+		val bus = user.bus
+
+		check(bus != null)
+		check(bus.timetable != null)
+
+		val timetable = bus.timetable
+		bus.timetable = null
 		logger.info("The user ({}) finished the timetable ({}) for line ({})", user.id, timetable?.id, timetable?.line?.id)
-		busRepository.save(user.bus)
+		busRepository.save(bus)
 	}
 }

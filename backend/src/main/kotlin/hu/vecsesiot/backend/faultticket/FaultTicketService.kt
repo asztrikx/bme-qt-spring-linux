@@ -1,6 +1,5 @@
 package hu.vecsesiot.backend.faultticket
 
-import hu.vecsesiot.backend.bus.BusService
 import hu.vecsesiot.backend.security.UserToUserDetails
 import hu.vecsesiot.backend.user.UserRepository
 import jakarta.transaction.Transactional
@@ -27,11 +26,14 @@ class FaultTicketService {
 		val user = userRepository.findById(principal.id).getOrNull()
 
 		check(user != null)
-		check(user.bus != null)
+
+		val bus = user.bus
+
+		check(bus != null)
 
 		ticket.user = user
-		ticket.bus = user.bus
-		logger.info("One faultticket was created by user ({}) to bus ({})", user.id, user.bus.id)
+		ticket.bus = bus
+		logger.info("One faultticket was created by user ({}) to bus ({})", user.id, bus.id)
 		repository.save(ticket)
 	}
 

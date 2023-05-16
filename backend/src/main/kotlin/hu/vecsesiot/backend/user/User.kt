@@ -24,7 +24,7 @@ class User(
 	val roles: MutableList<String>,
 ) {
 	@OneToOne(mappedBy = "user")
-	val bus: Bus? = null
+	var bus: Bus? = null
 
 	@OneToMany(mappedBy = "user")
 	lateinit var faultTickets: MutableList<FaultTicket>

@@ -27,5 +27,12 @@ class UserController {
 	fun details() = service.details()
 
 	@PostMapping("/subscribe/{id}")
-	fun subscribeForLine(@PathVariable id: Long) = service.subscribeForLine(id)
+	fun subscribeForLine(@PathVariable id: Long): ResponseEntity<Nothing> {
+		return try {
+			service.subscribeForLine(id)
+			ResponseEntity.ok().build()
+		} catch (e: Exception) {
+			ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+		}
+	}
 }

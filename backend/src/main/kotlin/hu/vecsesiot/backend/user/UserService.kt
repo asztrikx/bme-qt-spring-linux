@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.stereotype.Service
 import java.time.LocalDateTime
+import kotlin.jvm.optionals.getOrNull
 
 
 @Service
@@ -32,8 +33,12 @@ class UserService {
 	fun subscribeForLine(id: Long){
 		val authentication = SecurityContextHolder.getContext().authentication
 		val principal = authentication.principal as UserToUserDetails
-		val user = repository.findById(principal.id).get()
-		val line = lineRepository.findById(id).get()
+		val user = repository.findById(principal.id).getOrNull()
+		val line = lineRepository.findById(id).getOrNull()
+
+		check(user != null)
+		check(line != null)
+
 		user.lineSubscriptions.add(line)
 		repository.save(user)
 	}
