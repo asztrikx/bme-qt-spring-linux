@@ -71,7 +71,7 @@ class Bus(
 				val vector = subsection.second - subsection.first
 				distanceAtEndOfSubsection += vector.length()
 
-				if (distanceAtEndOfSubsection > distanceInSection) {
+				if (distanceAtEndOfSubsection >= distanceInSection) {
 					currentSubsection = subsection
 					break
 				}
