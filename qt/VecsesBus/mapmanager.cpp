@@ -14,6 +14,16 @@ MapManager::MapManager(QObject* rootObject) : NetworkManager(rootObject) {
 }
 
 void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
+    QNetworkRequest request0(QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/route"));
+    setAuthHeader(request0);
+    QNetworkReply* reply0 = mgr.get(request0);
+    QObject::connect(reply0, &QNetworkReply::finished, [=]() {
+        QJsonDocument jsonResponse = QJsonDocument::fromJson(reply0->readAll());
+        QJsonObject jsonObject = jsonResponse.object();
+        QQuickItem* mapView = rootObject->findChild<QQuickItem*>("map");
+        mapView->setProperty("sections", QVariant(jsonObject));
+    });
+
     QNetworkRequest request1(QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/stops"));
     setAuthHeader(request1);
     QNetworkReply* reply1 = mgr.get(request1);

@@ -32,25 +32,29 @@ Item {
         }
     }
 
+    property var sections;
     property var stops;
     property var nextBus;
     property var brokenBuses;
 
-    onStopsChanged: () => {
+    onSectionsChanged: () => {
         var coords = [];
-        for (const stop of stops._embedded.stops) {
-            coords.push(stop.coordinate);
-
-            if (stop.id === stopId) {
-                location.coordinate = QtPositioning.coordinate(stop.coordinate.latitude, stop.coordinate.longitude)
+        for (const section of sections._embedded.sections) {
+            for (const sectionPoint of section.sectionPoints) {
+                coords.push(sectionPoint);
             }
         }
 
         routePoly.path = coords;
+    }
 
+    onStopsChanged: () => {
         routeStops.clear();
-        for (const coord of coords) {
-            routeStops.append(coord);
+        for (const stop of stops._embedded.stops) {
+            if (stop.id === stopId) {
+                location.coordinate = QtPositioning.coordinate(stop.coordinate.latitude, stop.coordinate.longitude)
+            }
+            routeStops.append(stop.coordinate);
         }
     }
 
