@@ -3,24 +3,20 @@
 # Specify the source directory
 SOURCE_DIR := $(CURDIR)/src
 
-# Specify the output directory
-OUTPUT_DIR := $(CURDIR)/debian/neXtBus
+%:
+        dh $@
 
-# Build the application
-build:
-	dotnet build $(SOURCE_DIR)/nextBus.csproj -c Release -o $(OUTPUT_DIR)
+# Building C# project
+override_dh_auto_build:
+        /home/roni/.dotnet/dotnet build $(SOURCE_DIR)/ -c Release
 
-# Install the application
-install:
-	# Copy the executable to the binary directory
-	mkdir -p $(CURDIR)/debian/neXtBus/usr/bin
-	cp $(OUTPUT_DIR)/neXtBus $(CURDIR)/debian/neXtBus/usr/bin
+# Install the built files
+override_dh_auto_install:
+        mkdir -p debian/nextbus/usr/bin
+        cp $(SOURCE_DIR)/bin/Release/net7.0/neXtBus debian/nextbus/usr/bin/
+        cp $(SOURCE_DIR)/bin/Release/net7.0/neXtBus.dll debian/nextbus/usr/bin/
+        cp $(SOURCE_DIR)/bin/Release/net7.0/neXtBus.runtimeconfig.json debian/nextbus/usr/bin/
 
-# Clean the build directory
-clean:
-	# Remove any files generated during the build process
-	rm -rf $(OUTPUT_DIR)
-
-	# Remove any other files generated during the package creation process
-	rm -rf $(CURDIR)/debian/neXtBus
-
+# Cleaning build artifacts
+override_dh_auto_clean:
+        /home/roni/.dotnet/dotnet clean $(SOURCE_DIR)/

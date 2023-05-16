@@ -1,12 +1,15 @@
 Source: nextbus
 Section: misc
 Priority: optional
-Maintainer: VecsesIot Team radai.ronald@edu.bme.hu
-Build-Depends: debhelper (>= 9)
-Standards-Version: 3.9.5
+Maintainer: VecsesIoT Team <radai.ronald@edu.bme.hu>
+Build-Depends: debhelper-compat (= 13)
+Standards-Version: 4.5.1
+Rules-Requires-Root: no
 
 Package: nextbus
-Architecture: all
-Depends: VecsesIot kernel driver, dotnet 6.0
-Description: neXtBus Service for providing information to VecsesIot GPIO pin setter kernel module displaying next avaible bus.
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: neXtBus Service to set GPIO pins
+        A service for providing information to VecsesIoT GPIO pin
+        setter kernel module displaying next avaible bus.
 
