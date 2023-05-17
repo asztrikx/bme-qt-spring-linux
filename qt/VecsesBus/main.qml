@@ -3,6 +3,8 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.12
 import QtQuick.Window 2.15
 import QtPositioning 5.15
+import QtQuick.Dialogs
+import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: app
@@ -142,6 +144,8 @@ ApplicationWindow {
         objectName: "linelist"
         signal getAllLines()
         signal getLineStops(string url)
+        signal subscribeFor(var id)
+        signal unsubscribeFrom(var id)
 
         function onSelectedItem(item){
             getLineStops(item)
@@ -241,6 +245,16 @@ ApplicationWindow {
 
         function onBack(){
             actualView = "timetabledetaillist"
+        }
+    }
+
+    MessageDialog{
+        objectName: "linedialog"
+        id: messageDialog
+        title: "Subscribe operation"
+        function show(text){
+            messageDialog.text = text
+            messageDialog.open()
         }
     }
 }
