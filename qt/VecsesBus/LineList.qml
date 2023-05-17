@@ -59,24 +59,46 @@ Item {
                     width: parent.width
                     anchors.verticalCenter: parent.verticalCenter
                     spacing: 10
-                    Rectangle{
-                        width: 20 + number.length * 5
-                        height: 25
-                        color: "blue"
+                    Row{
+                        width: parent.width * 0.5
+                        spacing: 10
+                        Rectangle{
+                            width: 20 + number.length * 5
+                            height: 25
+                            color: "blue"
+                            Text {
+                                anchors.centerIn: parent
+                                id: numberText
+                                text: number
+                                color: "white"
+                                font.bold: true
+                            }
+                        }
+
                         Text {
-                            anchors.centerIn: parent
-                            id: numberText
-                            text: number
-                            color: "white"
-                            font.bold: true
+                            id: nameText
+                            text: name
+                            elide: Text.ElideRight
+                            font.pixelSize: 16
                         }
                     }
 
-                    Text {
-                        id: nameText
-                        text: name
-                        elide: Text.ElideRight
-                        font.pixelSize: 16
+
+                    Button{
+                        text: "+"
+                        visible: app.isAnyRole("User")
+                        onClicked: {
+                            const urlParts = url.split("/")
+                            subscribeFor(urlParts[urlParts.length - 1])
+                        }
+                    }
+                    Button{
+                        text: "-"
+                        visible: app.isAnyRole("User")
+                        onClicked: {
+                            const urlParts = url.split("/")
+                            unsubscribeFrom(urlParts[urlParts.length - 1])
+                        }
                     }
                 }
 

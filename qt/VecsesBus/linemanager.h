@@ -17,6 +17,9 @@ public slots:
 
     void getLineStopsHandler(QString url);
     void responseGetLinesStopsHandler();
+
+    void subscribeForHandler(QVariant id);
+    void unsubscribeFromHandler(QVariant id);
 };
 
 #endif // LINEMANAGER_H
