@@ -14,7 +14,7 @@ MapManager::MapManager(QObject* rootObject) : NetworkManager(rootObject) {
 }
 
 void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
-    QNetworkRequest request0(QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/route"));
+    QNetworkRequest request0(QUrl(baseUrl + "/lines/" + lineId.toString() + "/route"));
     setAuthHeader(request0);
     QNetworkReply* reply0 = mgr.get(request0);
     QObject::connect(reply0, &QNetworkReply::finished, [=]() {
@@ -24,7 +24,7 @@ void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
         mapView->setProperty("sections", QVariant(jsonObject));
     });
 
-    QNetworkRequest request1(QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/stops"));
+    QNetworkRequest request1(QUrl(baseUrl + "/lines/" + lineId.toString() + "/stops"));
     setAuthHeader(request1);
     QNetworkReply* reply1 = mgr.get(request1);
     QObject::connect(reply1, &QNetworkReply::finished, [=]() {
@@ -34,7 +34,7 @@ void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
         mapView->setProperty("stops", QVariant(jsonObject));
     });
 
-    QNetworkRequest request2(QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/nextbus/" + stopId.toString()));
+    QNetworkRequest request2(QUrl(baseUrl + "/lines/" + lineId.toString() + "/nextbus/" + stopId.toString()));
     setAuthHeader(request2);
     QNetworkReply* reply2 = mgr.get(request2);
     QObject::connect(reply2, &QNetworkReply::finished, [=]() {
@@ -48,7 +48,7 @@ void MapManager::drawHandler(QVariant lineId, QVariant stopId) {
         }
     });
 
-    QNetworkRequest request3(QUrl("http://localhost:8080/api/lines/" + lineId.toString() + "/brokenbuses/" + stopId.toString()));
+    QNetworkRequest request3(QUrl(baseUrl + "/lines/" + lineId.toString() + "/brokenbuses/" + stopId.toString()));
     setAuthHeader(request3);
     QNetworkReply* reply3 = mgr.get(request3);
     QObject::connect(reply3, &QNetworkReply::finished, [=]() {

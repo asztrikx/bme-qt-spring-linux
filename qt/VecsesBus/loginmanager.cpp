@@ -18,7 +18,7 @@ LoginManager::LoginManager(QObject* rootObject) : NetworkManager(rootObject)
 void LoginManager::loginHandler(QString username, QString password)
 {
     NetworkManager::setAuth(username + ":" + password);
-    QUrl url = QUrl(QString("http://localhost:8080/api"));
+    QUrl url = QUrl(baseUrl);
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.get(request);
@@ -29,7 +29,7 @@ void LoginManager::responseLoginHandler()
 {
     QQuickItem* login = rootObject->findChild<QQuickItem*>("login");
     if (reply->attribute(QNetworkRequest::HttpStatusCodeAttribute).toInt() == 200){
-        QUrl url = QUrl(QString("http://localhost:8080/api/users/details"));
+        QUrl url = QUrl(baseUrl + "/users/details");
         QNetworkRequest request(url);
         setAuthHeader(request);
         QNetworkReply* reply = mgr.get(request);
@@ -47,7 +47,7 @@ void LoginManager::responseLoginHandler()
 void LoginManager::signUpHandler(QVariant user)
 {
     QByteArray data = user.toByteArray();
-    QUrl url = QUrl(QString("http://localhost:8080/api/users/register"));
+    QUrl url = QUrl(QString(baseUrl + "/users/register"));
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     reply = mgr.post(request, data);

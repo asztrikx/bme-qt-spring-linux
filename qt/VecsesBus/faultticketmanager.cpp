@@ -21,7 +21,7 @@ FaultTicketManager::FaultTicketManager(QObject* rootObject) : NetworkManager(roo
 
 void FaultTicketManager::getAllFaultTicketsHandler()
 {
-    QUrl url = QUrl("http://localhost:8080/api/faultTickets");
+    QUrl url = QUrl(baseUrl + "/faultTickets");
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.get(request);
@@ -84,7 +84,7 @@ void FaultTicketManager::responseDeleteFaultTicketHandler(){
 
 void FaultTicketManager::createFaultTicketHandler(QVariant ticket){
     QByteArray data = ticket.toByteArray();
-    QUrl url = QUrl("http://localhost:8080/api/faultTickets/create");
+    QUrl url = QUrl(baseUrl + "/faultTickets/create");
     QNetworkRequest request(url);
     request.setHeader(QNetworkRequest::ContentTypeHeader, "application/json");
     setAuthHeader(request);
@@ -100,7 +100,7 @@ void FaultTicketManager::responseCreateFaultTicketHandler(){
 void FaultTicketManager::getAllFaultTicketsByUser(QVariant id)
 {
     QString user = id.toString();
-    QUrl url = QUrl("http://localhost:8080/api/faultTickets/search/findAllByUser?user=" + user);
+    QUrl url = QUrl(baseUrl + "/faultTickets/search/findAllByUser?user=" + user);
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.get(request);

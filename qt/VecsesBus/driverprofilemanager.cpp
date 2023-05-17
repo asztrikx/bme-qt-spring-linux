@@ -15,7 +15,7 @@ DriverProfileManager::DriverProfileManager(QObject* rootObject): NetworkManager(
 
 void DriverProfileManager::getDriverActiveTimeTableHandler(QString id)
 {
-    QUrl url = QUrl("http://localhost:8080/api/timetables/search/findTimetableByBusIsNotNullAndBusUserId?user_id=" + id);
+    QUrl url = QUrl(baseUrl + "/timetables/search/findTimetableByBusIsNotNullAndBusUserId?user_id=" + id);
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.get(request);
@@ -49,7 +49,7 @@ void DriverProfileManager::getDriverActiveTimeTableLineHandler(QString url)
 
 void DriverProfileManager::postFinishTimetable()
 {
-    QNetworkRequest request(QUrl("http://localhost:8080/api/buses/finish"));
+    QNetworkRequest request(QUrl(baseUrl + "/buses/finish"));
     setAuthHeader(request);
     reply = mgr.post(request, QByteArray());
     QObject::connect(reply, &QNetworkReply::finished, [=]() {

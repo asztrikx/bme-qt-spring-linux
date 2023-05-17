@@ -8,7 +8,7 @@
 
 QByteArray NetworkManager::auth = QString("dev:123").toUtf8().toBase64();
 
-NetworkManager::NetworkManager(QObject* rootObject): QObject(nullptr), rootObject(rootObject)
+NetworkManager::NetworkManager(QObject* rootObject): QObject(nullptr), baseUrl("http://localhost:8080/api"), rootObject(rootObject)
 {
 }
 

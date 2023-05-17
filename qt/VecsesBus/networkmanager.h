@@ -15,6 +15,7 @@ public:
     static void setAuth(QString value) { auth = value.toUtf8().toBase64(); }
     void setAuthHeader(QNetworkRequest& request);
 protected:
+    QString baseUrl;
     QObject* rootObject;
     QNetworkAccessManager mgr;
     QNetworkReply* reply;

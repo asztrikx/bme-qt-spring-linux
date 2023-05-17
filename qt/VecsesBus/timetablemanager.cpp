@@ -20,7 +20,7 @@ TimeTableManager::TimeTableManager(QObject* rootObject): NetworkManager(rootObje
 
 void TimeTableManager::getAllTimeTablesHandler()
 {
-    QUrl url = QUrl("http://localhost:8080/api/timetables");
+    QUrl url = QUrl(baseUrl + "/timetables");
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.get(request);
@@ -81,7 +81,7 @@ void TimeTableManager::getTimeTableSectionHandler(QVariant id, QString url)
 
 void TimeTableManager::getAllAvailableTimeTablesHandler(QString date)
 {
-    QUrl url = QUrl("http://localhost:8080/api/timetables/search/findAllByBusIsNullAndStartDateIsAfterOrderByStartDateAsc?date=" + date);
+    QUrl url = QUrl(baseUrl + "/timetables/search/findAllByBusIsNullAndStartDateIsAfterOrderByStartDateAsc?date=" + date);
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.get(request);
@@ -95,7 +95,7 @@ void TimeTableManager::getAllAvailableTimeTablesHandler(QString date)
 
 void TimeTableManager::postTakeTimetableHandler(QVariant id)
 {
-    QUrl url = QUrl("http://localhost:8080/api/buses/take/" + id.toString());
+    QUrl url = QUrl(baseUrl + "/buses/take/" + id.toString());
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.post(request, QByteArray());
