@@ -27,7 +27,7 @@ Item {
 
     onVisibleChanged: () => {
         if (!visible) return;
-        if (app.userData !== undefined && app.userData["roles"].includes("Driver")){
+        if (app.isAnyRole("Driver")){
             getAllAvailableTimeTables((new Date()).toISOString().split(".")[0])
         } else {
             getAllTimeTables()
@@ -83,7 +83,7 @@ Item {
                     Text {
                         text: "Take"
                         anchors.verticalCenter: parent.verticalCenter
-                        visible: (app.userData !== undefined && app.userData["roles"].includes("Driver"))
+                        visible: (app.isAnyRole("Driver"))
                         font.pixelSize: 16
                         font.family: "Roboto"
                         MouseArea {

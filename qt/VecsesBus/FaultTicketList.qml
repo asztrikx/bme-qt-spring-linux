@@ -22,9 +22,9 @@ Item {
 
     onVisibleChanged: () => {
         if (!visible) return;
-        if (app.userData !== undefined && app.userData["roles"].includes("Driver")){
+        if (app.isAnyRole("Driver")){
             getAllTicketsByUser(app.userData["id"])
-        } else if ((app.userData !== undefined && app.userData["roles"].includes("Maintenance"))){
+        } else if (app.isAnyRole("Maintenance")){
             getAllTickets()
         }
 
