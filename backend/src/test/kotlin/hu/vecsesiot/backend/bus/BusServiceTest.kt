@@ -1,5 +1,6 @@
 package hu.vecsesiot.backend.bus
 
+
 import hu.vecsesiot.backend.line.Line
 import hu.vecsesiot.backend.security.UserToUserDetails
 import hu.vecsesiot.backend.timetable.Timetable
@@ -18,10 +19,12 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDateTime
 import java.util.*
 
 @SpringBootTest
+@ActiveProfiles("test" )
 class BusServiceTest {
 
 	@Autowired
@@ -44,7 +47,7 @@ class BusServiceTest {
 
 	@BeforeEach
 	fun setup(){
-		testUserObj = User(1,"testuser","testemail", "Test User", "password", listOf("User"))
+		testUserObj = User(1,"testuser","testemail", "Test User", "password", mutableListOf("User"))
 		timetable = Timetable(1, LocalDateTime.now())
 		timetable.line = Line(1, "Test line")
 

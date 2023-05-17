@@ -20,7 +20,7 @@ class FaultTicketService {
 
 	private val logger = LoggerFactory.getLogger(FaultTicketService::class.java)
 	@Transactional
-	fun createTicket(ticket : FaultTicket){
+	fun createTicket(ticket : FaultTicket) : FaultTicket{
 		val authentication = SecurityContextHolder.getContext().authentication
 		val principal = authentication.principal as UserToUserDetails
 		val user = userRepository.findById(principal.id).getOrNull()
@@ -35,6 +35,7 @@ class FaultTicketService {
 		ticket.bus = bus
 		logger.info("One faultticket was created by user ({}) to bus ({})", user.id, bus.id)
 		repository.save(ticket)
+		return ticket
 	}
 
 	@Transactional

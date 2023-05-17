@@ -1,7 +1,6 @@
 package hu.vecsesiot.backend.line
 
 
-import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.bus.BusDto
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity

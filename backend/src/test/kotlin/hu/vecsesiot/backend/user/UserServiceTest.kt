@@ -17,10 +17,12 @@ import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.test.context.ActiveProfiles
 import java.util.*
 
 
 @SpringBootTest
+@ActiveProfiles("test")
 class UserServiceTest {
 
 	@Autowired
@@ -43,7 +45,7 @@ class UserServiceTest {
 	@BeforeEach
 	fun setup(){
 		testUser = RegisterDto("testemail", "testuser", "password", "Test User")
-		testUserObj = User(1,"testuser","testemail", "Test User", "password", listOf("User"))
+		testUserObj = User(1,"testuser","testemail", "Test User", "password", mutableListOf("User"))
 
 		securityContext = Mockito.mock(SecurityContext::class.java)
 		authentication = Mockito.mock(Authentication::class.java)
@@ -104,6 +106,19 @@ class UserServiceTest {
 	}
 
 	@Test
+	fun testSubscribeForValidLineWithExistUserAgain(){
+		val testLine = Line(1, "Test line")
+		testUserObj.lineSubscriptions = mutableListOf(testLine)
+		Mockito.`when`(repository.findById(testUserObj.id!!)).thenReturn(Optional.of(testUserObj))
+		Mockito.`when`(lineRepository.findById(1)).thenReturn(Optional.of(testLine))
+
+		assertThrows<IllegalStateException> {
+			service.subscribeForLine(1L)
+		}
+		Mockito.verify(repository, times(0)).save(any())
+	}
+
+	@Test
 	fun testSubscribeForInValidLineWithExistUser(){
 		Mockito.`when`(repository.findById(testUserObj.id!!)).thenReturn(Optional.of(testUserObj))
 		Mockito.`when`(lineRepository.findById(1)).thenReturn(Optional.empty())
@@ -111,6 +126,7 @@ class UserServiceTest {
 		assertThrows<IllegalStateException> {
 			service.subscribeForLine(1L)
 		}
+		Mockito.verify(repository, times(0)).save(any())
 	}
 
 	@Test
@@ -122,6 +138,58 @@ class UserServiceTest {
 		assertThrows<IllegalStateException> {
 			service.subscribeForLine(1L)
 		}
+		Mockito.verify(repository, times(0)).save(any())
+	}
+
+	@Test
+	fun testUnsubscribeFromValidLineWithExistUser(){
+		val testLine = Line(1, "Test line")
+		testUserObj.lineSubscriptions = mutableListOf(testLine)
+		Mockito.`when`(repository.findById(testUserObj.id!!)).thenReturn(Optional.of(testUserObj))
+		Mockito.`when`(lineRepository.findById(1)).thenReturn(Optional.of(testLine))
+
+		assertDoesNotThrow {
+			service.unsubscribeFromLine(1L)
+		}
+		assert(!testUserObj.lineSubscriptions.contains(testLine))
+		Mockito.verify(repository, times(1)).save(any())
+	}
+
+	@Test
+	fun testUnsubscribeFromValidLineWithExistUserAgain(){
+		val testLine = Line(1, "Test line")
+		testUserObj.lineSubscriptions = mutableListOf()
+		Mockito.`when`(repository.findById(testUserObj.id!!)).thenReturn(Optional.of(testUserObj))
+		Mockito.`when`(lineRepository.findById(1)).thenReturn(Optional.of(testLine))
+
+		assertThrows<IllegalStateException> {
+			service.unsubscribeFromLine(1L)
+		}
+		Mockito.verify(repository, times(0)).save(any())
+	}
+
+	@Test
+	fun testUnsubscribeFromInValidLineWithExistUser(){
+		Mockito.`when`(repository.findById(testUserObj.id!!)).thenReturn(Optional.of(testUserObj))
+		Mockito.`when`(lineRepository.findById(1)).thenReturn(Optional.empty())
+
+		assertThrows<IllegalStateException> {
+			service.unsubscribeFromLine(1L)
+		}
+
+		Mockito.verify(repository, times(0)).save(any())
+	}
+
+	@Test
+	fun testUnsubscribeFromValidLineWithNonExistUser(){
+		val testLine = Line(1, "Test line")
+		Mockito.`when`(repository.findById(testUserObj.id!!)).thenReturn(Optional.empty())
+		Mockito.`when`(lineRepository.findById(1)).thenReturn(Optional.of(testLine))
+
+		assertThrows<IllegalStateException> {
+			service.unsubscribeFromLine(1L)
+		}
+		Mockito.verify(repository, times(0)).save(any())
 	}
 
 

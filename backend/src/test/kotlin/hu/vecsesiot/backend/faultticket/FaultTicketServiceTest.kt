@@ -3,7 +3,6 @@ package hu.vecsesiot.backend.faultticket
 import hu.vecsesiot.backend.bus.Bus
 import hu.vecsesiot.backend.security.UserToUserDetails
 import hu.vecsesiot.backend.stop.GPSCoordinate
-import hu.vecsesiot.backend.user.RegisterDto
 import hu.vecsesiot.backend.user.User
 import hu.vecsesiot.backend.user.UserRepository
 import org.junit.jupiter.api.BeforeEach
@@ -11,7 +10,6 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.assertDoesNotThrow
 import org.junit.jupiter.api.assertThrows
 import org.mockito.ArgumentMatchers.any
-import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.times
 import org.springframework.beans.factory.annotation.Autowired
@@ -20,10 +18,12 @@ import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContext
 import org.springframework.security.core.context.SecurityContextHolder
+import org.springframework.test.context.ActiveProfiles
 import java.time.LocalDateTime
 import java.util.*
 
 @SpringBootTest
+@ActiveProfiles("test" )
 class FaultTicketServiceTest {
 
 	@Autowired
@@ -43,7 +43,7 @@ class FaultTicketServiceTest {
 
 	@BeforeEach
 	fun setup(){
-		testUserObj = User(1,"testuser","testemail", "Test User", "password", listOf("User"))
+		testUserObj = User(1,"testuser","testemail", "Test User", "password", mutableListOf("User"))
 		ticket = FaultTicket(1, LocalDateTime.now(), null, "Test ticket", GPSCoordinate(0.0, 0.0))
 
 		securityContext = Mockito.mock(SecurityContext::class.java)

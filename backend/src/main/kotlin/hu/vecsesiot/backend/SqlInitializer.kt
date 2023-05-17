@@ -20,11 +20,13 @@ import hu.vecsesiot.backend.user.UserRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.ApplicationArguments
 import org.springframework.boot.ApplicationRunner
+import org.springframework.context.annotation.Profile
 import org.springframework.stereotype.Component
 import java.time.Duration
 import java.time.LocalDateTime
 
 @Component
+@Profile("production")
 class SqlInitializer : ApplicationRunner {
 	@Autowired
 	private lateinit var userRepository: UserRepository

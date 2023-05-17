@@ -2,6 +2,7 @@ package hu.vecsesiot.backend.faultticket
 
 
 
+import hu.vecsesiot.backend.line.LineService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
@@ -13,10 +14,14 @@ class FaultTicketController {
 	@Autowired
 	private lateinit var service: FaultTicketService
 
+	@Autowired
+	private lateinit var lineService: LineService
+
 
 	@PostMapping("/create")
 	fun createFaultTicket(@RequestBody ticket: FaultTicket): ResponseEntity<Nothing> = try {
-		service.createTicket(ticket)
+		val savedTicket = service.createTicket(ticket)
+		lineService.notifyAllSubscribedUserOnBreakdown(savedTicket.bus.timetable!!.line.id!!)
 		ResponseEntity.ok().build()
 	} catch (e: Exception) {
 		ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
