@@ -16,7 +16,7 @@ class FaultTicket(
 	var resolveDate: LocalDateTime? = null,
 	@get:NotBlank
 	var description: String,
-	var coordinate: GPSCoordinate,
+	var coordinate: GPSCoordinate? = null,
 	@Enumerated(EnumType.STRING)
 	var state: State = State.Created
 ) {

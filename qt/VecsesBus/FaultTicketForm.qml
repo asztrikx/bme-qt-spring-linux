@@ -36,23 +36,6 @@ Item {
                 font.pixelSize: 16
             }
 
-            Row {
-                spacing: 10
-                width: parent.width
-                TextField {
-                    id: latField
-                    width: parent.width / 2 - parent.spacing / 2
-                    placeholderText: "Latitude"
-                    font.pixelSize: 16
-                }
-                TextField {
-                    id: longField
-                    width: parent.width / 2 - parent.spacing / 2
-                    placeholderText: "Longitude"
-                    font.pixelSize: 16
-                }
-            }
-
             Text {
                 id: errorText
                 text: ""
@@ -71,16 +54,8 @@ Item {
                             faultticketform.setError("Empty description");
                             return;
                         }
-                        if(isNaN(parseFloat(latField.text)) || isNaN(parseFloat(longField.text))){
-                            faultticketform.setError("Bad coordinate format");
-                            return;
-                        }
                         var newTicket = {
                             "description": descriptionField.text,
-                            "coordinate": {
-                                "latitude": latField.text,
-                                "longitude": longField.text
-                            },
                             "startDate": new Date()
                         }
                         createTicket(JSON.stringify(newTicket));

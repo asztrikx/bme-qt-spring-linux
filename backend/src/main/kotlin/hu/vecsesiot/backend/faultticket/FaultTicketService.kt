@@ -33,6 +33,7 @@ class FaultTicketService {
 
 		ticket.user = user
 		ticket.bus = bus
+		ticket.coordinate = bus.coordinate
 		logger.info("One faultticket was created by user ({}) to bus ({})", user.id, bus.id)
 		repository.save(ticket)
 		return ticket
