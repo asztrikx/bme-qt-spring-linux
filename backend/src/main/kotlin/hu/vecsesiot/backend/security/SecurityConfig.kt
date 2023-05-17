@@ -40,6 +40,8 @@ class SecurityConfig {
 
 				authorize("/users/register", permitAll)
 				authorize("/users/details", hasAnyAuthority(User))
+				authorize("/users/subscribe/**", hasAnyAuthority(User))
+				authorize("/users/unsubscribe/**", hasAnyAuthority(User))
 				authorize("/buses/**", hasAnyAuthority(Driver))
 				authorize("/faultTickets/**", hasAnyAuthority(Driver, Maintenance))
 				authorize("/timetables/**", hasAnyAuthority(User))

@@ -35,4 +35,14 @@ class UserController {
 			ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
 		}
 	}
+
+	@PostMapping("/unsubscribe/{id}")
+	fun unsubscribeFromLine(@PathVariable id: Long): ResponseEntity<Nothing> {
+		return try {
+			service.unsubscribeFromLine(id)
+			ResponseEntity.ok().build()
+		} catch (e: Exception) {
+			ResponseEntity.status(HttpStatus.BAD_REQUEST).build()
+		}
+	}
 }

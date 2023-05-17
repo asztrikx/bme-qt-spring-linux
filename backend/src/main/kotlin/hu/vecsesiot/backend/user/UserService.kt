@@ -38,8 +38,24 @@ class UserService {
 
 		check(user != null)
 		check(line != null)
+		check(!user.lineSubscriptions.contains(line))
 
 		user.lineSubscriptions.add(line)
+		repository.save(user)
+	}
+
+	@Transactional
+	fun unsubscribeFromLine(id: Long){
+		val authentication = SecurityContextHolder.getContext().authentication
+		val principal = authentication.principal as UserToUserDetails
+		val user = repository.findById(principal.id).getOrNull()
+		val line = lineRepository.findById(id).getOrNull()
+
+		check(user != null)
+		check(line != null)
+		check(user.lineSubscriptions.contains(line))
+
+		user.lineSubscriptions.remove(line)
 		repository.save(user)
 	}
 
