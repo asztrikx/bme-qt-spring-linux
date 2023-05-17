@@ -26,7 +26,7 @@ import java.time.Duration
 import java.time.LocalDateTime
 
 @Component
-@Profile("production")
+@Profile("!test")
 class SqlInitializer : ApplicationRunner {
 	@Autowired
 	private lateinit var userRepository: UserRepository
