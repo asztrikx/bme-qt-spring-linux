@@ -128,7 +128,7 @@ internal class Program
 
         if(index == -1)
         {
-            w.Write("39:0");
+            w.Write("0:0");
             Console.WriteLine("No busses avaible on any line! Turning all indicator off!");
         }
         else
@@ -143,7 +143,14 @@ internal class Program
         // setting the Http Client
         using HttpClient client = new();
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", Convert.ToBase64String(ASCIIEncoding.ASCII.GetBytes("disp:123")));
-        client.BaseAddress = new Uri("http://localhost:8080/api/");
+        
+        String? addr = System.Environment.GetEnvironmentVariable("BASEADDRESS");
+        if(addr is null)
+        {
+            Console.WriteLine("Base address not set in \"BASEADDRESS\" environment varialble!");
+            return;
+        }
+        client.BaseAddress = new Uri($"http://{addr}:8080/api/");
 
         Console.WriteLine("Setting up VecsesIot neXtBus service\n");
         SettingUp(client).Wait();
