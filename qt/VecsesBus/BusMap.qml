@@ -59,13 +59,19 @@ Item {
     }
 
     onNextBusChanged: () => {
-        if (nextBus === "nodata") return;
+        if (nextBus === "nodata") {
+            nextBusItem.coordinate = QtPositioning.coordinate(-100, -100)
+            return;
+        }
         var coord = nextBus.coordinate;
         nextBusItem.coordinate = QtPositioning.coordinate(coord.latitude, coord.longitude)
     }
 
     onBrokenBusesChanged: () => {
-        if (brokenBuses === "nodata") return;
+        if (brokenBuses === "nodata") {
+            brokenBusesModel.clear();
+            return;
+        }
         brokenBusesModel.clear();
         for (const brokenBus of brokenBuses) {
             var coord = brokenBus.coordinate;
