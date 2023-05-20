@@ -8,6 +8,9 @@ internal class Program
 {
     private static List<KeyValuePair<int, string>> buses = new();
     private static int stopId;
+        
+    // pins to be used by user
+    private static readonly int[] gpio_pin_nums = { 37, 35, 33, 31, 29, 40, 38, 36, 32, 22 };
 
     private static async Task SettingUp(HttpClient client)
     {
@@ -80,7 +83,7 @@ internal class Program
                     Convert.ToInt32(item.GetProperty("_links").GetProperty("line").GetProperty("href").GetString()!.Split('/').LastOrDefault()),
                     item.GetProperty("name").GetString()!
                 ));
-                Console.WriteLine($"Line \"{buses.Last().Value}\" added to stop!");
+                Console.WriteLine($"Line \"{buses.Last().Value}\" added to stop! Please connect gpio pin {gpio_pin_nums[buses.Count()-1]} to the display of bus line: {buses.Last().Value}!");
             }
         }
         catch
@@ -115,7 +118,7 @@ internal class Program
         return (mini, min);
     }
 
-    private static void writeBusIndex(int index, DateTime nextDate)
+    private static void writeBusIndex(int index, DateTime? nextDate)
     {
         // opening filestream
         using StreamWriter w = new StreamWriter("/proc/busservice");
@@ -129,12 +132,13 @@ internal class Program
         if(index == -1)
         {
             w.Write("0:0");
-            Console.WriteLine("No busses avaible on any line! Turning all indicator off!");
+            if(nextDate is not null)
+                Console.WriteLine("No busses avaible on any line! Turning all indicator off!");
         }
         else
         {
             w.Write($"{index}:1");
-            Console.WriteLine($"The next bus will arrive on line {buses[index].Key} at {nextDate}! Turning pin index {index} on.");
+            Console.WriteLine($"The next bus will arrive on line {buses[index].Value} at {nextDate!}! Turning pin index {index} on.");
         }
     }
 
@@ -154,9 +158,13 @@ internal class Program
 
         Console.WriteLine("Setting up VecsesIot neXtBus service\n");
         SettingUp(client).Wait();
-        Console.WriteLine("Setup completed!\n\n");
+        Console.WriteLine("Setup completed!");
 
         DateTime lastUpdated = DateTime.Now;
+
+        Console.WriteLine("Press enter to start display!\n");
+        writeBusIndex(-1, null);
+        Console.Read();
 
         // main loop
         while (true)
@@ -182,7 +190,7 @@ internal class Program
                 lastUpdated = DateTime.Now;
             }
 
-            Thread.Sleep(5000);
+            Thread.Sleep(10000);
         }
     }
 }
