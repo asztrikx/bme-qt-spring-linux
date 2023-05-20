@@ -36,7 +36,7 @@ Bónusz feladatok, melyek plusz utánajárást is igényelhetnek (maximális kap
 - [ ] 5p: Időzített taskok a backendben.
 - [ ] 5p: Linux alatt megszakítás kezelő készítése
 - [x] 5p: E-mail küldés a backendben.
-- [ ] 3-10p: Jelentős automatikus teszt lefedettség, lefedettségtől függően pontozva
+- [x] 3-10p: Jelentős automatikus teszt lefedettség, lefedettségtől függően pontozva
 - [x] 3p: QRC mechanizmus használata nem QML fájlok tárolására és elérésére.
 - [ ] 3p: Saját fejlesztésű dinamikusan linkelt könyvtár használata.
 - [ ] 8p: Induláskor lefutó öntesztelő funkció megvalósítása, mely a rendszer minden komponensének elérhetőségét és alapvető funkcióinak működőképességét teszteli (pl. webes felületről egy adat elmentése adatbázisba, majd visszaolvasása, hardver periféria megszólítása, valamint a vastag kliensen a logba írás).
