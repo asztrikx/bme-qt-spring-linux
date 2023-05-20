@@ -28,7 +28,13 @@ Item {
     onVisibleChanged: () => {
         if (!visible) return;
         if (app.isAnyRole("Driver")){
-            getAllAvailableTimeTables((new Date()).toISOString().split(".")[0])
+            let tzoffset = new Date().getTimezoneOffset() * 60000;
+            let localISOTime = new Date(Date.now() - tzoffset).toISOString()
+            // remove Z
+            localISOTime = localISOTime.slice(0, -1);
+            // remove ms
+            localISOTime = localISOTime.split(".")[0]
+            getAllAvailableTimeTables(localISOTime)
         } else {
             getAllTimeTables()
         }
