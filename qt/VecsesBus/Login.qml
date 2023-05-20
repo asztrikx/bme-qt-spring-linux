@@ -32,6 +32,7 @@ Item {
                 width: parent.width
                 placeholderText: "Username"
                 font.pixelSize: 16
+                onAccepted: () => { submit.onClicked(); }
             }
 
             TextField {
