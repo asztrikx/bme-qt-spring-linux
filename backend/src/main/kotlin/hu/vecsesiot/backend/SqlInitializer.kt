@@ -123,6 +123,18 @@ class SqlInitializer : ApplicationRunner {
 					name = "OTP lakótelep"
 				)
 			)
+			add(
+				Stop(
+					coordinate = GPSCoordinate(47.4116, 19.2707),
+					name = "Anna utca"
+				)
+			)
+			add(
+				Stop(
+					coordinate = GPSCoordinate(47.4167, 19.2518),
+					name = "Market Central"
+				)
+			)
 		}
 	}
 
@@ -238,6 +250,48 @@ class SqlInitializer : ApplicationRunner {
 					)
 				}
 			)
+			add(
+				Section(timespan = Duration.ofSeconds(200)).apply {
+					start = stops["Iskola utca"]
+					stop = stops["Anna utca"]
+					sectionPoints = mutableListOf(
+						stops["Iskola utca"].coordinate,
+						stops["Anna utca"].coordinate,
+					)
+				}
+			)
+			add(
+				Section(timespan = Duration.ofSeconds(200)).apply {
+					start = stops["Anna utca"]
+					stop = stops["Vörösmarty utca"]
+					sectionPoints = mutableListOf(
+						stops["Anna utca"].coordinate,
+						stops["Vörösmarty utca"].coordinate,
+					)
+				}
+			)
+			add(
+				Section(timespan = Duration.ofSeconds(200)).apply {
+					start = stops["Vörösmarty utca"]
+					stop = stops["OTP lakótelep"]
+					sectionPoints = mutableListOf(
+						stops["Vörösmarty utca"].coordinate,
+						stops["OTP lakótelep"].coordinate,
+					)
+				}
+			)
+			add(
+				Section(timespan = Duration.ofSeconds(20000)).apply {
+					start = stops["OTP lakótelep"]
+					stop = stops["Market Central"]
+					sectionPoints = mutableListOf(
+						stops["OTP lakótelep"].coordinate,
+						GPSCoordinate(47.4172, 19.2541),
+						GPSCoordinate(47.4162, 19.2534),
+						stops["Market Central"].coordinate,
+					)
+				}
+			)
 		}
 	}
 
@@ -258,6 +312,12 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				Line(name = "123E (Autóbuszállomás)").apply {
 					route = mutableListOf(sections[10], sections[7], sections[8], sections[9])
+					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
+				}
+			)
+			add(
+				Line(name = "580 (Market Central)").apply {
+					route = mutableListOf(sections[11], sections[12], sections[13], sections[14])
 					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
 				}
 			)
@@ -309,6 +369,16 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				Timetable(startDate = LocalDateTime.now().plusMinutes(33)).apply {
 					line = lines[2]
+				}
+			)
+			add(
+				Timetable(startDate = LocalDateTime.now().plusMinutes(1)).apply {
+					line = lines[3]
+				}
+			)
+			add(
+				Timetable(startDate = LocalDateTime.now().plusMinutes(3)).apply {
+					line = lines[3]
 				}
 			)
 		}
@@ -438,22 +508,23 @@ class SqlInitializer : ApplicationRunner {
 					coordinate = GPSCoordinate(47.416674, 19.254866),
 					state = FaultTicket.State.InProgress
 				).apply {
-					bus = buses[1]
+					bus = buses[0]
 					user = bus.user!!
 
 				}
 			)
-			add(FaultTicket(
-				startDate = now.minusHours(1),
-				description = "The engine is broken.",
-				coordinate = GPSCoordinate(47.409671, 19.270102),
-				resolveDate = now.minusSeconds(1),
-				state = FaultTicket.State.Resolved
-			).apply {
-				bus = buses[0]
-				user = bus.user!!
+			add(
+				FaultTicket(
+					startDate = now.minusHours(1),
+					description = "The engine is broken.",
+					coordinate = GPSCoordinate(47.409671, 19.270102),
+					resolveDate = now.minusSeconds(1),
+					state = FaultTicket.State.Resolved
+				).apply {
+					bus = buses[0]
+					user = bus.user!!
 
-			}
+				}
 			)
 			add(
 				FaultTicket(
@@ -463,11 +534,12 @@ class SqlInitializer : ApplicationRunner {
 					resolveDate = now.plusMinutes(5),
 					state = FaultTicket.State.Resolved
 				).apply {
-					bus = buses[1]
+					bus = buses[0]
 					user = bus.user!!
-
 				}
 			)
 		}
 	}
+
+	operator fun List<Stop>.get(name: String) = this.first { it.name == name }
 }
