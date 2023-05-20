@@ -129,6 +129,12 @@ Item {
                 height:25
                 source: "image/bus.png"
             }
+            Behavior on coordinate {
+                PropertyAnimation {
+                    duration: 200
+                    easing.type: Easing.Linear
+                }
+            }
         }
         MapQuickItem {
             id: location
