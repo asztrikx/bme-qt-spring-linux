@@ -120,6 +120,18 @@ Item {
         }
 
         MapQuickItem {
+            id: location
+            anchorPoint: Qt.point(locationImage.width / 2, locationImage.height / 2)
+            sourceItem: Image {
+                id: locationImage
+                smooth: true
+                width:25
+                height:25
+                source: "image/location.png"
+            }
+        }
+
+        MapQuickItem {
             id: nextBusItem
             anchorPoint: Qt.point(busImage.width / 2, busImage.height / 2)
             sourceItem: Image {
@@ -134,17 +146,6 @@ Item {
                     duration: 200
                     easing.type: Easing.Linear
                 }
-            }
-        }
-        MapQuickItem {
-            id: location
-            anchorPoint: Qt.point(locationImage.width / 2, locationImage.height / 2)
-            sourceItem: Image {
-                id: locationImage
-                smooth: true
-                width:25
-                height:25
-                source: "image/location.png"
             }
         }
 
