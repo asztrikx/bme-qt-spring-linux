@@ -79,7 +79,7 @@ Rectangle {
             }
 
             Button{
-                text: "Mentés"
+                text: "Save"
                 font.pixelSize: 16
                 onClicked: {
                     saveTicket(((stateLabelBox.currentIndex === 0) ? "Created" : ((stateLabelBox.currentIndex === 2)) ? "Resolved" : "InProgress"), ticket["_links"]["self"]["href"])
