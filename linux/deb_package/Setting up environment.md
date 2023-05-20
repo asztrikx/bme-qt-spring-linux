@@ -18,5 +18,5 @@ export BASEADDRESS=<ip of the backend>
 neXtBus
 
 # Testing functionality
-dmesg | tail
+dmesg | tail / dmesg -w
 raspi-gpio get 37,35,33,31,29,40,38,36,32,22
