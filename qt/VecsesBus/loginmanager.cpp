@@ -18,7 +18,7 @@ LoginManager::LoginManager(QObject* rootObject) : NetworkManager(rootObject)
 void LoginManager::loginHandler(QString username, QString password)
 {
     NetworkManager::setAuth(username + ":" + password);
-    QUrl url = QUrl(baseUrl);
+    QUrl url = QUrl(baseUrl + "/");
     QNetworkRequest request(url);
     setAuthHeader(request);
     reply = mgr.get(request);

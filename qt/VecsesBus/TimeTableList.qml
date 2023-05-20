@@ -54,7 +54,7 @@ Item {
                 anchors.fill: parent
                 onClicked: function(){
                     if (line["name"] !== undefined){
-                        timeTableDetailList.lineUrl = line["_links"]["self"]["href"]
+                        timeTableDetailList.lineID = line["id"]
                         getAllSectionByTimeTable(line["_links"]["route"]["href"], startDate)
                     }
                 }

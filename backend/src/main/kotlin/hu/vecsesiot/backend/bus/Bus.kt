@@ -32,6 +32,11 @@ class Bus(
 
 	val coordinate: GPSCoordinate?
 		get() {
+			val faultTicket = faultTickets.find { it.state != FaultTicket.State.Resolved }
+			if (faultTicket != null) {
+				return faultTicket.coordinate
+			}
+
 			val timetable = this.timetable
 			timetable ?: return null
 			val line = timetable.line
@@ -40,7 +45,7 @@ class Bus(
 
 			// Get section we are in
 			var travelTimeAtEndOfSection = Duration.ZERO
-			var currentSection: Section? = null
+			var currentSection: Section = line.route.last()
 			for (section in line.route) {
 				travelTimeAtEndOfSection += section.timespan
 				if (travelTimeAtEndOfSection >= travelTime) {
@@ -48,12 +53,11 @@ class Bus(
 					break
 				}
 			}
-			currentSection!!
 			val travelTimeAtStartOfSection = travelTimeAtEndOfSection.minus(currentSection.timespan)
 
 			// Fix traveltime (travel isn't started yet or travel is already over)
-			travelTime = min(travelTime, Duration.ZERO)
-			travelTime = max(travelTime, travelTimeAtEndOfSection)
+			travelTime = max(travelTime, Duration.ZERO)
+			travelTime = min(travelTime, travelTimeAtEndOfSection)
 
 			// Get distance in subsection
 			var distanceOfSection = 0.0
@@ -61,22 +65,20 @@ class Bus(
 				distanceOfSection += subsection.length()
 			}
 
-			val ratioInsideSection = (travelTime - travelTimeAtStartOfSection).seconds.toDouble() / (travelTimeAtEndOfSection - travelTimeAtStartOfSection).seconds
+			val ratioInsideSection = (travelTime - travelTimeAtStartOfSection).seconds.toDouble() / (travelTimeAtEndOfSection - travelTimeAtStartOfSection).seconds.toDouble()
 			val distanceInSection = distanceOfSection * ratioInsideSection
 
 			// Get subsection we are in
 			var distanceAtEndOfSubsection = 0.0
-			var currentSubsection: Pair<GPSCoordinate, GPSCoordinate>? = null
+			var currentSubsection = currentSection.sectionPoints.zipWithNext().last()
 			for (subsection in currentSection.sectionPoints.zipWithNext()) {
-				val vector = subsection.second - subsection.first
-				distanceAtEndOfSubsection += vector.length()
+				distanceAtEndOfSubsection += subsection.length()
 
 				if (distanceAtEndOfSubsection >= distanceInSection) {
 					currentSubsection = subsection
 					break
 				}
 			}
-			currentSubsection!!
 
 			// Get gps inside subsection
 			val distanceAtStartOfSubSection = distanceAtEndOfSubsection - currentSubsection.length()

@@ -8,7 +8,7 @@ Item {
     function setStop(id, stop){
         sectionmodel.get(id).name = stop.name
         sectionmodel.get(id).coordinate = stop.coordinate
-        stopUrl = stop["_links"]["self"]["href"]
+        sectionmodel.get(id).stopid = stop.id
         let timespan = 0
         for(let i = id; i >= 0; i--){
             timespan += sectionmodel.get(i).timespan;
@@ -41,8 +41,7 @@ Item {
     }
 
     property string startDate
-    property var lineUrl
-    property var stopUrl
+    property var lineID
     property var sections
     onSectionsChanged: () => {
         if(!sections["_embedded"]) return;
@@ -50,13 +49,14 @@ Item {
         onSectionsLoaded();
         let first = sections["_embedded"]["sections"][0];
         sectionmodel.append({
-                              "timespan" : parseDuration("PT0S"),
-                              "time" : toDate(startDate),
-                              "stop" : first["_links"]["start"]["href"],
-                              "url" : first["_links"]["self"]["href"],
-                              "name" : "Loading...",
-                              "coordinate" : {}
-                          })
+            "timespan" : parseDuration("PT0S"),
+            "time" : toDate(startDate),
+            "stop" : first["_links"]["start"]["href"],
+            "url" : first["_links"]["self"]["href"],
+            "name" : "Loading...",
+            "coordinate" : {},
+            "stopid" : -1
+        })
         getTimeTableSection(0, first["_links"]["start"]["href"])
         for (const section of sections["_embedded"]["sections"]){
             sectionmodel.append({
@@ -65,7 +65,8 @@ Item {
                                    "stop" : section["_links"]["stop"]["href"],
                                    "url" : section["_links"]["self"]["href"],
                                    "name" : "Loading...",
-                                    "coordinate" : {}
+                                    "coordinate" : {},
+                                    "stopid" : -1
                                })
             getTimeTableSection(sectionmodel.count - 1, section["_links"]["stop"]["href"])
         }
@@ -89,11 +90,7 @@ Item {
             MouseArea {
                 anchors.fill: parent
                 onClicked: function(){
-                    const lineUrlParts = lineUrl.split("/")
-                    const lineId = lineUrlParts[lineUrlParts.length - 1]
-                    const stopUrlParts = stopUrl.split("/")
-                    const stopId = stopUrlParts[stopUrlParts.length - 1]
-                    onSelectedItem(lineId, stopId, coordinate);
+                    onSelectedItem(lineID, stopid, coordinate);
                 }
             }
 
