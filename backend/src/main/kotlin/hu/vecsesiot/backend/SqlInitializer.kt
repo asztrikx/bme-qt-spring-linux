@@ -89,14 +89,14 @@ class SqlInitializer : ApplicationRunner {
 			)
 			add(
 				Stop(
-					coordinate = GPSCoordinate(47.40128681145784, 19.249980961251165),
+					coordinate = GPSCoordinate(47.40081377546881, 19.2486407587372),
 					name = "Széchenyi"
 				)
 			)
 			add(
 				Stop(
 					coordinate = GPSCoordinate(47.4173987343762, 19.241270529370745),
-					name = "Logisztikai központ"
+					name = "Logisztika központ"
 				)
 			)
 			add(
@@ -114,7 +114,7 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				Stop(
 					coordinate = GPSCoordinate(47.399162080014555, 19.299996594292413),
-					name = "Kőolajvezeték Vállalat"
+					name = "Kőolajvezeték vállalat"
 				)
 			)
 			add(
@@ -135,253 +135,123 @@ class SqlInitializer : ApplicationRunner {
 					name = "Market Central"
 				)
 			)
+			add(
+				Stop(
+					coordinate = GPSCoordinate(47.40597489716716, 19.257094448364764),
+					name = "Kinizsi utca"
+				)
+			)
+			add(
+				Stop(
+					coordinate = GPSCoordinate(47.40497231300258, 19.242531431424034),
+					name = "Besztercei utca"
+				)
+			)
+			add(
+				Stop(
+					coordinate = GPSCoordinate(47.40899928349606, 19.247786069530157),
+					name = "Halmy József tér"
+				)
+			)
+			add(
+				Stop(
+					coordinate = GPSCoordinate(47.413716243960444, 19.24605706617703),
+					name = "Előd utca"
+				)
+			)
 		}
 	}
 
 	private fun getSections(stops: List<Stop>): List<Section> {
-		return mutableListOf<Section>().apply {
-			add(
-				Section(timespan = Duration.ofSeconds(120)).apply {
-					start = stops[0]
-					stop = stops[1]
-					sectionPoints = mutableListOf(
-						stops[0].coordinate,
-						stops[1].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(100)).apply {
-					start = stops[1]
-					stop = stops[2]
-					sectionPoints = mutableListOf(
-						stops[1].coordinate,
-						stops[2].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(90)).apply {
-					start = stops[1]
-					stop = stops[3]
-					sectionPoints = mutableListOf(
-						stops[1].coordinate,
-						stops[3].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(65)).apply {
-					start = stops[2]
-					stop = stops[4]
-					sectionPoints = mutableListOf(
-						stops[2].coordinate,
-						stops[4].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(34)).apply {
-					start = stops[4]
-					stop = stops[5]
-					sectionPoints = mutableListOf(
-						stops[4].coordinate,
-						stops[5].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(123)).apply {
-					start = stops[3]
-					stop = stops[7]
-					sectionPoints = mutableListOf(
-						stops[3].coordinate,
-						stops[7].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(145)).apply {
-					start = stops[7]
-					stop = stops[8]
-					sectionPoints = mutableListOf(
-						stops[7].coordinate,
-						stops[8].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(170)).apply {
-					start = stops[6]
-					stop = stops[4]
-					sectionPoints = mutableListOf(
-						stops[6].coordinate,
-						stops[4].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(53)).apply {
-					start = stops[4]
-					stop = stops[2]
-					sectionPoints = mutableListOf(
-						stops[4].coordinate,
-						stops[2].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(102)).apply {
-					start = stops[2]
-					stop = stops[0]
-					sectionPoints = mutableListOf(
-						stops[2].coordinate,
-						stops[0].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(200)).apply {
-					start = stops[8]
-					stop = stops[6]
-					sectionPoints = mutableListOf(
-						stops[8].coordinate,
-						stops[6].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(200)).apply {
-					start = stops["Iskola utca"]
-					stop = stops["Anna utca"]
-					sectionPoints = mutableListOf(
-						stops["Iskola utca"].coordinate,
-						stops["Anna utca"].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(200)).apply {
-					start = stops["Anna utca"]
-					stop = stops["Vörösmarty utca"]
-					sectionPoints = mutableListOf(
-						stops["Anna utca"].coordinate,
-						stops["Vörösmarty utca"].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(200)).apply {
-					start = stops["Vörösmarty utca"]
-					stop = stops["OTP lakótelep"]
-					sectionPoints = mutableListOf(
-						stops["Vörösmarty utca"].coordinate,
-						stops["OTP lakótelep"].coordinate,
-					)
-				}
-			)
-			add(
-				Section(timespan = Duration.ofSeconds(20000)).apply {
-					start = stops["OTP lakótelep"]
-					stop = stops["Market Central"]
-					sectionPoints = mutableListOf(
-						stops["OTP lakótelep"].coordinate,
-						GPSCoordinate(47.4172, 19.2541),
-						GPSCoordinate(47.4162, 19.2534),
-						stops["Market Central"].coordinate,
-					)
-				}
-			)
-		}
+		return mutableListOf(
+			// 580 (Market Central)
+			stops.createSection("Iskola utca", "Anna utca", mutableListOf()),
+			stops.createSection("Anna utca", "Vörösmarty utca", mutableListOf()),
+			stops.createSection("Vörösmarty utca", "OTP lakótelep", mutableListOf()),
+			stops.createSection("OTP lakótelep", "Market Central", mutableListOf(
+				GPSCoordinate(47.4172, 19.2541),
+				GPSCoordinate(47.4162, 19.2534),
+			)),
+			// 581 (Kőolajvezeték vállalat)
+			stops.createSection("OTP lakótelep", "Vörösmarty utca", mutableListOf()),
+			stops.createSection("Vörösmarty utca", "Anna utca", mutableListOf()),
+			stops.createSection("Anna utca", "Iskola utca", mutableListOf()),
+			stops.createSection("Iskola utca", "Kőolajvezeték vállalat", mutableListOf()),
+			// 576 (Logisztika központ)
+			stops.createSection("Erzsébet tér", "Kinizsi utca", mutableListOf(
+				GPSCoordinate(47.39984172096639, 19.259285804647785),
+				GPSCoordinate(47.39998842262298, 19.259545571588877),
+				GPSCoordinate(47.40024259525668, 19.259652859942417),
+				GPSCoordinate(47.400502213180935, 19.259451694279527),
+				GPSCoordinate(47.40051492172357, 19.25941950774823),
+				GPSCoordinate(47.400571202350015, 19.258974261081036),
+			)),
+			stops.createSection("Kinizsi utca", "Sportpálya", mutableListOf(
+				GPSCoordinate(47.40597489716716, 19.257094448364764),
+				GPSCoordinate(47.40627623891681, 19.256901329310228),
+			)),
+			stops.createSection("Sportpálya", "Széchenyi", mutableListOf(
+				GPSCoordinate(47.40047060530009, 19.249417568510694),
+				GPSCoordinate(47.400550487528875, 19.249227131683153),
+				GPSCoordinate(47.40053959450482, 19.249082292405873),
+			)),
+			stops.createSection("Széchenyi", "Besztercei utca", mutableListOf(
+				GPSCoordinate(47.40081377546881, 19.2486407587372),
+				GPSCoordinate(47.404632063246375, 19.24209254670556),
+			)),
+			stops.createSection("Besztercei utca", "Halmy József tér", mutableListOf(
+				GPSCoordinate(47.40497231300258, 19.242531431424034),
+			)),
+			stops.createSection("Halmy József tér", "Előd utca", mutableListOf(
+				GPSCoordinate(47.40899928349606, 19.247786069530157),
+				GPSCoordinate(47.41106877712169, 19.250433059398958),
+			)),
+			stops.createSection("Előd utca", "Logisztika központ", mutableListOf(
+				GPSCoordinate(47.413716243960444, 19.24605706617703),
+				GPSCoordinate(47.41397543735944, 19.245610201741727),
+				GPSCoordinate(47.414360806484794, 19.245041723114454),
+				GPSCoordinate(47.4156069565216, 19.242989828691236),
+			)),
+		)
 	}
 
 	private fun getLines(sections: List<Section>): List<Line> {
-		return mutableListOf<Line>().apply {
-			add(
-				Line(name = "7 (Vörösmarty utca)").apply {
-					route = mutableListOf(sections[0], sections[1], sections[3], sections[4])
-					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
-				}
-			)
-			add(
-				Line(name = "8 (OTP lakótelep)").apply {
-					route = mutableListOf(sections[0], sections[2], sections[5], sections[6])
-					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
-				}
-			)
-			add(
-				Line(name = "123E (Autóbuszállomás)").apply {
-					route = mutableListOf(sections[10], sections[7], sections[8], sections[9])
-					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
-				}
-			)
-			add(
-				Line(name = "580 (Market Central)").apply {
-					route = mutableListOf(sections[11], sections[12], sections[13], sections[14])
-					stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
-				}
-			)
-		}
+		return mutableListOf(
+			Line(name = "580 (Market Central)").apply {
+				route = mutableListOf(sections[0], sections[1], sections[2], sections[3])
+				stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
+			},
+			Line(name = "581 (Kőolajvezeték vállalat)").apply {
+				route = mutableListOf(sections[4], sections[5], sections[6], sections[7])
+				stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
+			},
+			Line(name = "576 (Logisztika központ)").apply {
+				route = mutableListOf(sections[8], sections[9], sections[10], sections[11], sections[12], sections[13], sections[14])
+				stops = mutableListOf(*(route.map { it.start }.toTypedArray()), route.last().stop)
+			},
+		)
 	}
 
 	private fun getTimetables(lines: List<Line>): List<Timetable> {
-		return mutableListOf<Timetable>().apply {
-			add(
-				Timetable(startDate = LocalDateTime.now().plusHours(1)).apply {
-					line = lines[0]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(25)).apply {
-					line = lines[1]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(20)).apply {
-					line = lines[2]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(15)).apply {
-					line = lines[0]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(35)).apply {
-					line = lines[1]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(28)).apply {
-					line = lines[1]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(42)).apply {
-					line = lines[1]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(55)).apply {
-					line = lines[2]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(33)).apply {
-					line = lines[2]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(1)).apply {
-					line = lines[3]
-				}
-			)
-			add(
-				Timetable(startDate = LocalDateTime.now().plusMinutes(3)).apply {
-					line = lines[3]
-				}
-			)
-		}
+		return mutableListOf(
+			Timetable(startDate = LocalDateTime.now().plusMinutes(1)).apply {
+				line = lines[0]
+			},
+			Timetable(startDate = LocalDateTime.now().plusMinutes(-10)).apply {
+				line = lines[0]
+			},
+			Timetable(startDate = LocalDateTime.now().plusMinutes(3)).apply {
+				line = lines[0]
+			},
+
+			Timetable(startDate = LocalDateTime.now().plusMinutes(3)).apply {
+				line = lines[1]
+			},
+
+			Timetable(startDate = LocalDateTime.now().plusMinutes(3)).apply {
+				line = lines[2]
+			},
+		)
 	}
 
 	private fun getUsers(): List<User> {
@@ -470,13 +340,11 @@ class SqlInitializer : ApplicationRunner {
 			add(
 				Bus(serialnumber = "AAA111").apply {
 					user = users[3]
-					timetable = timetables[3]
 				}
 			)
 			add(
 				Bus(serialnumber = "BBB222").apply {
 					user = users[2]
-					timetable = timetables[7]
 				}
 			)
 			add(
@@ -542,4 +410,13 @@ class SqlInitializer : ApplicationRunner {
 	}
 
 	operator fun List<Stop>.get(name: String) = this.first { it.name == name }
+
+	fun List<Stop>.createSection(startStopName: String, endStopName: String, coos: MutableList<GPSCoordinate>) =
+		Section(timespan = Duration.ofSeconds(200)).apply {
+			start = this@createSection[startStopName]
+			stop = this@createSection[endStopName]
+			sectionPoints = (
+				mutableListOf(this@createSection[startStopName].coordinate) + coos + mutableListOf(this@createSection[endStopName].coordinate)
+				).toMutableList()
+		}
 }
