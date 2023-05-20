@@ -12,6 +12,9 @@ internal class Program
     // pins to be used by user
     private static readonly int[] gpio_pin_nums = { 37, 35, 33, 31, 29, 40, 38, 36, 32, 22 };
 
+    // pin set last to high
+    private static int highPin = 100;
+
     private static async Task SettingUp(HttpClient client)
     {
         stopId = GetStopID(client);
@@ -83,7 +86,7 @@ internal class Program
                     Convert.ToInt32(item.GetProperty("_links").GetProperty("line").GetProperty("href").GetString()!.Split('/').LastOrDefault()),
                     item.GetProperty("name").GetString()!
                 ));
-                Console.WriteLine($"Line \"{buses.Last().Value}\" added to stop! Please connect gpio pin {gpio_pin_nums[buses.Count()-1]} to the display of bus line: {buses.Last().Value}!");
+                Console.WriteLine($"Line \"{buses.Last().Value}\" added to stop! Please connect GPIO pin {gpio_pin_nums[buses.Count()-1]} to the display of bus line: {buses.Last().Value}!");
             }
         }
         catch
@@ -129,15 +132,17 @@ internal class Program
         if (index > 10)
             throw new ArgumentException($"Value of pin index ({index}) is illegal!");
 
-        if(index == -1)
+        if(index == -1 && highPin != -1)
         {
             w.Write("0:0");
+            highPin = -1;
             if(nextDate is not null)
                 Console.WriteLine("No busses avaible on any line! Turning all indicator off!");
         }
-        else
+        else if(highPin != index)
         {
             w.Write($"{index}:1");
+            highPin = index;
             Console.WriteLine($"The next bus will arrive on line {buses[index].Value} at {nextDate!}! Turning pin index {index} on.");
         }
     }
