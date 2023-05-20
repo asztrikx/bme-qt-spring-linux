@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport"
-              content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-        <meta http-equiv="X-UA-Compatible" content="ie=edge">
-        <title>Email</title>
-    </head>
-    <body>
-        <div>Dear <b th:text="${name}">!</b></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Email</title>
+</head>
+<body>
+<div>Dear <b th:text="${name}">!</b></div>
 
-        <div> There is a fault on <b th:text="${line}"></b> your subscribed line!></></div>
-        <div> Our mechanics are on the way, we ask for your patience.</div>
-    </body>
+<div> There is a fault on <b th:text="${line}"></b> your subscribed line!</div>
+<div> Our mechanics are on the way, we ask for your patience.</div>
+</body>
 </html>

@@ -14,4 +14,9 @@ class EmailController {
 	fun sendEmail(@RequestBody address: String) {
 		service.sendEmail(address, "Test", "Hello VecsesIOT from Spring booot!")
 	}
+
+	@PostMapping("/emailTemplate")
+	fun sendEmailTemplate(@RequestBody address: String) {
+		service.sendEmailTemplate(address, FaultNotificationTemplate("Nagy István", "Funny ride"))
+	}
 }
