@@ -23,7 +23,7 @@ import java.time.LocalDateTime
 import java.util.*
 
 @SpringBootTest
-@ActiveProfiles("test" )
+@ActiveProfiles("test")
 class FaultTicketServiceTest {
 
 	@Autowired
@@ -37,13 +37,13 @@ class FaultTicketServiceTest {
 
 	private lateinit var securityContext: SecurityContext
 	private lateinit var authentication: Authentication
-	private lateinit var testUserObj : User
+	private lateinit var testUserObj: User
 
 	private lateinit var ticket: FaultTicket
 
 	@BeforeEach
-	fun setup(){
-		testUserObj = User(1,"testuser","testemail", "Test User", "password", mutableListOf("User"))
+	fun setup() {
+		testUserObj = User(1, "testuser", "testemail", "Test User", "password", mutableListOf("User"))
 		ticket = FaultTicket(1, LocalDateTime.now(), null, "Test ticket", GPSCoordinate(0.0, 0.0))
 
 		securityContext = Mockito.mock(SecurityContext::class.java)
@@ -54,7 +54,7 @@ class FaultTicketServiceTest {
 	}
 
 	@Test
-	fun testCreateTicketWithNonExistUser(){
+	fun testCreateTicketWithNonExistUser() {
 		Mockito.`when`(userRepository.findById(testUserObj.id!!)).thenReturn(Optional.empty())
 		assertThrows<IllegalStateException> {
 			service.createTicket(ticket)
@@ -64,7 +64,7 @@ class FaultTicketServiceTest {
 	}
 
 	@Test
-	fun testCreateTicketWithExistUserWithoutBus(){
+	fun testCreateTicketWithExistUserWithoutBus() {
 		Mockito.`when`(userRepository.findById(testUserObj.id!!)).thenReturn(Optional.of(testUserObj))
 		assertThrows<IllegalStateException> {
 			service.createTicket(ticket)
@@ -74,10 +74,11 @@ class FaultTicketServiceTest {
 	}
 
 	@Test
-	fun testCreateTicketWithExistUserWithBus(){
+	fun testCreateTicketWithExistUserWithBus() {
 		val testBus = Bus(1, "111AAA")
 		Mockito.`when`(userRepository.findById(testUserObj.id!!)).thenReturn(Optional.of(testUserObj))
 		testUserObj.bus = testBus
+		testBus.faultTickets = mutableListOf()
 
 		assertDoesNotThrow {
 			service.createTicket(ticket)
@@ -87,7 +88,7 @@ class FaultTicketServiceTest {
 	}
 
 	@Test
-	fun testRefreshNonExistTicket(){
+	fun testRefreshNonExistTicket() {
 		Mockito.`when`(repository.findById(ticket.id!!)).thenReturn(Optional.empty())
 
 		assertThrows<IllegalStateException> {
@@ -100,7 +101,7 @@ class FaultTicketServiceTest {
 	}
 
 	@Test
-	fun testRefreshTicketToInProgress(){
+	fun testRefreshTicketToInProgress() {
 		Mockito.`when`(repository.findById(ticket.id!!)).thenReturn(Optional.of(ticket))
 		assertDoesNotThrow {
 			service.refreshState(ticket.id!!, FaultTicket.State.InProgress)
@@ -111,7 +112,7 @@ class FaultTicketServiceTest {
 	}
 
 	@Test
-	fun testRefreshTicketToResolved(){
+	fun testRefreshTicketToResolved() {
 		Mockito.`when`(repository.findById(ticket.id!!)).thenReturn(Optional.of(ticket))
 		assertDoesNotThrow {
 			service.refreshState(ticket.id!!, FaultTicket.State.Resolved)
