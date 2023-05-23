@@ -7,7 +7,7 @@ Csapattagok Neptun kóddal:
 - Rádai Ronald (KBP74E)
 - Vörös Asztrik (WYZJ90)
 
-Bemutató videó URL: https://youtu.be/QHczOp94sjg
+Bemutató videó URL: https://youtu.be/8HfnVG-S4ZQ
 
 (Ugye minden olyan dolog szerepel benne a kiírásnak megfelelően, amire pontot szeretnétek kapni?)
 
